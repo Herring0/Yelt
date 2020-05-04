@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www:thymeleaf.org" lang="en">
+<head>
+    <title th:text="${movie.title} + ' | Yelt'"></title>
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/movie.css">
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/lib/readmore.js/readmore.min.js"></script>
+    <script src="../../js/header.js"></script>
+    <script src="../../js/movie.js"></script>
+    <script></script>
+</head>
+<body style="background-color: #f4f4f4; margin: 0; padding: 0;">
+<header th:insert="fragments/Header :: header">
+</header>
+<div class="main">
+    <div class="movie_main_info">
+        <div class="movie_main_info_container">
+            <div class="movie_info_first_c">
+                <div class="poster_block">
+                    <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movie.poster_path})}"
+                         width="300" height="450" onerror="this.src='../../resources/lost_poster.png'" class="film_poster">
+                </div>
+                <div class="folder_selection_block">
+                    <button class="btn_folder_selection">
+                        Add to folder
+                        <ul class="submenu">
+                            <li><a href="">I'll watch</a></li>
+                            <li><a href="">Liked films</a></li>
+                            <li><a href="">Favorites</a></li>
+                            <li><a href="">Remark</a></li>
+                        </ul>
+                    </button>
+                </div>
+                <div class="sub_block">
+                    <a href="#">Found a mistake?</a>
+                    <a href="#">Add information</a>
+                </div>
+            </div>
+            <div class="delimeter"></div>
+            <div class="movie_info_second_c">
+                <div th:text="${movie.title}" class="title_block"></div>
+                <button class="btn_watch_now">Watch now</button>
+                <div class="about_movie_block">
+                    <span class="about_title">About movie</span>
+                    <div class="about_movie">
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Year</div>
+                            <div class="about_movie_info_v"><a th:text="${movie.release_date}" href="#"></a></div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Countries</div>
+                            <div class="about_movie_info_v"><a th:text="${movie.production_countries[0].name}"
+                                                               href="#"></a></div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Genres</div>
+                            <div class="about_movie_info_v" th:each="genre,iter : ${movie.genres}">
+                                <a href="#" th:text="${genre.name}"></a> <span
+                                    th:text="${iter.last} ? '' : ',&nbsp;'"></span>
+                            </div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Tagline</div>
+                            <div class="about_movie_info_v tagline" th:text="'«' + ${movie.tagline} + '»'"></div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Directors</div>
+                            <div class="about_movie_info_v" th:each="director,iter : ${directors}">
+                                <th:block th:if="${iter.index < 3}">
+                                    <a th:text="${director.name}" th:href="@{/people/{id}(id=${director.id})}"></a>
+                                    <span th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></span>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Writers</div>
+                            <div class="about_movie_info_v" th:each="writer,iter : ${writers}">
+                                <th:block th:if="${iter.index < 3}">
+                                    <a th:text="${writer.name}" th:href="@{/people/{id}(id=${writer.id})}"></a>
+                                    <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Producers</div>
+                            <div class="about_movie_info_v" th:each="producer,iter : ${producers}">
+                                <th:block th:if="${iter.index < 3}">
+                                    <a th:text="${producer.name}" th:href="@{/people/{id}(id=${producer.id})}"></a>
+                                    <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Camera</div>
+                            <div class="about_movie_info_v" th:each="camera,iter : ${cameras}">
+                                <th:block th:if="${iter.index < 3}">
+                                    <a th:text="${camera.name}" th:href="@{/people/{id}(id=${camera.id})}"></a>
+                                    <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Revenue</div>
+                            <div class="about_movie_info_v" th:text="${movie.revenue_in_dollars}">Filipe Botelho</div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Certification</div>
+                            <div class="about_movie_info_v" th:text="${certification}"></div>
+                        </div>
+                        <div class="about_movie_info">
+                            <div class="about_movie_info_k">Runtme</div>
+                            <th:block th:with="hours = ${movie.runtime / 60}, minutes = ${movie.runtime % 60}">
+                                <div class="about_movie_info_v" th:text="${hours} + 'h&nbsp;' + ${minutes} + 'm'"></div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="note_block">
+                    <a href="#" class="add_note"> Add note</a>
+                    <span>only you can see</span>
+                </div>
+            </div>
+            <div class="movie_info_third_c">
+                <div class="rating_block">
+                    <div class="rating">8.3</div>
+                    <div class="votes">116k</div>
+                </div>
+                <div class="cast_block">
+                    <a href="#" class="cast_n_crew_title">Cast</a>
+                    <th:block th:each="cast,iter : ${credits.cast}">
+                        <th:block th:if="${iter.index < 9}">
+                            <a th:text="${cast.name}" th:href="@{/people/{id}(id=${cast.id})}"
+                               class="cast_n_crew_name"></a>
+                        </th:block>
+                    </th:block>
+                    <a href="#" th:text="${#lists.size(credits.cast)} + ' actors'" class="cast_n_crew_num"></a>
+                </div>
+                <div class="crew_block">
+                    <a href="#" class="cast_n_crew_title">Crew</a>
+                    <th:block th:each="crew,iter : ${credits.crew}">
+                        <th:block th:if="${iter.index < 9}">
+                            <a th:text="${crew.name}" th:href="@{/people/{id}(id=${crew.id})}"
+                               class="cast_n_crew_name"></a>
+                        </th:block>
+                    </th:block>
+                    <a href="#" th:text="${#lists.size(credits.crew)} + ' members'" class="cast_n_crew_num"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sub_info_container">
+        <div class="movie_sub_info_block">
+            <div class="description_block">
+                <span>Description</span>
+                <div class="description" th:text="${movie.overview}"></div>
+            </div>
+            <div class="sub_info_rating_block">
+                <span>Rating</span>
+                <div class="stars_n_rating_block">
+                    <div class="stars_block">
+                        <div class="star" data="1"></div>
+                        <div class="star" data="2"></div>
+                        <div class="star" data="3"></div>
+                        <div class="star" data="4"></div>
+                        <div class="star" data="5"></div>
+                        <div class="star" data="6"></div>
+                        <div class="star" data="7"></div>
+                        <div class="star" data="8"></div>
+                        <div class="star" data="9"></div>
+                        <div class="star" data="10"></div>
+                    </div>
+                    <div class="rating_n_votes">
+                        <a href="#" class="sub_info_rating">8.302</a>
+                        <div class="sub_info_votes">116k</div>
+                    </div>
+                </div>
+                <div class="my_vote_block">
+                    <span>My rating</span>
+                    <div class="my_vote">8</div>
+                    <div class="delete_vote">delete</div>
+                    <div class="date_vote">20.04.2019 16:47</div>
+                </div>
+                <div class="vote_date"></div>
+            </div>
+            <div class="similar_movies_block">
+                <a href="#">Similar movies</a>
+                <div class="similar_movies">
+                    <th:block th:each="result,iter : ${similarMovies.results}">
+                        <th:block th:if="${iter.index < 5}">
+                            <a th:href="@{/movie/{id}(id=${result.id})}" class="similar_movie">
+                                <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${result.poster_path})}"
+                                     width="140" height="210" onerror="this.src='../../resources/lost_poster.png'" class="similar_poster">
+                                <span class="similar_movie_name" th:text="${result.title}"></span>
+                                <span th:text="${#strings.arraySplit(result.release_date, '-')[0]} + ', ' + ${result.main_genre}"
+                                      class="similar_movie_info"></span>
+                            </a>
+                        </th:block>
+                    </th:block>
+                </div>
+            </div>
+            <th:block th:if="${#lists.size(movieVideos.results) > 0}">
+                <div class="videos_block">
+                    <a href="#">Videos</a>
+                    <div class="videos">
+                        <th:block th:each="video,iter : ${movieVideos.results}">
+                            <th:block th:if="${iter.index < 2}">
+                                <div href="#" class="video" data-th-attr="yid=${video.key}">
+                                    <img th:src="@{https://img.youtube.com/vi/{key}/hqdefault.jpg(key=${video.key})}"
+                                         alt="" class="video_y">
+                                    <div class="video_btn_container">
+                                        <div class="video_btn">
+                                            <div class="play"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </th:block>
+                    </div>
+                </div>
+            </th:block>
+            <div class="reviews_block">
+                <a href="#">Reviews</a>
+                <button class="write_review">
+                    Write a review
+                </button>
+                <div class="reviews">
+                    <div class="review positive_review">
+                        <div class="review_header">
+                            <div class="review_user_block">
+                                <div class="profile_img"></div>
+                                <div class="profile_n_rev_num">
+                                    <a href="#" class="review_profile">Herring</a>
+                                    <div class="reviews_num">8 reviews</div>
+                                </div>
+                            </div>
+                            <div class="review_data_block">19 февраля 2019 в 14:24</div>
+                        </div>
+                        <div class="review_main">
+                        </div>
+                    </div>
+                    <div class="review neutral_review">
+                        <div class="review_header">
+                            <div class="review_user_block">
+                                <div class="profile_img"></div>
+                                <div class="profile_n_rev_num">
+                                    <a href="#" class="review_profile">Herring</a>
+                                    <div class="reviews_num">8 reviews</div>
+                                </div>
+                            </div>
+                            <div class="review_data_block">19 февраля 2019 в 14:24</div>
+                        </div>
+                        <div class="review_main">
+
+                        </div>
+                    </div>
+                    <div class="review negative_review">
+                        <div class="review_header">
+                            <div class="review_user_block">
+                                <div class="profile_img"></div>
+                                <div class="profile_n_rev_num">
+                                    <a href="#" class="review_profile">Herring</a>
+                                    <div class="reviews_num">8 reviews</div>
+                                </div>
+                            </div>
+                            <div class="review_data_block">19 февраля 2019 в 14:24</div>
+                        </div>
+                        <div class="review_main">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sub_info_delimeter"></div>
+        <div class="other_info"></div>
+    </div>
+</div>
+<footer th:insert="fragments/Footer :: footer">
+</footer>
+<div class="video_show_container">
+    <div class="i_video_close"></div>
+    <iframe width="1000" height="600" src="" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+            class="i_video"></iframe>
+</div>
+</body>
+</html>

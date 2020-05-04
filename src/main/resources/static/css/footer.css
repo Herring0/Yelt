@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+footer {
+	background-color: rgb(31, 31, 31);
+	height: 250px;
+	width: 1220px;
+	margin: auto;
+	padding-top: 45px;
+	border-radius: 20px 20px 0px 0px;
+	font-family: 'Roboto', sans-serif;
+	margin-top: -25px;
+}
+
+.contacts {
+	margin: auto;
+	width: 24%;
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.contact {
+	/*text-decoration: none;*/
+	color: #fff;
+	margin-right: 15px;
+	opacity: 0.3;
+	font-size: 1.45em;
+	font-family: FontAwesome;
+	transition-duration: .15s;
+}
+
+.contact:hover {
+	opacity: 1;
+	color: #E07A5F;
+}
+
+.vk:before {
+	content: "\f189";
+}
+
+.facebook:before {
+	content: "\f082";
+}
+
+.twitter:before {
+	content: "\f099";
+}
+
+.telegram:before {
+	content: "\f3fe";
+}
+
+.instagram:before {
+	content: "\f955";
+} 
+
+.youtube:before {
+	content: "\f167";
+}
+
+.content_links {
+	margin: auto;
+	width: 60%;
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.content_link {
+	color: #fff;
+	margin-right: 15px;
+	opacity: 0.3;
+	font-size: .95em;
+	transition-duration: .15s;
+}
+
+.content_link:hover {
+	opacity: 1;
+	color: #E07A5F;
+}
+
+.apps {
+	margin: auto;
+	width: 28%;
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.bottom_info {
+	margin-left: 50px;
+}
+
+.bottom_info a {
+	color: #fff;
+	margin-right: 5px;
+	opacity: 0.3;
+	font-size: .85em;
+	transition-duration: .15s;
+}
+
+.info_year {
+	color: #fff;
+	opacity: 0.3;
+	font-size: .85em;
+}
+
+.bottom_info a:hover {
+	opacity: 1;
+	color: #E07A5F;
+}
+
+.info_age {
+	color: #fff;
+	opacity: 0.3;
+	font-size: .75em;
+	border-radius: 2px;
+	background-color: rgba(0,0,0,0.25);
+	line-height: 13px;
+	padding: 3px 8px;
+}
+
+@media screen and (max-width: 1130px) {
+	footer {
+		width: 960px;
+	}
+	.contacts {
+		width: 30%; 
+	}
+	.content_links {
+		width: 80%; 
+	}
+	.apps {
+		width: 35%;
+	}
+}
+@media screen and (max-width: 850px) {
+	footer {
+		width: 800px;
+	}
+	.contacts {
+		width: 30%; 
+	}
+	.content_links {
+		width: 90%; 
+	}
+	.apps {
+		width: 42%;
+	}
+}
