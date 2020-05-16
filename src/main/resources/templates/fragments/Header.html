@@ -1,4 +1,6 @@
-<div class="container" th:fragment="header">
+<div class="container" th:fragment="header" xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div class="f">
         <a href="#" class="logo">Yelt</a>
     </div>
@@ -7,20 +9,33 @@
         <a href="#" class="enter_promo">Enter promo</a>
     </div>
     <div class="t">
-        <form action="" method="get">
+        <form action="" method="get" class="search_form">
             <input name="s" placeholder="Search Yelt" type="search" class="search_input">
             <button type="submit" class="search_button"></button>
         </form>
     </div>
-    <div class="fr">
-        <a href="#" class="watchlist"> Wacthlist</a>
-        <div class="profile">
-            <ul class="submenu">
-                <li><a href="">Category</a></li>
-                <li><a href="">Author</a></li>
-                <li><a href="">Archive</a></li>
-                <li><a href="">Tags</a></li>
-            </ul>
+    <th:block sec:authorize="!isAuthenticated()">
+        <div class="fr">
+            <a href="/login" class="signin">Log in</a>
         </div>
-    </div>
+    </th:block>
+    <th:block sec:authorize="isAuthenticated()">
+        <div class="fr_authorized">
+            <a href="#" class="watchlist"> Wacthlist</a>
+            <div class="profile">
+                <ul class="submenu">
+                    <li><a href="">Category</a></li>
+                    <li><a href="">Author</a></li>
+                    <li><a href="">Archive</a></li>
+                    <li><a href="">Tags</a></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" value="Sign Out"/>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </th:block>
+</div>
 </div>

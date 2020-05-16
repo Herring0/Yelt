@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www:thymeleaf.org" lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title th:text="${movie.title} + ' | Yelt'"></title>
+    <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../../css/header.css">
     <link rel="stylesheet" type="text/css" href="../../css/footer.css">
     <link rel="stylesheet" type="text/css" href="../../css/movie.css">
@@ -21,7 +26,8 @@
             <div class="movie_info_first_c">
                 <div class="poster_block">
                     <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movie.poster_path})}"
-                         width="300" height="450" onerror="this.src='../../resources/lost_poster.png'" class="film_poster">
+                         width="300" height="450" onerror="this.src='../../resources/lost_poster.png'"
+                         class="film_poster">
                 </div>
                 <div class="folder_selection_block">
                     <button class="btn_folder_selection">
@@ -177,12 +183,16 @@
                         <div class="sub_info_votes">116k</div>
                     </div>
                 </div>
-                <div class="my_vote_block">
-                    <span>My rating</span>
-                    <div class="my_vote">8</div>
-                    <div class="delete_vote">delete</div>
-                    <div class="date_vote">20.04.2019 16:47</div>
-                </div>
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="my_vote_block">
+                        <th:block th:if="${userMovie != null}">
+                            <span>My rating</span>
+                            <div class="my_vote" th:text="${userMovie.getRating()}"></div>
+                            <div class="delete_vote">delete</div>
+                            <div class="date_vote" th:text="${userMovie.getVote_time()}"></div>
+                        </th:block>
+                    </div>
+                </th:block>
                 <div class="vote_date"></div>
             </div>
             <div class="similar_movies_block">
@@ -192,7 +202,8 @@
                         <th:block th:if="${iter.index < 5}">
                             <a th:href="@{/movie/{id}(id=${result.id})}" class="similar_movie">
                                 <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${result.poster_path})}"
-                                     width="140" height="210" onerror="this.src='../../resources/lost_poster.png'" class="similar_poster">
+                                     width="140" height="210" onerror="this.src='../../resources/lost_poster.png'"
+                                     class="similar_poster">
                                 <span class="similar_movie_name" th:text="${result.title}"></span>
                                 <span th:text="${#strings.arraySplit(result.release_date, '-')[0]} + ', ' + ${result.main_genre}"
                                       class="similar_movie_info"></span>

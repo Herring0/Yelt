@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Spring Security Example </title>
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <script> </script>
+</head>
+<body>
+
+<div class="main-page">
+    <th:block th:if="${message != null}">
+        <span th:text="${message}" class="error"></span>
+    </th:block>
+    <div class="form">
+        <form th:action="@{/login}" method="post" class="register-form">
+            <input type="text" placeholder="login" name="username" class="data_input"/>
+            <input type="password" placeholder="password" name="password" class="data_input"/>
+            <input type="submit" value="Sign In" class="submit"/>
+            <p class="message">Not registered? <a href="/registration">Create an account</a></p>
+        </form>
+    </div>
+</div>
+
+<!--<form th:action="@{/login}" method="post">-->
+<!--    <div><label> Login : <input type="text" name="username"/> </label></div>-->
+<!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
+<!--    <div><input type="submit" value="Sign In"/></div>-->
+<!--</form>-->
+<!--<a href="/registration">Add new user</a>-->
+</body>
+</html>

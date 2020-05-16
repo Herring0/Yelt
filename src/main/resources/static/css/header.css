@@ -75,7 +75,7 @@ a {
 	box-sizing: border-box;
 }
 
-.fr {
+.fr_authorized {
 	width: 190px;
 	padding-left: 10px;
 	display: flex;
@@ -84,7 +84,16 @@ a {
 	box-sizing: border-box;
 }
 
-form {
+.fr {
+	width: 190px;
+	padding-left: 10px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.search_form {
 	position: relative;
 	width: 500px;
 	margin: 0 auto;
@@ -152,6 +161,13 @@ ul {
 	transition-duration: .2s;
 }
 
+.signin {
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.15em;
+	color: var(--eggshell);
+	transition-duration: .2s;
+}
+
 .submenu {
 	position: absolute;
 	z-index: 4;
@@ -183,6 +199,28 @@ ul {
 	transition: .2s linear;
 }
 
+.submenu form {
+	display: flex;
+	justify-content: center;
+}
+
+.submenu input {
+	background: transparent;
+	border: none;
+	font-family: 'Roboto', sans-serif;
+	font-size: .9em;
+	letter-spacing: 1px;
+	color: var(--eggshell);
+	transition: .2s linear;
+	width: 100%;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.submenu input:hover {
+	background: var(--cadet);
+}
+
 .watchlist::before {
 	content: "\f02e";
 	font-weight: 900;
@@ -195,6 +233,8 @@ ul {
 .watchlist:hover::before {color: var(--cadet);
 }
 .watchlist:hover {color: var(--cadet);}
+
+.signin:hover {color: var(--cadet);}
 
 .logo:hover {color: var(--cadet);}
 
