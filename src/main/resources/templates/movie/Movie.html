@@ -4,8 +4,6 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title th:text="${movie.title} + ' | Yelt'"></title>
-    <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-    <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../../css/header.css">
     <link rel="stylesheet" type="text/css" href="../../css/footer.css">
@@ -131,8 +129,8 @@
             </div>
             <div class="movie_info_third_c">
                 <div class="rating_block">
-                    <div class="rating">8.3</div>
-                    <div class="votes">116k</div>
+                    <div class="rating" th:text="${rating}"></div>
+                    <div class="votes" th:text="${votesCount}"></div>
                 </div>
                 <div class="cast_block">
                     <a href="#" class="cast_n_crew_title">Cast</a>
@@ -179,106 +177,104 @@
                         <div class="star" data="10"></div>
                     </div>
                     <div class="rating_n_votes">
-                        <a href="#" class="sub_info_rating">8.302</a>
-                        <div class="sub_info_votes">116k</div>
+                        <a href="#" class="sub_info_rating" th:text="${rating}"></a>
+                        <div class="sub_info_votes" th:text="${votesCount}"></div>
                     </div>
                 </div>
-                <th:block sec:authorize="isAuthenticated()">
-                    <div class="my_vote_block">
-                        <th:block th:if="${userMovie != null}">
-                            <span>My rating</span>
-                            <div class="my_vote" th:text="${userMovie.getRating()}"></div>
-                            <div class="delete_vote">delete</div>
-                            <div class="date_vote" th:text="${userMovie.getVote_time()}"></div>
-                        </th:block>
-                    </div>
-                </th:block>
-                <div class="vote_date"></div>
-            </div>
-            <div class="similar_movies_block">
-                <a href="#">Similar movies</a>
-                <div class="similar_movies">
-                    <th:block th:each="result,iter : ${similarMovies.results}">
-                        <th:block th:if="${iter.index < 5}">
-                            <a th:href="@{/movie/{id}(id=${result.id})}" class="similar_movie">
-                                <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${result.poster_path})}"
-                                     width="140" height="210" onerror="this.src='../../resources/lost_poster.png'"
-                                     class="similar_poster">
-                                <span class="similar_movie_name" th:text="${result.title}"></span>
-                                <span th:text="${#strings.arraySplit(result.release_date, '-')[0]} + ', ' + ${result.main_genre}"
-                                      class="similar_movie_info"></span>
-                            </a>
-                        </th:block>
-                    </th:block>
+                <div class="my_vote_block" th:classappend="${userMovie == null} ? hidden">
+
+                    <span>My rating</span>
+                    <div class="my_vote" th:text="${userMovie != null} ? ${userMovie.getRating()}"></div>
+                    <div class="delete_vote">delete</div>
+                    <div class="date_vote" th:text="${userMovie != null} ? ${userMovie.getVote_time()}"></div>
+
+                    <div class="vote_date"></div>
                 </div>
-            </div>
-            <th:block th:if="${#lists.size(movieVideos.results) > 0}">
-                <div class="videos_block">
-                    <a href="#">Videos</a>
-                    <div class="videos">
-                        <th:block th:each="video,iter : ${movieVideos.results}">
-                            <th:block th:if="${iter.index < 2}">
-                                <div href="#" class="video" data-th-attr="yid=${video.key}">
-                                    <img th:src="@{https://img.youtube.com/vi/{key}/hqdefault.jpg(key=${video.key})}"
-                                         alt="" class="video_y">
-                                    <div class="video_btn_container">
-                                        <div class="video_btn">
-                                            <div class="play"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="similar_movies_block">
+                    <a href="#">Similar movies</a>
+                    <div class="similar_movies">
+                        <th:block th:each="result,iter : ${similarMovies.results}">
+                            <th:block th:if="${iter.index < 5}">
+                                <a th:href="@{/movie/{id}(id=${result.id})}" class="similar_movie">
+                                    <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${result.poster_path})}"
+                                         width="140" height="210" onerror="this.src='../../resources/lost_poster.png'"
+                                         class="similar_poster">
+                                    <span class="similar_movie_name" th:text="${result.title}"></span>
+                                    <span th:text="${#strings.arraySplit(result.release_date, '-')[0]} + ', ' + ${result.main_genre}"
+                                          class="similar_movie_info"></span>
+                                </a>
                             </th:block>
                         </th:block>
                     </div>
                 </div>
-            </th:block>
-            <div class="reviews_block">
-                <a href="#">Reviews</a>
-                <button class="write_review">
-                    Write a review
-                </button>
-                <div class="reviews">
-                    <div class="review positive_review">
-                        <div class="review_header">
-                            <div class="review_user_block">
-                                <div class="profile_img"></div>
-                                <div class="profile_n_rev_num">
-                                    <a href="#" class="review_profile">Herring</a>
-                                    <div class="reviews_num">8 reviews</div>
-                                </div>
-                            </div>
-                            <div class="review_data_block">19 февраля 2019 в 14:24</div>
-                        </div>
-                        <div class="review_main">
+                <th:block th:if="${#lists.size(movieVideos.results) > 0}">
+                    <div class="videos_block">
+                        <a href="#">Videos</a>
+                        <div class="videos">
+                            <th:block th:each="video,iter : ${movieVideos.results}">
+                                <th:block th:if="${iter.index < 2}">
+                                    <div href="#" class="video" data-th-attr="yid=${video.key}">
+                                        <img th:src="@{https://img.youtube.com/vi/{key}/hqdefault.jpg(key=${video.key})}"
+                                             alt="" class="video_y">
+                                        <div class="video_btn_container">
+                                            <div class="video_btn">
+                                                <div class="play"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </th:block>
                         </div>
                     </div>
-                    <div class="review neutral_review">
-                        <div class="review_header">
-                            <div class="review_user_block">
-                                <div class="profile_img"></div>
-                                <div class="profile_n_rev_num">
-                                    <a href="#" class="review_profile">Herring</a>
-                                    <div class="reviews_num">8 reviews</div>
+                </th:block>
+                <div class="reviews_block">
+                    <a href="#">Reviews</a>
+                    <button class="write_review">
+                        Write a review
+                    </button>
+                    <div class="reviews">
+                        <div class="review positive_review">
+                            <div class="review_header">
+                                <div class="review_user_block">
+                                    <div class="profile_img"></div>
+                                    <div class="profile_n_rev_num">
+                                        <a href="#" class="review_profile">Herring</a>
+                                        <div class="reviews_num">8 reviews</div>
+                                    </div>
                                 </div>
+                                <div class="review_data_block">19 февраля 2019 в 14:24</div>
                             </div>
-                            <div class="review_data_block">19 февраля 2019 в 14:24</div>
+                            <div class="review_main">
+                            </div>
                         </div>
-                        <div class="review_main">
+                        <div class="review neutral_review">
+                            <div class="review_header">
+                                <div class="review_user_block">
+                                    <div class="profile_img"></div>
+                                    <div class="profile_n_rev_num">
+                                        <a href="#" class="review_profile">Herring</a>
+                                        <div class="reviews_num">8 reviews</div>
+                                    </div>
+                                </div>
+                                <div class="review_data_block">19 февраля 2019 в 14:24</div>
+                            </div>
+                            <div class="review_main">
 
-                        </div>
-                    </div>
-                    <div class="review negative_review">
-                        <div class="review_header">
-                            <div class="review_user_block">
-                                <div class="profile_img"></div>
-                                <div class="profile_n_rev_num">
-                                    <a href="#" class="review_profile">Herring</a>
-                                    <div class="reviews_num">8 reviews</div>
-                                </div>
                             </div>
-                            <div class="review_data_block">19 февраля 2019 в 14:24</div>
                         </div>
-                        <div class="review_main">
+                        <div class="review negative_review">
+                            <div class="review_header">
+                                <div class="review_user_block">
+                                    <div class="profile_img"></div>
+                                    <div class="profile_n_rev_num">
+                                        <a href="#" class="review_profile">Herring</a>
+                                        <div class="reviews_num">8 reviews</div>
+                                    </div>
+                                </div>
+                                <div class="review_data_block">19 февраля 2019 в 14:24</div>
+                            </div>
+                            <div class="review_main">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -287,14 +283,13 @@
         <div class="sub_info_delimeter"></div>
         <div class="other_info"></div>
     </div>
-</div>
-<footer th:insert="fragments/Footer :: footer">
-</footer>
-<div class="video_show_container">
-    <div class="i_video_close"></div>
-    <iframe width="1000" height="600" src="" frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-            class="i_video"></iframe>
-</div>
+    <footer th:insert="fragments/Footer :: footer">
+    </footer>
+    <div class="video_show_container">
+        <div class="i_video_close"></div>
+        <iframe width="1000" height="600" src="" frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                class="i_video"></iframe>
+    </div>
 </body>
 </html>

@@ -389,8 +389,9 @@ ul {
 }
 
 .sub_info_delimeter {
-  height: 100%;
+  height: auto;
   width: 1px;
+  background-color: rgba(31,31,31,0.1);
 }
 
 .sub_info_delimeter:before {
@@ -399,7 +400,7 @@ ul {
   display: block;
   height: 100%;
   width: 1px;
-  background-color: rgba(31,31,31,0.1);
+
 }
 
 .other_info {
@@ -849,6 +850,10 @@ ul {
   font-size: .85em;
   color: var(--cadet);
   opacity: .6;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 @media screen and (max-width: 1130px) {

@@ -35,6 +35,7 @@ $(document).ready(function () {
         $(".i_video").attr("src", "");
     }
 
+
     var rate = function (e) {
         var now = new Date();
         var date = now.getFullYear() + '.' + String((now.getMonth() + 1)).padStart(2, '0') + '.' + String(now.getDate()).padStart(2, '0');
@@ -52,30 +53,39 @@ $(document).ready(function () {
                 break;
             }
         }
-        $(".my_vote").text(ind);
 
-        var xhr = new XMLHttpRequest();
+        $.ajax({
+            type : "POST",
+            contentType : "application/x-www-form-urlencoded",
+            url : window.location.href,
+            data : 'rating='+ind+"&date="+date+" "+time,
 
-        var body = 'rating=' + encodeURIComponent(ind) + "&" + "date=" + date + " " + time;
-        console.log(body);
-
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-
-        xhr.open("POST", window.location.href, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                callback(xhr.response);
+            success: function (data) {
+                console.log(data);
+                if(!$.isEmptyObject(data)) {
+                    $(".my_vote_block").removeClass("hidden");
+                    $(".my_vote").text(data.rating);
+                    $(".date_vote").text(data.date);
+                }
             }
-        };
+        });
+    }
 
-        xhr.onloadend = function () {
-            if (xhr.status == 404) ;
-        }
+    var delete_vote = function (e) {
+        var now = new Date();
+        var date = now.getFullYear() + '.' + String((now.getMonth() + 1)).padStart(2, '0') + '.' + String(now.getDate()).padStart(2, '0');
+        var time = now.getHours() + ":" + String(now.getMinutes()).padStart(2, '0') + ":" + String(now.getSeconds()).padStart(2, '0');
 
-        xhr.send(body);
+        $.ajax({
+            type : "POST",
+            contentType : "application/x-www-form-urlencoded",
+            url : window.location.href,
+            data : 'rating='+(-1)+"&date="+date+" "+time,
+
+            success: function (data) {
+                $(".my_vote_block").addClass("hidden");
+            }
+        });
     }
 
     $(".video img").click(show_video);
@@ -83,6 +93,7 @@ $(document).ready(function () {
     $(".i_video_close").click(hide_video);
     $(".video_show_container").click(hide_video);
     $(".star").click(rate);
+    $(".delete_vote").click(delete_vote);
 
     $('.review').readmore({
         moreLink: '<a href="#">read more</a>',

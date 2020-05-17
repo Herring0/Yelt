@@ -21,8 +21,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 @Controller
 @RequestMapping("/movie")
@@ -49,8 +48,20 @@ public class MovieController {
         MovieCredits movieCredits = tmDbRequester.getMovieCredits(id);
         MovieReleaseDates movieReleaseDates = tmDbRequester.getMovieReleaseDates(id);
         MovieSimilarMovies similarMovies = tmDbRequester.getSimilarMovies(id);
-        GenresMovieList genresMovieList = tmDbRequester.getGenresMovieList();
         MovieVideos movieVideos = tmDbRequester.getMovieVideos(id);
+        List<UserMovie> votes = userMovieRepository.findByMid(id);
+
+        int votesCount = 0;
+        String rating = "0";
+        if (votes != null && votes.size() > 0) {
+            votesCount = votes.size();
+            int i = 0;
+            for (UserMovie vote : votes) {
+                i += vote.getRating();
+            }
+            float ratingI = (float) i / votesCount;
+            rating = String.format("%.1f", ratingI).replace(",", ".");
+        }
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails user;
@@ -59,12 +70,7 @@ public class MovieController {
         if (principal instanceof UserDetails) {
             user = ((UserDetails)principal);
             myUser = userRepository.findByLogin(user.getUsername());
-            System.out.println(myUser.getId() + " | " + id);
             userMovie = userMovieRepository.findByUidAndMid(myUser.getId(), id);
-            if (userMovie != null)
-                System.out.println(userMovie.getRating());
-            else
-                System.out.println("um not found");
         }
 
         movieDetails.release_date = movieDetails.release_date.split("-")[0];
@@ -81,46 +87,47 @@ public class MovieController {
         model.addAttribute("movieVideos", movieVideos);
         model.addAttribute("user", myUser);
         model.addAttribute("userMovie", userMovie);
+        model.addAttribute("votesCount", votesCount);
+        model.addAttribute("rating", rating);
 
         return "movie/Movie";
     }
 
     @PostMapping("/{id}")
-    public String rate(@PathVariable(value = "id") String id, @RequestParam(value="rating") int rating, @RequestParam(value="date") String date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+    @ResponseBody
+    public Map<String, Object> rate(@PathVariable(value = "id") String id, @RequestParam(value="rating") int rating, @RequestParam(value="date") String date) {
         String jdate = null;
+        Map<String, Object> modelMap = new HashMap<>();
         try {
             Date parsedDate = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").parse(date);
             jdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(parsedDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails user = null;
         UserMovie userMovie = null;
         if (principal instanceof UserDetails) {
             user = ((UserDetails)principal);
-            User myUser = userRepository.findByLogin(user.getUsername());
-            userMovie = userMovieRepository.findByUidAndMid(myUser.getId(), id);
+            User userDB = userRepository.findByLogin(user.getUsername());
+            userMovie = userMovieRepository.findByUidAndMid(userDB.getId(), id);
+            if (rating == -1) {
+                userMovieRepository.delete(userMovie);
+                return null;
+            }
             if (userMovie == null) {
-                userMovie = new UserMovie(myUser.getId(), id, rating, jdate);
-                userMovieRepository.save(userMovie);
+                userMovie = new UserMovie(userDB.getId(), id, rating, jdate);
             } else {
                 userMovie.setRating(rating);
                 userMovie.setVote_time(jdate);
-                userMovieRepository.save(userMovie);
             }
-
+            userMovieRepository.save(userMovie);
+            modelMap.put("rating", rating);
+            modelMap.put("date", jdate);
         } else {
-            return "redirect:/login";
+//            return "redirect:/login";
         }
 
-        System.out.println("added user_movie with param: \n" +
-                "\tuid = " + userMovie.getUid() + "\n" +
-                "\tmid = " + userMovie.getMid() + "\n" +
-                "\trating = " + userMovie.getRating() + "\n" +
-                "\tdatetime = " + userMovie.getVote_time());
-        return "redirect:/";
+        return modelMap;
     }
 }

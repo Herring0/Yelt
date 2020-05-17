@@ -30,13 +30,10 @@ public class RegistrationController {
     public String addUser(User user, Map<String, Object> model) {
         User userFromDb = userRepository.findByLogin(user.getLogin());
 
-
         if (userFromDb != null) {
-            System.out.println(userFromDb.getLogin());
             model.put("message", "User already exists");
             return "registration";
         }
-        System.out.println(user.getLogin());
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         usersDataService.insertUser(user);
