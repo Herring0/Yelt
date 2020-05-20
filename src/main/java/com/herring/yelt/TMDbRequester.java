@@ -43,7 +43,6 @@ public class TMDbRequester {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     result = EntityUtils.toString(entity);
-//                    System.out.println(result);
                 }
 
             } finally {
@@ -82,9 +81,7 @@ public class TMDbRequester {
             try {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
-                    // return it as a String
                     result = EntityUtils.toString(entity);
-//                    System.out.println(result);
                 }
 
             } finally {
@@ -124,9 +121,7 @@ public class TMDbRequester {
             try {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
-                    // return it as a String
                     result = EntityUtils.toString(entity);
-//                    System.out.println(result);
                 }
 
             } finally {
@@ -166,9 +161,7 @@ public class TMDbRequester {
             try {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
-                    // return it as a String
                     result = EntityUtils.toString(entity);
-//                    System.out.println(result);
                 }
 
             } finally {
@@ -209,9 +202,7 @@ public class TMDbRequester {
             try {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
-                    // return it as a String
                     result = EntityUtils.toString(entity);
-//                    System.out.println(result);
                 }
 
             } finally {
@@ -250,7 +241,6 @@ public class TMDbRequester {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     result = EntityUtils.toString(entity);
-//                    System.out.println(result);
                 }
 
             } finally {
@@ -291,7 +281,6 @@ public class TMDbRequester {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     result = EntityUtils.toString(entity);
-//                    System.out.println(result);
                 }
 
             } finally {
@@ -311,5 +300,45 @@ public class TMDbRequester {
         movieVideos = new Gson().fromJson(result, MovieVideos.class);
         System.out.println("Movie videos received");
         return movieVideos;
+    }
+
+    public MovieLists getMovieLists(String id) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        MovieLists movieLists;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(BASE_URL);
+        stringBuilder.append("/movie/");
+        stringBuilder.append(id);
+        stringBuilder.append("/lists");
+        stringBuilder.append("?api_key=");
+        stringBuilder.append(apiKey);
+        String result = "";
+        try {
+            HttpGet request = new HttpGet(stringBuilder.toString());
+            CloseableHttpResponse response = httpClient.execute(request);
+
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    result = EntityUtils.toString(entity);
+                }
+
+            } finally {
+                response.close();
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        movieLists = new Gson().fromJson(result, MovieLists.class);
+        System.out.println("Movie lists received");
+        return movieLists;
     }
 }

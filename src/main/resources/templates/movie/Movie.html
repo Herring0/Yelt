@@ -281,7 +281,37 @@
             </div>
         </div>
         <div class="sub_info_delimeter"></div>
-        <div class="other_info"></div>
+        <div class="other_info">
+            <th:block th:if="${#lists.size(movieLists.results) > 0}">
+                <div class="lists_block">
+                    <a href="#" class="lists_title">In the lists</a>
+                    <div class="lists_container">
+                        <th:block th:each="list,iter : ${movieLists.results}">
+                            <th:block th:if="${iter.index < 4}">
+                                <a href="#" class="list">
+                                    <img th:src="@{https://image.tmdb.org/t/p/w500{path}(path=${list.poster_path})}"
+                                         width="55"
+                                         height="60" onerror="this.src='../../resources/list.png'">
+                                    <div class="list_text_container">
+                                        <span class="list_title" th:text="${list.name}"></span>
+                                        <span class="list_place" th:text="${list.item_count} + ' titles'"></span>
+                                    </div>
+                                </a>
+                            </th:block>
+                        </th:block>
+                    </div>
+                </div>
+            </th:block>
+            <div class="adv_block">
+                <a href="#" class="adv">
+                    <img src="../../resources/adv.jpg" width="300" height="300" alt="">
+                </a>
+                <a href="#" class="adv">
+                    <img src="../../resources/adv.jpg" width="300" height="300" alt="">
+                </a>
+            </div>
+
+        </div>
     </div>
     <footer th:insert="fragments/Footer :: footer">
     </footer>
@@ -291,5 +321,20 @@
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
                 class="i_video"></iframe>
     </div>
+    <div class="write_review_container">
+        <div class="form_container">
+            <div class="i_review_close"></div>
+            <form action="#" class="review_container" method="post">
+                <select name="review_type" class="review_combobox">
+                    <option value="1" class="review_option">Positive</option>
+                    <option value="2" class="review_option">Neutral</option>
+                    <option value="3" class="review_option">Negative</option>
+                </select>
+                <textarea rows="10" cols="60" name="text"></textarea>
+                <input type="submit" value="Write" name="action" class="review_btn">
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

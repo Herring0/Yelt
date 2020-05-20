@@ -5,6 +5,7 @@ import com.herring.yelt.gson.models.genres.GenresMovieList;
 import com.herring.yelt.gson.models.movies.*;
 import com.herring.yelt.models.User;
 import com.herring.yelt.models.UserMovie;
+import com.herring.yelt.models.UserReview;
 import com.herring.yelt.repositories.UserMovieRepository;
 import com.herring.yelt.repositories.UserRepository;
 import com.herring.yelt.services.MovieCertificationService;
@@ -49,6 +50,7 @@ public class MovieController {
         MovieReleaseDates movieReleaseDates = tmDbRequester.getMovieReleaseDates(id);
         MovieSimilarMovies similarMovies = tmDbRequester.getSimilarMovies(id);
         MovieVideos movieVideos = tmDbRequester.getMovieVideos(id);
+        MovieLists movieLists = tmDbRequester.getMovieLists(id);
         List<UserMovie> votes = userMovieRepository.findByMid(id);
 
         int votesCount = 0;
@@ -89,6 +91,7 @@ public class MovieController {
         model.addAttribute("userMovie", userMovie);
         model.addAttribute("votesCount", votesCount);
         model.addAttribute("rating", rating);
+        model.addAttribute("movieLists", movieLists);
 
         return "movie/Movie";
     }
@@ -129,5 +132,11 @@ public class MovieController {
         }
 
         return modelMap;
+    }
+
+    @PostMapping(params="action=Write", path = "/{id}")
+    public String writeReview(UserReview userReview, @PathVariable(value = "id") String id) {
+        System.out.println(userReview.getText());
+        return "redirect:/movie/" + id;
     }
 }

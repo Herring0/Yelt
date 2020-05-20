@@ -88,12 +88,23 @@ $(document).ready(function () {
         });
     }
 
+    var write_review = function (e) {
+        $(".write_review_container").css("display", "flex");
+    }
+
+    var hide_review = function (e) {
+        $(".write_review_container").css("display", "none");
+    }
+
     $(".video img").click(show_video);
     $(".video_btn_container").click(show_video);
     $(".i_video_close").click(hide_video);
     $(".video_show_container").click(hide_video);
+    // $(".write_review_container").click(hide_review);
     $(".star").click(rate);
     $(".delete_vote").click(delete_vote);
+    $(".write_review").click(write_review);
+    $(".i_review_close").click(hide_review);
 
     $('.review').readmore({
         moreLink: '<a href="#">read more</a>',
