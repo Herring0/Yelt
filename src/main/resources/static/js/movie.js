@@ -55,14 +55,13 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            type : "POST",
-            contentType : "application/x-www-form-urlencoded",
-            url : window.location.href,
-            data : 'rating='+ind+"&date="+date+" "+time,
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            url: window.location.href,
+            data: 'rating=' + ind + "&date=" + date + " " + time,
 
             success: function (data) {
-                console.log(data);
-                if(!$.isEmptyObject(data)) {
+                if (!$.isEmptyObject(data)) {
                     $(".my_vote_block").removeClass("hidden");
                     $(".my_vote").text(data.rating);
                     $(".date_vote").text(data.date);
@@ -77,10 +76,10 @@ $(document).ready(function () {
         var time = now.getHours() + ":" + String(now.getMinutes()).padStart(2, '0') + ":" + String(now.getSeconds()).padStart(2, '0');
 
         $.ajax({
-            type : "POST",
-            contentType : "application/x-www-form-urlencoded",
-            url : window.location.href,
-            data : 'rating='+(-1)+"&date="+date+" "+time,
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            url: window.location.href,
+            data: 'rating=' + (-1) + "&date=" + date + " " + time,
 
             success: function (data) {
                 $(".my_vote_block").addClass("hidden");
@@ -96,26 +95,47 @@ $(document).ready(function () {
         $(".write_review_container").css("display", "none");
     }
 
+    var delete_review = function (e) {
+        $.ajax({
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            url: window.location.href + "/delete_vote",
+            // data: "",
+
+            success: function (data) {
+                if (!$.isEmptyObject(data)) {
+                    console.log("vote deleted");
+                    $(e.target).closest(".review").css("display", "none");
+                }
+            }
+        });
+    }
+
+    $(".review_footer").click(function (e) {
+        var height = $(e.target).parent().children(".review_main").children(".review_text").height() + 5;
+        if (height > 410) {
+            if ($(this).hasClass("collapsed")) {
+                $(e.target).parent().children(".review_main").animate({height: height.toString()}, 1000);
+                $(e.target).parent().children(".review_footer").children(".review_footer_icon").removeClass("rotate0");
+                $(e.target).parent().children(".review_footer").children(".review_footer_icon").addClass("rotate180");
+                $(this).removeClass("collapsed");
+            } else {
+                $(e.target).parent().children(".review_main").animate({height: '400px'}, 1000);
+                $(e.target).parent().children(".review_footer").children(".review_footer_icon").removeClass("rotate180");
+                $(e.target).parent().children(".review_footer").children(".review_footer_icon").addClass("rotate0");
+                $(this).addClass("collapsed");
+            }
+        }
+    });
+
     $(".video img").click(show_video);
     $(".video_btn_container").click(show_video);
     $(".i_video_close").click(hide_video);
     $(".video_show_container").click(hide_video);
-    // $(".write_review_container").click(hide_review);
     $(".star").click(rate);
     $(".delete_vote").click(delete_vote);
     $(".write_review").click(write_review);
     $(".i_review_close").click(hide_review);
-
-    $('.review').readmore({
-        moreLink: '<a href="#">read more</a>',
-        lessLink: '<a href="#">read less</a>',
-        collapsedHeight: 500,
-        speed: 500,
-        afterToggle: function (trigger, element, expanded) {
-            if (!expanded) {
-                $('html, body').animate({scrollTop: $(element).offset().top}, {duration: 100});
-            }
-        }
-    });
+    $(".review_delete_block").click(delete_review);
 });
 

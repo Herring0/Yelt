@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="../../css/movie.css">
     <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
     <script src="../../js/lib/jquery.js"></script>
-    <script src="../../js/lib/readmore.js/readmore.min.js"></script>
     <script src="../../js/header.js"></script>
     <script src="../../js/movie.js"></script>
     <script></script>
@@ -236,18 +235,29 @@
                         <th:block th:if="${reviews != null}">
                             <th:block th:each="review,iter : ${reviews}">
                                 <th:block th:if="${iter.index < 10}">
-                                    <div class="review" th:classappend="${review.getType() == 'Positive'} ? positive_review : (${review.getType() == 'Negative'} ? negative_review : neutral_review)">
+                                    <div class="review" th:id="${#authorization.expression('isAuthenticated()')} ? ${'rr' + user.getId()}"
+                                         th:classappend="${review.getType() == 'Positive'} ? positive_review : (${review.getType() == 'Negative'} ? negative_review : neutral_review)">
                                         <div class="review_header">
                                             <div class="review_user_block">
                                                 <div class="profile_img"></div>
                                                 <div class="profile_n_rev_num">
-                                                    <a href="#" class="review_profile" th:text="${usersDataService.getUser(review.getUid()).getNickname()}"></a>
-                                                    <div class="reviews_num" th:text="${usersDataService.getUser(review.getUid()).getNum_rating()} + ' reviews'"></div>
+                                                    <a href="#" class="review_profile"
+                                                       th:text="${usersDataService.getUser(review.getUid()).getNickname()}"></a>
+                                                    <div class="reviews_num"
+                                                         th:text="${userReviewService.getReviewCount(review.getUid())} + ' reviews'"></div>
                                                 </div>
                                             </div>
                                             <div class="review_data_block" th:text="${review.getDate()}"></div>
+                                            <th:block sec:authorize="isAuthenticated()">
+                                                <div th:if="${usersDataService.getUser(review.getUid()).getId() == user.getId()}"
+                                                     class="review_delete_block"></div>
+                                            </th:block>
                                         </div>
-                                        <div class="review_main" th:text="${review.getText()}">
+                                        <div class="review_main">
+                                            <span class="review_text" th:text="${review.getText()}"></span>
+                                        </div>
+                                        <div class="review_footer collapsed">
+                                            <div class="review_footer_icon"></div>
                                         </div>
                                     </div>
                                 </th:block>

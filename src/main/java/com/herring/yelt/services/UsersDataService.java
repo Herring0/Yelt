@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsersDataService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Transactional
     public User insertUser(User user) {

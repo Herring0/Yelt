@@ -8,10 +8,7 @@ import com.herring.yelt.models.UserReview;
 import com.herring.yelt.repositories.UserMovieRepository;
 import com.herring.yelt.repositories.UserRepository;
 import com.herring.yelt.repositories.UserReviewRepository;
-import com.herring.yelt.services.MovieCertificationService;
-import com.herring.yelt.services.MovieCreditsService;
-import com.herring.yelt.services.MovieSimilarMoviesService;
-import com.herring.yelt.services.UsersDataService;
+import com.herring.yelt.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,6 +34,8 @@ public class MovieController {
 
     @Autowired
     private UsersDataService usersDataService;
+    @Autowired
+    private UserReviewService userReviewService;
 
     @Autowired
     private TMDbRequester tmDbRequester;
@@ -80,6 +79,14 @@ public class MovieController {
             UserDetails user = ((UserDetails)principal);
             myUser = userRepository.findByLogin(user.getUsername());
             userMovie = userMovieRepository.findByUidAndMid(myUser.getId(), id);
+
+            // Move user review to first position
+            UserReview userReview = userReviewRepository.findByUidAndMid(myUser.getId(), id);
+            if (userReview != null) {
+                int index = reviews.indexOf(userReview);
+                reviews.remove(index);
+                reviews.add(0, userReview);
+            }
         }
 
         movieDetails.release_date = movieDetails.release_date.split("-")[0];
@@ -101,6 +108,7 @@ public class MovieController {
         model.addAttribute("movieLists", movieLists);
         model.addAttribute("reviews", reviews);
         model.addAttribute("usersDataService", usersDataService);
+        model.addAttribute("userReviewService", userReviewService);
 
         return "movie/Movie";
     }
@@ -163,6 +171,12 @@ public class MovieController {
             }
             userReviewRepository.save(userReviewDB);
         }
+        return "redirect:/movie/" + id;
+    }
+
+    @PostMapping("/{id}/delete_vote")
+    public String deleteVote(@PathVariable(value = "id") String id) {
+        System.out.println("dvote");
         return "redirect:/movie/" + id;
     }
 

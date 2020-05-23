@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserReviewRepository extends CrudRepository<UserReview, Integer> {
     UserReview findByUidAndMid(int uid, String mid);
     List<UserReview> findByMid(String mid);
+    Long countByUid(int uid);
 }
