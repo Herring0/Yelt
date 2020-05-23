@@ -229,53 +229,30 @@
                 </th:block>
                 <div class="reviews_block">
                     <a href="#">Reviews</a>
-                    <button class="write_review">
+                    <button sec:authorize="isAuthenticated()" class="write_review">
                         Write a review
                     </button>
                     <div class="reviews">
-                        <div class="review positive_review">
-                            <div class="review_header">
-                                <div class="review_user_block">
-                                    <div class="profile_img"></div>
-                                    <div class="profile_n_rev_num">
-                                        <a href="#" class="review_profile">Herring</a>
-                                        <div class="reviews_num">8 reviews</div>
+                        <th:block th:if="${reviews != null}">
+                            <th:block th:each="review,iter : ${reviews}">
+                                <th:block th:if="${iter.index < 10}">
+                                    <div class="review" th:classappend="${review.getType() == 'Positive'} ? positive_review : (${review.getType() == 'Negative'} ? negative_review : neutral_review)">
+                                        <div class="review_header">
+                                            <div class="review_user_block">
+                                                <div class="profile_img"></div>
+                                                <div class="profile_n_rev_num">
+                                                    <a href="#" class="review_profile" th:text="${usersDataService.getUser(review.getUid()).getNickname()}"></a>
+                                                    <div class="reviews_num" th:text="${usersDataService.getUser(review.getUid()).getNum_rating()} + ' reviews'"></div>
+                                                </div>
+                                            </div>
+                                            <div class="review_data_block" th:text="${review.getDate()}"></div>
+                                        </div>
+                                        <div class="review_main" th:text="${review.getText()}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="review_data_block">19 февраля 2019 в 14:24</div>
-                            </div>
-                            <div class="review_main">
-                            </div>
-                        </div>
-                        <div class="review neutral_review">
-                            <div class="review_header">
-                                <div class="review_user_block">
-                                    <div class="profile_img"></div>
-                                    <div class="profile_n_rev_num">
-                                        <a href="#" class="review_profile">Herring</a>
-                                        <div class="reviews_num">8 reviews</div>
-                                    </div>
-                                </div>
-                                <div class="review_data_block">19 февраля 2019 в 14:24</div>
-                            </div>
-                            <div class="review_main">
-
-                            </div>
-                        </div>
-                        <div class="review negative_review">
-                            <div class="review_header">
-                                <div class="review_user_block">
-                                    <div class="profile_img"></div>
-                                    <div class="profile_n_rev_num">
-                                        <a href="#" class="review_profile">Herring</a>
-                                        <div class="reviews_num">8 reviews</div>
-                                    </div>
-                                </div>
-                                <div class="review_data_block">19 февраля 2019 в 14:24</div>
-                            </div>
-                            <div class="review_main">
-                            </div>
-                        </div>
+                                </th:block>
+                            </th:block>
+                        </th:block>
                     </div>
                 </div>
             </div>
@@ -325,10 +302,10 @@
         <div class="form_container">
             <div class="i_review_close"></div>
             <form action="#" class="review_container" method="post">
-                <select name="review_type" class="review_combobox">
-                    <option value="1" class="review_option">Positive</option>
-                    <option value="2" class="review_option">Neutral</option>
-                    <option value="3" class="review_option">Negative</option>
+                <select name="type" class="review_combobox">
+                    <option value="Positive" class="review_option">Positive</option>
+                    <option value="Neutral" class="review_option">Neutral</option>
+                    <option value="Negative" class="review_option">Negative</option>
                 </select>
                 <textarea rows="10" cols="60" name="text"></textarea>
                 <input type="submit" value="Write" name="action" class="review_btn">

@@ -17,4 +17,9 @@ public class UsersDataService {
         userRepository.save(user);
         return user;
     }
+
+    @Transactional
+    public User getUser(int id) {
+        return userRepository.findById(id);
+    }
 }

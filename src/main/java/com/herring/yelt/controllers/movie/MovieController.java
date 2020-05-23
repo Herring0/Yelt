@@ -1,16 +1,17 @@
 package com.herring.yelt.controllers.movie;
 
 import com.herring.yelt.TMDbRequester;
-import com.herring.yelt.gson.models.genres.GenresMovieList;
 import com.herring.yelt.gson.models.movies.*;
 import com.herring.yelt.models.User;
 import com.herring.yelt.models.UserMovie;
 import com.herring.yelt.models.UserReview;
 import com.herring.yelt.repositories.UserMovieRepository;
 import com.herring.yelt.repositories.UserRepository;
+import com.herring.yelt.repositories.UserReviewRepository;
 import com.herring.yelt.services.MovieCertificationService;
 import com.herring.yelt.services.MovieCreditsService;
 import com.herring.yelt.services.MovieSimilarMoviesService;
+import com.herring.yelt.services.UsersDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +32,11 @@ public class MovieController {
     private UserMovieRepository userMovieRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserReviewRepository userReviewRepository;
+
+    @Autowired
+    private UsersDataService usersDataService;
 
     @Autowired
     private TMDbRequester tmDbRequester;
@@ -43,15 +48,18 @@ public class MovieController {
     @Autowired
     private MovieCertificationService movieCertificationService;
 
+    private MovieDetails movieDetails;
+    private MovieCredits movieCredits;
+    private MovieReleaseDates movieReleaseDates;
+    private MovieSimilarMovies similarMovies;
+    private MovieVideos movieVideos;
+    private MovieLists movieLists;
+
     @GetMapping("/{id}")
     public String main(@PathVariable(value = "id") String id, Model model) {
-        MovieDetails movieDetails = tmDbRequester.getMovieDetails(id);
-        MovieCredits movieCredits = tmDbRequester.getMovieCredits(id);
-        MovieReleaseDates movieReleaseDates = tmDbRequester.getMovieReleaseDates(id);
-        MovieSimilarMovies similarMovies = tmDbRequester.getSimilarMovies(id);
-        MovieVideos movieVideos = tmDbRequester.getMovieVideos(id);
-        MovieLists movieLists = tmDbRequester.getMovieLists(id);
+        executeTMDbRequester(id);
         List<UserMovie> votes = userMovieRepository.findByMid(id);
+        List<UserReview> reviews = userReviewRepository.findByMid(id);
 
         int votesCount = 0;
         String rating = "0";
@@ -66,11 +74,10 @@ public class MovieController {
         }
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails user;
         UserMovie userMovie = null;
         User myUser = null;
         if (principal instanceof UserDetails) {
-            user = ((UserDetails)principal);
+            UserDetails user = ((UserDetails)principal);
             myUser = userRepository.findByLogin(user.getUsername());
             userMovie = userMovieRepository.findByUidAndMid(myUser.getId(), id);
         }
@@ -92,6 +99,8 @@ public class MovieController {
         model.addAttribute("votesCount", votesCount);
         model.addAttribute("rating", rating);
         model.addAttribute("movieLists", movieLists);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("usersDataService", usersDataService);
 
         return "movie/Movie";
     }
@@ -108,18 +117,17 @@ public class MovieController {
             e.printStackTrace();
         }
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails user = null;
-        UserMovie userMovie = null;
         if (principal instanceof UserDetails) {
-            user = ((UserDetails)principal);
+            UserDetails user = ((UserDetails)principal);
             User userDB = userRepository.findByLogin(user.getUsername());
-            userMovie = userMovieRepository.findByUidAndMid(userDB.getId(), id);
+            UserMovie userMovie = userMovieRepository.findByUidAndMid(userDB.getId(), id);
             if (rating == -1) {
                 userMovieRepository.delete(userMovie);
                 return null;
             }
             if (userMovie == null) {
                 userMovie = new UserMovie(userDB.getId(), id, rating, jdate);
+                userDB.setNum_rating(userDB.getNum_rating() + 1);
             } else {
                 userMovie.setRating(rating);
                 userMovie.setVote_time(jdate);
@@ -136,7 +144,48 @@ public class MovieController {
 
     @PostMapping(params="action=Write", path = "/{id}")
     public String writeReview(UserReview userReview, @PathVariable(value = "id") String id) {
-        System.out.println(userReview.getText());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserReview userReviewDB;
+        if (principal instanceof UserDetails) {
+            UserDetails user = ((UserDetails)principal);
+            User userDB = userRepository.findByLogin(user.getUsername());
+            userReviewDB = userReviewRepository.findByUidAndMid(userDB.getId(), id);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+
+            if (userReviewDB == null) {
+                userReviewDB = new UserReview(userDB.getId(), id, userReview.getType(), formatter.format(date), userReview.getText());
+            } else {
+                userReviewDB.setText(userReview.getText());
+                userReviewDB.setDate(formatter.format(date));
+                userReviewDB.setType(userReview.getType());
+            }
+            userReviewRepository.save(userReviewDB);
+        }
         return "redirect:/movie/" + id;
+    }
+
+
+    // гениальный мув от гениального человека
+    private void executeTMDbRequester(String id) {
+        Thread detailsThread = new Thread(() -> movieDetails = tmDbRequester.getMovieDetails(id));
+        Thread creditsThread = new Thread(() -> movieCredits = tmDbRequester.getMovieCredits(id));
+        Thread releaseDatesThread = new Thread(() -> movieReleaseDates = tmDbRequester.getMovieReleaseDates(id));
+        Thread similarMoviesThread = new Thread(() -> similarMovies = tmDbRequester.getSimilarMovies(id));
+        Thread videosThread = new Thread(() -> movieVideos = tmDbRequester.getMovieVideos(id));
+        Thread listsThread = new Thread(() -> movieLists = tmDbRequester.getMovieLists(id));
+
+        detailsThread.start(); creditsThread.start();
+        releaseDatesThread.start(); similarMoviesThread.start();
+        videosThread.start(); listsThread.start();
+
+        try {
+            detailsThread.join(); creditsThread.join();
+            releaseDatesThread.join(); similarMoviesThread.join();
+            videosThread.join(); listsThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
