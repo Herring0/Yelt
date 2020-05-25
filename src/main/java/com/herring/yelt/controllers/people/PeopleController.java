@@ -24,6 +24,8 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String main(@PathVariable(value = "id") String id, Model model) {
+        peopleCreditsService.getStructuredCrew(id);
+
         PeopleDetails peopleDetails = tmDbRequester.getPeopleDetails(id);
         DiscoverMovie discoverMovies = tmDbRequester.getDiscoverMovies(id);
 

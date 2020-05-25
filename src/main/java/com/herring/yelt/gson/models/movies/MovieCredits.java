@@ -1,6 +1,7 @@
 package com.herring.yelt.gson.models.movies;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MovieCredits {
     public int id;
@@ -26,5 +27,18 @@ public class MovieCredits {
         public String job;
         public String name;
         public String profile_path;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Crew crew = (Crew) o;
+            return id == crew.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
+        }
     }
 }

@@ -3,12 +3,17 @@
 footer {
 	background-color: rgb(31, 31, 31);
 	height: 250px;
-	width: 1220px;
+	display: flex;
+	justify-content: center;
 	margin: auto;
 	padding-top: 45px;
-	border-radius: 20px 20px 0px 0px;
+	/*border-radius: 20px 20px 0px 0px;*/
 	font-family: 'Roboto', sans-serif;
 	margin-top: -25px;
+}
+
+.f_container {
+	width: 1220px;
 }
 
 .contacts {
@@ -121,7 +126,7 @@ footer {
 }
 
 @media screen and (max-width: 1130px) {
-	footer {
+	.f_container {
 		width: 960px;
 	}
 	.contacts {
@@ -135,7 +140,7 @@ footer {
 	}
 }
 @media screen and (max-width: 850px) {
-	footer {
+	.f_container {
 		width: 800px;
 	}
 	.contacts {

@@ -14,9 +14,12 @@ public class PeopleCreditsService {
     @Autowired
     private TMDbRequester tmDbRequester;
 
+    private PeopleCredits peopleCredits;
+
     @Transactional
     public Map<String, List<PeopleCredits.Cast>> getStructuredCast(String pId) {
-        PeopleCredits peopleCredits = tmDbRequester.getPeopleCredits(pId);
+        if (peopleCredits == null || String.valueOf(peopleCredits.id) != pId)
+            peopleCredits = tmDbRequester.getPeopleCredits(pId);
 
         Set<String> castYears = new TreeSet<>(); // Уникальные даты
         for (PeopleCredits.Cast cast : peopleCredits.cast) {
@@ -51,9 +54,16 @@ public class PeopleCreditsService {
     }
 
     @Transactional
-    public Map<String, List<PeopleCredits.Crew>> getStructuredCrew(String pId) {
-        PeopleCredits peopleCredits = tmDbRequester.getPeopleCredits(pId);
+    public Map<String, Map<String, Set<PeopleCredits.Crew>>> getStructuredCrew(String pId) {
+        if (peopleCredits == null || String.valueOf(peopleCredits.id) != pId)
+            peopleCredits = tmDbRequester.getPeopleCredits(pId);
+        Set<String> departments = new HashSet<>();
         Set<String> crewYears = new TreeSet<>(); // Уникальные даты
+
+        for (PeopleCredits.Crew crew : peopleCredits.crew)
+            departments.add(crew.department);
+
+
         for (PeopleCredits.Crew crew : peopleCredits.crew) {
             if (crew.release_date == null) {
                 crew.release_date = "—";
@@ -68,42 +78,40 @@ public class PeopleCreditsService {
 
         Collections.sort(peopleCredits.crew);
 
-        Map<String, List<PeopleCredits.Crew>> crewMap = new TreeMap<>(Collections.reverseOrder());
-        for (String crewYear : crewYears) {
-            List<PeopleCredits.Crew> crewArr = new ArrayList<>();
-            for (PeopleCredits.Crew crew : peopleCredits.crew) {
-                if (crew.release_date.equals(crewYear)) {
-                    crewArr.add(crew);
-                } else {
-                    continue;
+        Map<String, Map<String, Set<PeopleCredits.Crew>>> departamentMap = new TreeMap<>();
+        for (String department : departments) {
+            Map<String, Set<PeopleCredits.Crew>> crewMap = new TreeMap<>(Collections.reverseOrder());
+            for (String crewYear : crewYears) {
+                Set<PeopleCredits.Crew> crewArr = new HashSet<>();
+                for (PeopleCredits.Crew crew : peopleCredits.crew) {
+                    if (crew.department.equals(department)) {
+                        if (crew.release_date.equals(crewYear)) {
+                            crewArr.add(crew);
+                        } else {
+                            continue;
+                        }
+                        crewMap.put(crewYear, crewArr);
+                    }
                 }
             }
-            crewMap.put(crewYear, crewArr);
+            departamentMap.put(department, crewMap);
         }
-
-        return crewMap;
+        System.out.println(departamentMap);
+        return departamentMap;
     }
 
     @Transactional
     public int getKnownCreditsCount(String pId) {
-        PeopleCredits peopleCredits = tmDbRequester.getPeopleCredits(pId);
+        if (peopleCredits == null || String.valueOf(peopleCredits.id) != pId)
+            peopleCredits = tmDbRequester.getPeopleCredits(pId);
         return peopleCredits.cast.size() + peopleCredits.crew.size();
     }
 
     @Transactional
     public PeopleCredits getCredits(String pId) {
-        PeopleCredits peopleCredits = tmDbRequester.getPeopleCredits(pId);
+        if (peopleCredits == null || String.valueOf(peopleCredits.id) != pId)
+            peopleCredits = tmDbRequester.getPeopleCredits(pId);
         return peopleCredits;
     }
 
 }
-
-
-
-
-
-
-
-
-
-

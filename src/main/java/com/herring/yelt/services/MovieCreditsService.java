@@ -3,8 +3,7 @@ package com.herring.yelt.services;
 import com.herring.yelt.gson.models.movies.MovieCredits;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MovieCreditsService {
@@ -62,5 +61,14 @@ public class MovieCreditsService {
             }
         }
         return cameras;
+    }
+
+    public Set<MovieCredits.Crew> getCrewSet(MovieCredits movieCredits) {
+        Set<MovieCredits.Crew> crewSet = new LinkedHashSet<>();
+        for (MovieCredits.Crew crew : movieCredits.crew) {
+            crewSet.add(crew);
+        }
+
+        return crewSet;
     }
 }

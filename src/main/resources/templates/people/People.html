@@ -104,11 +104,39 @@
                                     </div>
                                 </div>
                             </th:block>
-
                         </div>
                     </th:block>
                 </div>
             </div>
+
+            <th:block th:with="structuredCrew=${peopleCreditsService.getStructuredCrew(people.id)}">
+                <th:block th:each="departament,iter : ${structuredCrew.keySet()}">
+                    <div class="credits_card">
+                        <span class="m_title" th:text="${departament}"></span>
+                        <div class="credit_card"
+                             th:with="structuredCast=${structuredCrew.get(departament)}">
+                            <th:block th:each="year,iter : ${structuredCast.keySet()}">
+                                <div class="jobs_block">
+                                    <th:block th:each="job,iter : ${structuredCast.get(year)}">
+                                        <div class="job_container">
+                                            <span class="job_year" th:text="${year}"></span>
+                                            <div class="job_popup_block">
+                                                <div class="job_popup"></div>
+                                            </div>
+                                            <div class="job_info">
+                                                <a th:href="@{/movie/{id}(id=${job.id})}" class="job_movie link s_title"
+                                                   th:text="${job.title}"></a>
+                                                <span class="as"> ... </span>
+                                                <span class="job_role" th:text="${job.job}"></span>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </th:block>
+            </th:block>
         </div>
     </div>
 </div>

@@ -1,13 +1,14 @@
 package com.herring.yelt.gson.models.people;
 
+import com.herring.yelt.gson.models.movies.MovieCredits;
+
 import java.util.List;
+import java.util.Objects;
 
 public class PeopleCredits {
     public List<Cast> cast;
     public List<Crew> crew;
     public int id;
-
-
 
     public class Cast implements Comparable<PeopleCredits.Cast> {
         public String character;
@@ -68,7 +69,20 @@ public class PeopleCredits {
 
         @Override
         public String toString() {
-            return release_date;
+            return title;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PeopleCredits.Crew crew = (PeopleCredits.Crew) o;
+            return id == crew.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
         }
     }
 }

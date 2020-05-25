@@ -144,13 +144,13 @@
                 </div>
                 <div class="crew_block">
                     <a href="#" class="cast_n_crew_title">Crew</a>
-                    <th:block th:each="crew,iter : ${credits.crew}">
+                    <th:block th:each="crew,iter : ${crewSet}">
                         <th:block th:if="${iter.index < 9}">
                             <a th:text="${crew.name}" th:href="@{/people/{id}(id=${crew.id})}"
                                class="cast_n_crew_name"></a>
                         </th:block>
                     </th:block>
-                    <a href="#" th:text="${#lists.size(credits.crew)} + ' members'" class="cast_n_crew_num"></a>
+                    <a href="#" th:text="${crewSet.size()} + ' members'" class="cast_n_crew_num"></a>
                 </div>
             </div>
         </div>
@@ -301,8 +301,7 @@
 
         </div>
     </div>
-    <footer th:insert="fragments/Footer :: footer">
-    </footer>
+
     <div class="video_show_container">
         <div class="i_video_close"></div>
         <iframe width="1000" height="600" src="" frameborder="0"
@@ -324,5 +323,7 @@
         </div>
     </div>
 </div>
+<footer th:insert="fragments/Footer :: footer">
+</footer>
 </body>
 </html>
