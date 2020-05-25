@@ -2,6 +2,7 @@ package com.herring.yelt.controllers.movie;
 
 import com.herring.yelt.TMDbRequester;
 import com.herring.yelt.gson.models.movies.*;
+import com.herring.yelt.gson.models.people.PeopleCredits;
 import com.herring.yelt.models.User;
 import com.herring.yelt.models.UserMovie;
 import com.herring.yelt.models.UserReview;

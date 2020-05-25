@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+:root {
+  --cadet: #E1E2E2a0;
+  --eggshell: #FFF;
+  /* --terra_cotta: #E07A5F; */
+  --terra_cotta: #F0803C;
+  --charcoal: #3E4C5E;
+  --maize: #F7C548;
+  --orange_soda: #f85a3e;
+  --smoky_black: #1D2228;
+  --btn_hover: #ff7a29;
+  --font_color_first: #546A76;
+  --font_color_second: #3E4C5E;
+}
+
+body {
+  background-color: #fff; 
+  margin: 0; 
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+}
+
+.link {
+  color: var(--font_color_second);
+}
+
+.link:hover {
+  color: #F0803C;
+}
+
+.main {
+  height: 100%;
+  width: 1220px;
+  margin: auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+.content_wrapper {
+  padding-top: 100px;
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  margin-bottom: 30px;
+}
+
+.people_main_info {
+  min-width: 300px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.people_sub_info {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+}
+
+.poster_container {
+  width: 100%;
+}
+
+.poster {
+  border-radius: 8px;
+}
+
+.personal_info_container {
+  margin-top: 30px;
+}
+
+.s_title {
+  font-size: 1em;
+  color: var(--charcoal);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.m_title {
+  font-size: 1.4em;
+  color: var(--charcoal);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.b_title {
+  font-size: 2.2rem;
+  color: var(--charcoal);
+  font-weight: 600;
+}
+
+.personal_info_unit {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.personal_info {
+  margin-bottom: 8px;
+}
+
+.report_an_issue {
+  margin-top: 15px;
+}
+
+.issue_icon::before {
+  content: "\f06a";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: var(--btn_hover);
+}
+
+.report_an_issue {
+  font-size: 1.2em;
+}
+
+.biography_container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.biography {
+  line-height: 22px;
+  margin-top: 5px;
+}
+
+.known_for_container {
+  margin-top: 20px;
+}
+
+.known_for_container > a {
+  font-size: 1.9em;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+
+.known_for_movies {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.known_for_movie {
+  display: flex;
+  flex-direction: column;
+}
+
+.known_for_poster {
+  transition-duration: .2s;
+  border-radius: 6px;
+}
+
+.known_for_movie:hover .known_for_poster{
+  transform: scale(1.02, 1.02);
+  box-shadow: 0px 3px 14px 0px rgba(240, 128, 60, 0.15);
+}
+
+.known_for_movie:hover .known_for_movie_name{
+  color: var(--terra_cotta);
+}
+
+.known_for_movie_name {
+  font-size: .9em;
+  text-align: center;
+  color: var(--font_color_first);
+  font-weight: 500;
+  margin-top: 6px;
+  margin-left: 2px;
+  max-width: 140px;
+}
+
+.known_for_movie_info {
+  font-size: .9em;
+  color: var(--font_color_first);
+  opacity: .6;
+  margin-top: 1px;
+  margin-left: 1px;
+  width: 140px;
+}
+
+.known_for_container > a:after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f054";
+  opacity: .3;
+  color: var(--charcoal);
+  font-size: .8em;
+  margin-left: 10px;
+}
+
+.credits_card {
+  margin-top: 20px;
+}
+
+.credit_card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e3e3e3;
+  margin-top: 5px;
+}
+
+.jobs_block {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0px;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-bottom-color:rgb(222, 222, 222);
+}
+
+.job_container {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.job_year {
+  padding: 8px 16px;
+  width: 35px;
+  text-align: center;
+}
+
+.job_popup_block {
+  width: 6px;
+  height: 6px;
+  cursor: pointer;
+  border: 2px solid var(--font_color_second);
+  border-radius: 50%;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
+.job_popup {
+width: 100%;
+height: 100%;
+border-radius: 50%;
+}
+
+.job_popup_block:hover .job_popup {
+  background-color: var(--font_color_first);
+}
+
+.job_info {
+  padding: 8px 16px;
+}
+
+.job_movie {
+
+}
+
+.as {
+  opacity: .5;
+}
+
+.job_role {
+  opacity: .8;
+}

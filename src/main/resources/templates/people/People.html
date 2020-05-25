@@ -1,14 +1,117 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www:thymeleaf.org" lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title th:text="${people.name} + ' | Yelt'"></title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/people.css">
+
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/header.js"></script>
+    <script></script>
 </head>
 <body>
-<div>
-    <P>name = <span th:text="${people.name}"></span></P>
-    <p>birthday = <span th:text="${people.birthday}"></span></p>
+<header th:insert="fragments/Header :: header"></header>
+<div class="main">
+    <div class="content_wrapper">
+        <div class="people_main_info">
+            <div class="poster_container">
+                <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${people.profile_path})}"
+                     width="300" height="450" onerror="this.src='../../resources/lost_poster.png'"
+                     class="poster">
+            </div>
+            <div class="personal_info_container">
+                <span class="m_title">Personal info</span>
+                <div class="personal_info_unit">
+                    <span class="s_title">Known For</span>
+                    <span class="personal_info" th:text="${people.known_for_department}"></span>
+                </div>
+                <div class="personal_info_unit">
+                    <span class="s_title">Known Credits</span>
+                    <span class="personal_info"
+                          th:text="${peopleCreditsService.getKnownCreditsCount(people.id)}"></span>
+                </div>
+                <div class="personal_info_unit">
+                    <span class="s_title">Gender</span>
+                    <span class="personal_info" th:text="${people.gender == 2} ? Male : Female"></span>
+                </div>
+                <div class="personal_info_unit">
+                    <span class="s_title">Birthday</span>
+                    <span class="personal_info" th:text="${people.birthday}"></span>
+                </div>
+                <div class="personal_info_unit">
+                    <span class="s_title">Place of Birth</span>
+                    <span class="personal_info" th:text="${people.place_of_birth}"></span>
+                </div>
+                <div class="personal_info_unit">
+                    <span class="s_title">Also Known As</span>
+                    <th:block th:each="known : ${people.also_known_as}">
+                        <span class="personal_info" th:text="${known}"></span>
+                    </th:block>
+                </div>
+            </div>
+            <div class="report_an_issue">
+                <span class="issue_icon"></span>
+                <a href="#" class="link">Report an issue</a>
+            </div>
+        </div>
+        <div class="people_sub_info">
+            <div class="name_container">
+                <span class="b_title" th:text="${people.name}"></span>
+            </div>
+            <div class="biography_container">
+                <span class="m_title">Biography</span>
+                <span class="biography"
+                      th:utext="${people.biography.length() > 0} ? ${#strings.replace(#strings.escapeXml(people.biography), '&#10;', '&lt;br /&gt;')} : 'Unknown'"></span>
+            </div>
+            <div class="known_for_container">
+                <span class="m_title">Known For</span>
+                <div class="known_for_movies">
+                    <th:block th:each="result,iter : ${discoverMovies.results}">
+                        <th:block th:if="${iter.index < 5}">
+                            <a th:href="@{/movie/{id}(id=${result.id})}" class="known_for_movie">
+                                <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${result.poster_path})}"
+                                     width="150" height="236" onerror="this.src='../../resources/lost_poster.png'"
+                                     class="known_for_poster">
+                                <span class="known_for_movie_name" th:text="${result.title}"></span>
+                            </a>
+                        </th:block>
+                    </th:block>
+                </div>
+            </div>
+            <div class="credits_card">
+                <span class="m_title">Acting</span>
+                <div class="credit_card" th:with="structuredCast=${peopleCreditsService.getStructuredCast(people.id)}">
+                    <th:block th:each="year,iter : ${structuredCast.keySet()}">
+                        <div class="jobs_block">
+                            <th:block th:each="job,iter : ${structuredCast.get(year)}">
+                                <div class="job_container">
+                                    <span class="job_year" th:text="${year}"></span>
+                                    <div class="job_popup_block">
+                                        <div class="job_popup"></div>
+                                    </div>
+                                    <div class="job_info">
+                                        <a th:href="@{/movie/{id}(id=${job.id})}" class="job_movie link s_title"
+                                           th:text="${job.title}"></a>
+                                        <th:block th:if="${job.character.length() > 0}">
+                                            <span class="as">as</span>
+                                            <span class="job_role" th:text="${job.character}"></span>
+                                        </th:block>
+                                    </div>
+                                </div>
+                            </th:block>
+
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<footer th:insert="fragments/Footer :: footer"></footer>
 </body>
 </html>

@@ -20,7 +20,7 @@ $(document).ready(function () {
     }
 
     $(".star").mouseleave(function () {
-        $(".star").css("color", "var(--eggshell)");
+        $(".star").css("color", "#e8e5e3");
     })
 
     var show_video = function (e) {

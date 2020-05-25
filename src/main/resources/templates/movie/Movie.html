@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -14,7 +15,7 @@
     <script src="../../js/movie.js"></script>
     <script></script>
 </head>
-<body style="background-color: #f4f4f4; margin: 0; padding: 0;">
+<body>
 <header th:insert="fragments/Header :: header">
 </header>
 <div class="main">
@@ -55,7 +56,7 @@
                         </div>
                         <div class="about_movie_info">
                             <div class="about_movie_info_k">Countries</div>
-                            <div class="about_movie_info_v"><a th:text="${movie.production_countries[0].name}"
+                            <div class="about_movie_info_v"><a th:text="${movie.production_countries.size() > 0} ? ${movie.production_countries[0].name} : 'Unknown'"
                                                                href="#"></a></div>
                         </div>
                         <div class="about_movie_info">
@@ -196,7 +197,7 @@
                             <th:block th:if="${iter.index < 5}">
                                 <a th:href="@{/movie/{id}(id=${result.id})}" class="similar_movie">
                                     <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${result.poster_path})}"
-                                         width="140" height="210" onerror="this.src='../../resources/lost_poster.png'"
+                                         width="150" height="236" onerror="this.src='../../resources/lost_poster.png'"
                                          class="similar_poster">
                                     <span class="similar_movie_name" th:text="${result.title}"></span>
                                     <span th:text="${#strings.arraySplit(result.release_date, '-')[0]} + ', ' + ${result.main_genre}"

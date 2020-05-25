@@ -1,8 +1,10 @@
 package com.herring.yelt;
 
 import com.google.gson.Gson;
+import com.herring.yelt.gson.models.discover.DiscoverMovie;
 import com.herring.yelt.gson.models.genres.GenresMovieList;
 import com.herring.yelt.gson.models.movies.*;
+import com.herring.yelt.gson.models.people.PeopleCredits;
 import com.herring.yelt.gson.models.people.PeopleDetails;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -340,5 +342,92 @@ public class TMDbRequester {
         movieLists = new Gson().fromJson(result, MovieLists.class);
         System.out.println("Movie lists received");
         return movieLists;
+    }
+
+    public PeopleCredits getPeopleCredits(String id) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        PeopleCredits peopleCredits;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(BASE_URL);
+        stringBuilder.append("/person/");
+        stringBuilder.append(id);
+        stringBuilder.append("/movie_credits");
+        stringBuilder.append("?api_key=");
+        stringBuilder.append(apiKey);
+        String result = "";
+        try {
+            HttpGet request = new HttpGet(stringBuilder.toString());
+            CloseableHttpResponse response = httpClient.execute(request);
+
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    result = EntityUtils.toString(entity);
+                }
+
+            } finally {
+                response.close();
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        peopleCredits = new Gson().fromJson(result, PeopleCredits.class);
+        System.out.println("People credits received");
+        return peopleCredits;
+    }
+
+    public DiscoverMovie getDiscoverMovies(String pId) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        DiscoverMovie discoverMovies;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(BASE_URL);
+        stringBuilder.append("/discover");
+        stringBuilder.append("/movie");
+        stringBuilder.append("?api_key=");
+        stringBuilder.append(apiKey);
+        stringBuilder.append("&language=en-US");
+        stringBuilder.append("&sort_by=popularity.desc");
+        stringBuilder.append("&include_adult=true");
+        stringBuilder.append("&include_video=false");
+        stringBuilder.append("&page=1");
+        stringBuilder.append("&with_people=");
+        stringBuilder.append(pId);
+
+        String result = "";
+        try {
+            HttpGet request = new HttpGet(stringBuilder.toString());
+            CloseableHttpResponse response = httpClient.execute(request);
+
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    result = EntityUtils.toString(entity);
+                }
+
+            } finally {
+                response.close();
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        discoverMovies = new Gson().fromJson(result, DiscoverMovie.class);
+        System.out.println("Discover movies received");
+        return discoverMovies;
     }
 }

@@ -1,12 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
-  --cadet: #546A76;
-  --eggshell: #F4F1DE;
-  --terra_cotta: #E07A5F;
+  --cadet: #E1E2E2a0;
+  --eggshell: #FFF;
+  /* --terra_cotta: #E07A5F; */
+  --terra_cotta: #F0803C;
   --charcoal: #3E4C5E;
   --maize: #F7C548;
   --orange_soda: #f85a3e;
+  --smoky_black: #1D2228;
+  --btn_hover: #ff741f;
+  --font_color_first: #546A76;
+  --font_color_second: #3E4C5E;
 }
 
 .main {
@@ -19,6 +24,12 @@
 
   flex-direction: column;
   font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
 }
 
 button:active, button:focus {
@@ -75,7 +86,7 @@ button::-moz-focus-inner {
 .btn_folder_selection {
   background-color: var(--terra_cotta);
   color: var(--eggshell);
-  border: 2px solid var(--eggshell);
+  border: none;
   border-radius: 5px;
   width: 100%;
   height: 45px;
@@ -91,8 +102,7 @@ button::-moz-focus-inner {
 }
 
 .btn_folder_selection:hover {
- color: var(--cadet);
- border-color: var(--cadet);
+ background-color: var(--btn_hover);
 }
 
 ul {
@@ -130,6 +140,10 @@ ul {
   color: var(--eggshell);
   text-align: center;
   transition: .3s linear;
+}
+
+.btn_folder_selection > .submenu a:hover {
+  background-color: var(--smoky_black);
 }
 
 .btn_folder_selection:hover .submenu {
@@ -179,7 +193,7 @@ ul {
 .btn_watch_now {
   background-color: var(--terra_cotta);
   color: var(--eggshell);
-  border: 2px solid var(--eggshell);
+  border: none;
   border-radius: 5px;
   width: 140px;
   height: 40px;
@@ -195,8 +209,7 @@ ul {
 }
 
 .btn_watch_now:hover {
-  color: var(--cadet);
-  border-color: var(--cadet);
+  background-color: var(--btn_hover);
 }
 
 .about_movie_block {
@@ -366,13 +379,13 @@ ul {
   display: flex;
   height: 100%;
   padding-bottom: 50px;
-  width: 94%;
+  width: 100%;
 }
 
 .movie_sub_info_block {
   margin-right: 15px;
   margin-top: 50px;
-  width: 820px;
+  width: 880px;
 }
 
 .description_block > span {
@@ -385,7 +398,7 @@ ul {
 .description {
   margin-top: 20px;
   font-size: 1em;
-  color: var(--cadet);
+  color: var(--font_color_first);
   line-height: 1.38;
 }
 
@@ -461,7 +474,7 @@ ul {
 }
 
 .star {
-  color: var(--eggshell);
+  color: #e8e5e3;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -507,7 +520,7 @@ ul {
 }
 
 .delete_vote {
-  color: var(--cadet);
+  color: var(--font_color_first);
   opacity: .6;
   font-size: .85em;
   margin-left: 10px;
@@ -523,7 +536,7 @@ ul {
   opacity: .6;
   margin-left: 70px;
   font-size: .85em;
-  color: var(--cadet);
+  color: var(--font_color_first);
 }
 
 .similar_movies_block {
@@ -565,7 +578,7 @@ ul {
 
 .similar_movie_name {
   font-size: .9em;
-  color: var(--cadet);
+  color: var(--font_color_first);
   font-weight: 500;
   margin-top: 6px;
   margin-left: 2px;
@@ -574,7 +587,7 @@ ul {
 
 .similar_movie_info {
   font-size: .9em;
-  color: var(--cadet);
+  color: var(--font_color_first);
   opacity: .6;
   margin-top: 1px;
   margin-left: 1px;
@@ -623,8 +636,8 @@ ul {
   position: relative;
   border-radius: 6px;
   cursor: pointer;
-  width: 385px;
-  height: 245px;
+  width: 415px;
+  height: 285px;
 }
 
 .video img {
@@ -755,8 +768,7 @@ ul {
 }
 
 .write_review:hover {
-  color: var(--cadet);
-  border-color: var(--cadet);
+  background-color: var(--btn_hover);
 }
 
 .reviews {
@@ -807,7 +819,7 @@ ul {
   height: 100%;
   width: 100%;
   font-size: .9em;
-  color: var(--cadet);
+  color: var(--font_color_first);
   opacity: .6;
   text-align: right;
   padding-top: 9px;
@@ -836,7 +848,7 @@ ul {
   background-image:url(profile_img.jpg);
   width: 45px;
   height: 45px;
-  border: 2px solid var(--cadet);
+  border: 2px solid var(--font_color_first);
   border-radius: 50%;
   background-size: 45px;
   background-repeat: no-repeat;
@@ -856,7 +868,7 @@ ul {
 
 .reviews_num {
   font-size: .85em;
-  color: var(--cadet);
+  color: var(--font_color_first);
   opacity: .6;
 }
 
@@ -923,7 +935,7 @@ ul {
 }
 
 .list_place {
-  color: var(--cadet);
+  color: var(--font_color_first);
   opacity: .8;
   font-size: .9em;
 }
@@ -1004,7 +1016,7 @@ ul {
 .review_btn {
   background-color: var(--terra_cotta);
   color: var(--eggshell);
-  border: 2px solid var(--eggshell);
+  border: none;
   border-radius: 3px;
   width: 100%;
   height: 45px;
@@ -1020,8 +1032,7 @@ ul {
 }
 
 .review_btn:hover {
-  color: var(--cadet);
-  border-color: var(--cadet);
+  background-color: var(--btn_hover);
 }
 
 select {
@@ -1075,7 +1086,7 @@ select {
 }
 
 .review_option:hover {
-  background-color: var(--cadet)
+  background-color: var(--font_color_first)
 }
 
 .review_delete_block {
@@ -1099,20 +1110,20 @@ select {
   position: relative;
   height: 60px;
   width: 100%;
-  background: var(--cadet);
+  background: var(--font_color_first);
   cursor: pointer;
-  transition: .3s linear;
+  transition: .25s linear;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .review_footer:hover {
-  background: var(--charcoal);
+  background: var(--smoky_black);
 }
 
 .review_footer:hover .review_footer_icon::before {
-  color: var(--maize);
+  color: var(--btn_hover);
 }
 
 .review_footer_icon {
@@ -1124,7 +1135,7 @@ select {
   font-family: "Font Awesome 5 Free";
   color: #fff;
   font-size: 2.0em;
-  transition: .3s linear;
+  transition: .25s linear;
   font-weight: 900;
 }
 

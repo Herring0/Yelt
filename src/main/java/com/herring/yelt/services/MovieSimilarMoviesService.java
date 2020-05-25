@@ -18,8 +18,10 @@ public class MovieSimilarMoviesService {
         genresMovieList = tmDbRequester.getGenresMovieList();
         for (MovieSimilarMovies.Result result : similarMovies.results) {
             for (GenresMovieList.Genre genre : genresMovieList.genres) {
-                if (result.genre_ids[0] == genre.id) {
-                    result.main_genre = genre.name;
+                if (result.genre_ids.length > 0) {
+                    if (result.genre_ids[0] == genre.id) {
+                        result.main_genre = genre.name;
+                    }
                 }
             }
         }
