@@ -2,6 +2,7 @@ package com.herring.yelt;
 
 import com.google.gson.Gson;
 import com.herring.yelt.gson.models.search.SearchMovies;
+import com.herring.yelt.gson.models.search.SearchPeople;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -45,13 +46,34 @@ public class TMDbSearchHandler {
         if (query.length() > 0) {
             String result = new RestTemplate().getForObject(urlBuilder.toString(), String.class);
             searchMovies = new Gson().fromJson(result, SearchMovies.class);
+            searchMovies.results.forEach(e -> e.dataType = "movie");
             return searchMovies;
         }
 
         return null;
     }
 
-    public void closeConnection() {
+    public SearchPeople searchPeople(String query) {
+        RestTemplate restTemplate = new RestTemplate();
+        SearchPeople searchPeople;
 
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder.append(BASE_URL);
+        urlBuilder.append("/person");
+        urlBuilder.append("?api_key=");
+        urlBuilder.append(apiKey);
+        urlBuilder.append("&query=");
+        urlBuilder.append(query);
+        urlBuilder.append("&include_adult=true");
+
+        if (query.length() > 0) {
+            String result = new RestTemplate().getForObject(urlBuilder.toString(), String.class);
+            searchPeople = new Gson().fromJson(result, SearchPeople.class);
+            searchPeople.results.forEach(e -> e.dataType = "people");
+            return searchPeople;
+        }
+
+        return null;
     }
+
 }
