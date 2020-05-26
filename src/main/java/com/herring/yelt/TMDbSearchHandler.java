@@ -41,7 +41,6 @@ public class TMDbSearchHandler {
         urlBuilder.append("&query=");
         urlBuilder.append(query);
         urlBuilder.append("&include_adult=true");
-        System.out.println(urlBuilder.toString());
 
         if (query.length() > 0) {
             String result = new RestTemplate().getForObject(urlBuilder.toString(), String.class);

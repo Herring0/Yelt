@@ -176,9 +176,18 @@ public class MovieController {
         return "redirect:/movie/" + id;
     }
 
-    @PostMapping("/{id}/delete_vote")
+    @PostMapping("/{id}/delete_review")
     public String deleteVote(@PathVariable(value = "id") String id) {
-        System.out.println("dvote");
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails user = ((UserDetails)principal);
+            User userDb = userRepository.findByLogin(user.getUsername());
+            UserReview userReview = userReviewRepository.findByUidAndMid(userDb.getId(), id);
+            if (userReview != null) {
+                userReviewRepository.deleteById(userReview.getId());
+            }
+        }
+
         return "redirect:/movie/" + id;
     }
 

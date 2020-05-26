@@ -142,6 +142,13 @@ ul {
 	padding: 0;
 }
 
+.empty_result {
+	font-size: 1.2em;
+	border-style: solid;
+	border-width: 0px 0px 1px 0px;
+	border-bottom-color: rgb(222, 222, 222);
+}
+
 .profile {
 	background-image:url(profile_img.jpg);
 	width: 45px;
@@ -251,22 +258,41 @@ ul {
 	transition-delay: .05s;
 }
 
-.search_result_container a {
-	font-family: 'Roboto', sans-serif;
-	font-size: 1em;
-	letter-spacing: 1px;
-	padding: 5px 10px;
-	text-decoration: none;
-	display: block;
-	color: var(--font_color_first);
-	text-align: left;
-	transition: .2s;
-}
-
 .search_result {
 	border-style: solid;
 	border-width: 0px 0px 1px 0px;
 	border-bottom-color: rgb(222, 222, 222);
+	transition: .2s;
+}
+
+.search_result_link {
+	font-family: 'Roboto', sans-serif;
+	text-decoration: none;
+	padding: 5px 10px;
+	font-size: 1em;
+	letter-spacing: 1px;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	text-align: left;
+	color: var(--font_color_first);
+	box-sizing: border-box;
+	transition: .2s;
+}
+
+.search_result_link_empty {
+	font-family: 'Roboto', sans-serif;
+	text-decoration: none;
+	padding: 5px 10px;
+	letter-spacing: 1px;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	text-align: center;
+	color: var(--font_color_first);
+	box-sizing: border-box;
 }
 
 .watchlist:hover::before {color: var(--terra_cotta);
@@ -283,9 +309,16 @@ ul {
 
 .submenu a:hover {background: var(--terra_cotta);}
 
-.search_result_container a:hover {
+.search_result:hover {
 	background: var(--terra_cotta);
+}
+
+.search_result_link:hover {
 	color: #fff;
+}
+
+.search_result_link:hover .lds-dual-ring::after {
+	border-color: #fff transparent #fff transparent;
 }
 
 .profile:hover .submenu {
@@ -339,5 +372,33 @@ ul {
 	}
 	.container > .t > form {
 		width: 450px;
+	}
+}
+
+.lds-dual-ring {
+	padding-right: 6px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+.lds-dual-ring::after {
+	content: " ";
+	display: block;
+	width: 9px;
+	height: 9px;
+	margin: 4px;
+	border-radius: 50%;
+	border: 2px solid var(--font_color_first);
+	border-color: var(--font_color_first) transparent var(--font_color_first) transparent;
+	animation: lds-dual-ring 1.2s linear infinite;
+	transition: .2s;
+}
+@keyframes lds-dual-ring {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
 	}
 }

@@ -40,7 +40,6 @@ $(document).ready(function () {
         var now = new Date();
         var date = now.getFullYear() + '.' + String((now.getMonth() + 1)).padStart(2, '0') + '.' + String(now.getDate()).padStart(2, '0');
         var time = now.getHours() + ":" + String(now.getMinutes()).padStart(2, '0') + ":" + String(now.getSeconds()).padStart(2, '0');
-        console.log(date + " " + time);
 
         child = e.target;
         var parent = child.parentNode;
@@ -99,12 +98,10 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             contentType: "application/x-www-form-urlencoded",
-            url: window.location.href + "/delete_vote",
-            // data: "",
+            url: window.location.href + "/delete_review",
 
             success: function (data) {
                 if (!$.isEmptyObject(data)) {
-                    console.log("vote deleted");
                     $(e.target).closest(".review").css("display", "none");
                 }
             }

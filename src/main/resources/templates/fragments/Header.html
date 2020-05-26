@@ -2,7 +2,7 @@
      xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div class="f">
-        <a href="#" class="logo">Yelt</a>
+        <a href="/homepage" class="logo">Yelt</a>
     </div>
     <div class="s">
         <a href="#" class="watch_now">Watch now</a>
@@ -12,13 +12,8 @@
         <form action="" method="get" class="search_form">
             <input name="s" placeholder="Search Yelt" class="search_input">
             <ul class="search_result_container">
-<!--                <li class="search_result"><a href="#">Category</a></li>-->
-<!--                <li class="search_result"><a href="#">Author</a></li>-->
-<!--                <li class="search_result"><a href="#">Archive</a></li>-->
-<!--                <li class="search_result"><a href="#">Tags</a></li>-->
             </ul>
             <button type="submit" class="search_button"></button>
-
         </form>
     </div>
     <th:block sec:authorize="!isAuthenticated()">
