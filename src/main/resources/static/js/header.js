@@ -12,7 +12,6 @@ $(document).ready(function () {
         var peopleResults;
 
         $(".lds-dual-ring").css("visibility", "visible");
-
         $.ajax({
             type: "POST",
             contentType: "application/x-www-form-urlencoded",
@@ -74,15 +73,15 @@ $(document).ready(function () {
                                         ');
                                     }
                                 }
-                                $(".lds-dual-ring").css("visibility", "hidden");
                             }
+                            $(".lds-dual-ring").css("visibility", "hidden");
                         }
                     });
+                } else {
+                    $(".lds-dual-ring").css("visibility", "hidden");
                 }
-            }
+            },
         });
-
-
     }
 
     $(".search_input").keyup(search);

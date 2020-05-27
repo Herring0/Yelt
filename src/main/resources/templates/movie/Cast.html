@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${movieDetails.title} + ' | Yelt'"></title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../css/cast.css">
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/header.js"></script>
+    <script> </script>
+</head>
+<body>
+<header th:insert="fragments/Header :: header"></header>
+<div class="main">
+    <div class="movie_header_block">
+        <div class="movie_header_container">
+            <a th:href="@{/movie/{id}(id=${movieDetails.id})}" class="link_container">
+                <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movieDetails.poster_path})}"
+                     width="58" height="87" class="poster">
+                <div class="title_container">
+                    <span class="title" th:text="${movieDetails.title}"></span>
+                    <span class="back_to_main">← Back to main</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="cast_n_crew_block">
+        <div class="cast_n_crew_container">
+            <span class="cast_n_crew_title">Cast <span class="count"
+                                                       th:text="${movieCredits.cast.size()}"></span></span>
+            <div class="people_credits">
+                <th:block th:each="cast,iter : ${movieCredits.cast}">
+                    <div class="people_credit">
+                        <img th:src="@{http://image.tmdb.org/t/p/w66_and_h66_face{poster_path}(poster_path=${cast.profile_path})}"
+                             width="66" height="66" class="people_photo"
+                             onerror="this.src='../../resources/person.png'">
+                        <div class="people_movie_info">
+                            <a th:href="@{/people/{id}(id=${cast.id})}" class="name link" th:text="${cast.name}"></a>
+                            <span class="character" th:text="${cast.character}"></span>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+        <div class="cast_n_crew_container">
+            <span class="cast_n_crew_title">Crew <span class="count" th:text="${crewSet.size()}"></span></span>
+            <th:block th:each="department,iter : ${structuredCrew.keySet()}">
+                <div class="department_container">
+                    <span class="department name" th:text="${department}"></span>
+                    <div class="people_credits">
+                        <th:block th:each="crew,iter : ${structuredCrew.get(department)}">
+                            <div class="people_credit">
+                                <img th:src="@{http://image.tmdb.org/t/p/w66_and_h66_face{poster_path}(poster_path=${crew.profile_path})}"
+                                     width="66" height="66" class="people_photo"
+                                     onerror="this.src='../../resources/person.png'">
+                                <div class="people_movie_info">
+                                    <a th:href="@{/people/{id}(id=${crew.id})}" class="name link"
+                                       th:text="${crew.name}"></a>
+                                    <span class="character" th:text="${crew.job}"></span>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</div>
+<footer th:insert="fragments/Footer :: footer"></footer>
+</body>
+</html>

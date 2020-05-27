@@ -18,8 +18,6 @@ public class SearchController {
     @ResponseBody
     public SearchMovies searchMovies(@RequestParam("query") String query, Model model) {
         SearchMovies searchMovies = tmDbSearchHandler.searchMovies(query);
-//        if (searchMovies != null)
-//            System.out.println("total_results: " + searchMovies.total_results);
         model.addAttribute("searchMovies", searchMovies);
 
         return searchMovies;
@@ -29,8 +27,6 @@ public class SearchController {
     @ResponseBody
     public SearchPeople searchPeople(@RequestParam("query") String query, Model model) {
         SearchPeople searchPeople = tmDbSearchHandler.searchPeople(query);
-//        if (searchMovies != null)
-//            System.out.println("total_results: " + searchMovies.total_results);
         model.addAttribute("searchPeople", searchPeople);
 
         return searchPeople;

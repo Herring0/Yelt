@@ -56,8 +56,8 @@ public class MovieController {
     private MovieLists movieLists;
 
     @GetMapping("/{id}")
-    public String main(@PathVariable(value = "id") String id, Model model) {
-        executeTMDbRequester(id);
+    public String movie(@PathVariable(value = "id") String id, Model model) {
+        executeTMDbRequesterForMovie(id);
         List<UserMovie> votes = userMovieRepository.findByMid(id);
         List<UserReview> reviews = userReviewRepository.findByMid(id);
 
@@ -113,6 +113,18 @@ public class MovieController {
         model.addAttribute("userReviewService", userReviewService);
 
         return "movie/Movie";
+    }
+
+    @GetMapping("/{id}/cast")
+    public String cast(@PathVariable(value = "id") String id, Model model) {
+        executeTMDbRequesterForCast(id);
+
+        model.addAttribute("movieDetails", movieDetails);
+        model.addAttribute("movieCredits", movieCredits);
+        model.addAttribute("crewSet", movieCreditsService.getCrewSet(movieCredits));
+        model.addAttribute("structuredCrew", movieCreditsService.getStructuredCrew(movieCredits, id));
+
+        return "movie/Cast";
     }
 
     @PostMapping("/{id}")
@@ -193,7 +205,7 @@ public class MovieController {
 
 
     // гениальный мув от гениального человека
-    private void executeTMDbRequester(String id) {
+    private void executeTMDbRequesterForMovie(String id) {
         Thread detailsThread = new Thread(() -> movieDetails = tmDbRequester.getMovieDetails(id));
         Thread creditsThread = new Thread(() -> movieCredits = tmDbRequester.getMovieCredits(id));
         Thread releaseDatesThread = new Thread(() -> movieReleaseDates = tmDbRequester.getMovieReleaseDates(id));
@@ -209,6 +221,19 @@ public class MovieController {
             detailsThread.join(); creditsThread.join();
             releaseDatesThread.join(); similarMoviesThread.join();
             videosThread.join(); listsThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void executeTMDbRequesterForCast(String id) {
+        Thread detailsThread = new Thread(() -> movieDetails = tmDbRequester.getMovieDetails(id));
+        Thread creditsThread = new Thread(() -> movieCredits = tmDbRequester.getMovieCredits(id));
+
+        detailsThread.start(); creditsThread.start();
+
+        try {
+            detailsThread.join(); creditsThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

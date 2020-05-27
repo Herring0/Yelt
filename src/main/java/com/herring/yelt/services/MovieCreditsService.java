@@ -1,7 +1,9 @@
 package com.herring.yelt.services;
 
 import com.herring.yelt.gson.models.movies.MovieCredits;
+import com.herring.yelt.gson.models.people.PeopleCredits;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -70,5 +72,27 @@ public class MovieCreditsService {
         }
 
         return crewSet;
+    }
+
+    @Transactional
+    public Map<String, Set<MovieCredits.Crew>> getStructuredCrew(MovieCredits credits, String pId) {
+        MovieCredits movieCredits = credits;
+        Set<String> departments = new HashSet<>();
+
+        for (MovieCredits.Crew crew : movieCredits.crew)
+            departments.add(crew.department);
+
+        Map<String, Set<MovieCredits.Crew>> departamentMap = new TreeMap<>();
+        for (String department : departments) {
+            Set<MovieCredits.Crew> crewSet = new LinkedHashSet<>();
+            for (MovieCredits.Crew crew : credits.crew) {
+                if (crew.department.equals(department)) {
+                    crewSet.add(crew);
+                }
+            }
+            departamentMap.put(department, crewSet);
+        }
+        System.out.println(departamentMap);
+        return departamentMap;
     }
 }

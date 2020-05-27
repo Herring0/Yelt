@@ -19,138 +19,145 @@
 <header th:insert="fragments/Header :: header">
 </header>
 <div class="main">
-    <div class="movie_main_info">
-        <div class="movie_main_info_container">
-            <div class="movie_info_first_c">
-                <div class="poster_block">
-                    <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movie.poster_path})}"
-                         width="300" height="450" onerror="this.src='../../resources/lost_poster.png'"
-                         class="film_poster">
-                </div>
-                <div class="folder_selection_block">
-                    <button class="btn_folder_selection">
-                        Add to folder
-                        <ul class="submenu">
-                            <li><a href="">I'll watch</a></li>
-                            <li><a href="">Liked films</a></li>
-                            <li><a href="">Favorites</a></li>
-                            <li><a href="">Remark</a></li>
-                        </ul>
-                    </button>
-                </div>
-                <div class="sub_block">
-                    <a href="#">Found a mistake?</a>
-                    <a href="#">Add information</a>
-                </div>
-            </div>
-            <div class="delimeter"></div>
-            <div class="movie_info_second_c">
-                <div th:text="${movie.title}" class="title_block"></div>
-                <button class="btn_watch_now">Watch now</button>
-                <div class="about_movie_block">
-                    <span class="about_title">About movie</span>
-                    <div class="about_movie">
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Year</div>
-                            <div class="about_movie_info_v"><a th:text="${movie.release_date}" href="#"></a></div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Countries</div>
-                            <div class="about_movie_info_v"><a th:text="${movie.production_countries.size() > 0} ? ${movie.production_countries[0].name} : 'Unknown'"
-                                                               href="#"></a></div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Genres</div>
-                            <div class="about_movie_info_v" th:each="genre,iter : ${movie.genres}">
-                                <a href="#" th:text="${genre.name}"></a> <span
-                                    th:text="${iter.last} ? '' : ',&nbsp;'"></span>
-                            </div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Tagline</div>
-                            <div class="about_movie_info_v tagline" th:text="'«' + ${movie.tagline} + '»'"></div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Directors</div>
-                            <div class="about_movie_info_v" th:each="director,iter : ${directors}">
-                                <th:block th:if="${iter.index < 3}">
-                                    <a th:text="${director.name}" th:href="@{/people/{id}(id=${director.id})}"></a>
-                                    <span th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></span>
-                                </th:block>
-                            </div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Writers</div>
-                            <div class="about_movie_info_v" th:each="writer,iter : ${writers}">
-                                <th:block th:if="${iter.index < 3}">
-                                    <a th:text="${writer.name}" th:href="@{/people/{id}(id=${writer.id})}"></a>
-                                    <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
-                                </th:block>
-                            </div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Producers</div>
-                            <div class="about_movie_info_v" th:each="producer,iter : ${producers}">
-                                <th:block th:if="${iter.index < 3}">
-                                    <a th:text="${producer.name}" th:href="@{/people/{id}(id=${producer.id})}"></a>
-                                    <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
-                                </th:block>
-                            </div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Camera</div>
-                            <div class="about_movie_info_v" th:each="camera,iter : ${cameras}">
-                                <th:block th:if="${iter.index < 3}">
-                                    <a th:text="${camera.name}" th:href="@{/people/{id}(id=${camera.id})}"></a>
-                                    <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
-                                </th:block>
-                            </div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Revenue</div>
-                            <div class="about_movie_info_v" th:text="${movie.revenue_in_dollars}">Filipe Botelho</div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Certification</div>
-                            <div class="about_movie_info_v" th:text="${certification}"></div>
-                        </div>
-                        <div class="about_movie_info">
-                            <div class="about_movie_info_k">Runtme</div>
-                            <th:block th:with="hours = ${movie.runtime / 60}, minutes = ${movie.runtime % 60}">
-                                <div class="about_movie_info_v" th:text="${hours} + 'h&nbsp;' + ${minutes} + 'm'"></div>
-                            </th:block>
-                        </div>
+    <div class="movie_main_info_bg" th:style="${movie.backdrop_path != null} ? 'background-image: url(' + @{https://image.tmdb.org/t/p/w1920_and_h800_multi_faces{backdrop_path}(backdrop_path=${movie.backdrop_path})} + ');'">
+        <div class="movie_main_info">
+            <div class="movie_main_info_container">
+                <div class="movie_info_first_c">
+                    <div class="poster_block">
+                        <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movie.poster_path})}"
+                             width="300" height="450" onerror="this.src='../../resources/lost_poster.png'"
+                             class="film_poster">
+                    </div>
+                    <div class="folder_selection_block">
+                        <button class="btn_folder_selection">
+                            Add to folder
+                            <ul class="submenu">
+                                <li><a href="">I'll watch</a></li>
+                                <li><a href="">Liked films</a></li>
+                                <li><a href="">Favorites</a></li>
+                                <li><a href="">Remark</a></li>
+                            </ul>
+                        </button>
+                    </div>
+                    <div class="sub_block">
+                        <a href="#">Found a mistake?</a>
+                        <a href="#">Add information</a>
                     </div>
                 </div>
-                <div class="note_block">
-                    <a href="#" class="add_note"> Add note</a>
-                    <span>only you can see</span>
+                <div class="delimeter"></div>
+                <div class="movie_info_second_c">
+                    <div th:text="${movie.title}" class="title_block"></div>
+                    <button class="btn_watch_now">Watch now</button>
+                    <div class="about_movie_block">
+                        <span class="about_title">About movie</span>
+                        <div class="about_movie">
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Year</div>
+                                <div class="about_movie_info_v"><a th:text="${movie.release_date}" href="#"></a></div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Countries</div>
+                                <div class="about_movie_info_v"><a
+                                        th:text="${movie.production_countries.size() > 0} ? ${movie.production_countries[0].name} : 'Unknown'"
+                                        href="#"></a></div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Genres</div>
+                                <div class="about_movie_info_v" th:each="genre,iter : ${movie.genres}">
+                                    <a href="#" th:text="${genre.name}"></a> <span
+                                        th:text="${iter.last} ? '' : ',&nbsp;'"></span>
+                                </div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Tagline</div>
+                                <div class="about_movie_info_v tagline" th:text="'«' + ${movie.tagline} + '»'"></div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Directors</div>
+                                <div class="about_movie_info_v" th:each="director,iter : ${directors}">
+                                    <th:block th:if="${iter.index < 3}">
+                                        <a th:text="${director.name}" th:href="@{/people/{id}(id=${director.id})}"></a>
+                                        <span th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></span>
+                                    </th:block>
+                                </div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Writers</div>
+                                <div class="about_movie_info_v" th:each="writer,iter : ${writers}">
+                                    <th:block th:if="${iter.index < 3}">
+                                        <a th:text="${writer.name}" th:href="@{/people/{id}(id=${writer.id})}"></a>
+                                        <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
+                                    </th:block>
+                                </div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Producers</div>
+                                <div class="about_movie_info_v" th:each="producer,iter : ${producers}">
+                                    <th:block th:if="${iter.index < 3}">
+                                        <a th:text="${producer.name}" th:href="@{/people/{id}(id=${producer.id})}"></a>
+                                        <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
+                                    </th:block>
+                                </div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Camera</div>
+                                <div class="about_movie_info_v" th:each="camera,iter : ${cameras}">
+                                    <th:block th:if="${iter.index < 3}">
+                                        <a th:text="${camera.name}" th:href="@{/people/{id}(id=${camera.id})}"></a>
+                                        <th:block th:text="${iter.last || iter.index == 2} ? '' : ',&nbsp;'"></th:block>
+                                    </th:block>
+                                </div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Revenue</div>
+                                <div class="about_movie_info_v" th:text="${movie.revenue_in_dollars}">Filipe Botelho
+                                </div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Certification</div>
+                                <div class="about_movie_info_v" th:text="${certification}"></div>
+                            </div>
+                            <div class="about_movie_info">
+                                <div class="about_movie_info_k">Runtme</div>
+                                <th:block th:with="hours = ${movie.runtime / 60}, minutes = ${movie.runtime % 60}">
+                                    <div class="about_movie_info_v"
+                                         th:text="${hours} + 'h&nbsp;' + ${minutes} + 'm'"></div>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note_block">
+                        <a href="#" class="add_note"> Add note</a>
+                        <span>only you can see</span>
+                    </div>
                 </div>
-            </div>
-            <div class="movie_info_third_c">
-                <div class="rating_block">
-                    <div class="rating" th:text="${rating}"></div>
-                    <div class="votes" th:text="${votesCount}"></div>
-                </div>
-                <div class="cast_block">
-                    <a href="#" class="cast_n_crew_title">Cast</a>
-                    <th:block th:each="cast,iter : ${credits.cast}">
-                        <th:block th:if="${iter.index < 9}">
-                            <a th:text="${cast.name}" th:href="@{/people/{id}(id=${cast.id})}"
-                               class="cast_n_crew_name"></a>
+                <div class="movie_info_third_c">
+                    <div class="rating_block">
+                        <div class="rating" th:text="${rating}"></div>
+                        <div class="votes" th:text="${votesCount}"></div>
+                    </div>
+                    <div class="cast_block">
+                        <a href="#" class="cast_n_crew_title">Cast</a>
+                        <th:block th:each="cast,iter : ${credits.cast}">
+                            <th:block th:if="${iter.index < 9}">
+                                <a th:text="${cast.name}" th:href="@{/people/{id}(id=${cast.id})}"
+                                   class="cast_n_crew_name"></a>
+                            </th:block>
                         </th:block>
-                    </th:block>
-                    <a href="#" th:text="${#lists.size(credits.cast)} + ' actors'" class="cast_n_crew_num"></a>
-                </div>
-                <div class="crew_block">
-                    <a href="#" class="cast_n_crew_title">Crew</a>
-                    <th:block th:each="crew,iter : ${crewSet}">
-                        <th:block th:if="${iter.index < 9}">
-                            <a th:text="${crew.name}" th:href="@{/people/{id}(id=${crew.id})}"
-                               class="cast_n_crew_name"></a>
+                        <a th:href="@{/movie/{id}/cast(id=${movie.id})}"
+                           th:text="${#lists.size(credits.cast)} + ' actors'" class="cast_n_crew_num"></a>
+                    </div>
+                    <div class="crew_block">
+                        <a href="#" class="cast_n_crew_title">Crew</a>
+                        <th:block th:each="crew,iter : ${crewSet}">
+                            <th:block th:if="${iter.index < 9}">
+                                <a th:text="${crew.name}" th:href="@{/people/{id}(id=${crew.id})}"
+                                   class="cast_n_crew_name"></a>
+                            </th:block>
                         </th:block>
-                    </th:block>
-                    <a href="#" th:text="${crewSet.size()} + ' members'" class="cast_n_crew_num"></a>
+                        <a th:href="@{/movie/{id}/cast(id=${movie.id})}" th:text="${crewSet.size()} + ' members'"
+                           class="cast_n_crew_num"></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -236,7 +243,8 @@
                         <th:block th:if="${reviews != null}">
                             <th:block th:each="review,iter : ${reviews}">
                                 <th:block th:if="${iter.index < 10}">
-                                    <div class="review" th:id="${#authorization.expression('isAuthenticated()')} ? ${'rr' + user.getId()}"
+                                    <div class="review"
+                                         th:id="${#authorization.expression('isAuthenticated()')} ? ${'rr' + user.getId()}"
                                          th:classappend="${review.getType() == 'Positive'} ? positive_review : (${review.getType() == 'Negative'} ? negative_review : neutral_review)">
                                         <div class="review_header">
                                             <div class="review_user_block">

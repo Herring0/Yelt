@@ -37,7 +37,7 @@
                 </div>
                 <div class="personal_info_unit">
                     <span class="s_title">Gender</span>
-                    <span class="personal_info" th:text="${people.gender == 2} ? Male : Female"></span>
+                    <span class="personal_info" th:text="${people.gender == 2} ? Male : (${people.gender == 1} ? Female : 'Unknown')"></span>
                 </div>
                 <div class="personal_info_unit">
                     <span class="s_title">Birthday</span>

@@ -3,22 +3,11 @@ package com.herring.yelt;
 import com.google.gson.Gson;
 import com.herring.yelt.gson.models.search.SearchMovies;
 import com.herring.yelt.gson.models.search.SearchPeople;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
-import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Uri;
 
 @Component("tmdb_search_handler")
 public class TMDbSearchHandler {
