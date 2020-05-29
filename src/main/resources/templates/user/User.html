@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${user.nickname} + ' | Yelt'"></title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/user.css">
+
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/header.js"></script>
+    <script src="../../js/user.js"></script>
+    <script></script>
+</head>
+<body>
+<header th:insert="fragments/Header :: header"></header>
+<div class="head_block">
+    <div class="bg_image">
+        <div class="head_container">
+            <div class="photo_container">
+                <th:block th:if="${user.getAvatar() == null}">
+                    <div class="photo"
+                         style="background: url('../../resources/person.png'); background-size: 150px;"></div>
+                </th:block>
+                <th:block th:unless="${user.getAvatar() == null}">
+                    <div class="photo"
+                         th:style="'background: url(' + @{../../db/users/photos/{avatar}(avatar=${user.getAvatar()})} + '); background-size: 150px;'"></div>
+                </th:block>
+
+            </div>
+            <div class="head_info_container">
+                <span class="nickname" th:text="${user.nickname}">
+<!--                    <span class="block_user">Заблокировать</span>-->
+<!--                    <span class="unblock_user">Разблокировать</span>-->
+                </span>
+                <div class="head_activity_container">
+                    <div class="activity_container">
+                        <span class="activity">7.3</span>
+                        <div class="activity_text">
+                            Average
+                            <br>
+                            Movie Rating
+                        </div>
+                    </div>
+                    <div class="activity_delimiter"></div>
+                    <div class="activity_container">
+                        <span class="activity" th:text="${user.getNum_rating()}"></span>
+                        <div class="activity_text">
+                            Total
+                            <br>
+                            Ratings
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="und_head_container">
+    <div class="selector">Overview</div>
+</div>
+<div class="main">
+    <div class="stats">
+        <h2>Stats</h2>
+        <div class="stats_blocks">
+            <div class="block">
+                <div class="block_title">Total Favorites</div>
+                <div class="block_content">
+                    <span class="total">27</span>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block_title">Total Reviews</div>
+                <div class="block_content">
+                    <span class="total">18</span>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block_title">Rating Overview</div>
+                <div class="block_content">
+                    <div class="overview_block">
+                        <div class="overview_container">
+                            <div class="overview" height="4%">
+                                <div class="popup">
+                                    <span class="popup_text">1</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="8%">
+                                <div class="popup">
+                                    <span class="popup_text">2</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="2%">
+                                <div class="popup">
+                                    <span class="popup_text">3</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="14%">
+                                <div class="popup">
+                                    <span class="popup_text">4</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="19%">
+                                <div class="popup">
+                                    <span class="popup_text">5</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="24%">
+                                <div class="popup">
+                                    <span class="popup_text">6</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="46%">
+                                <div class="popup">
+                                    <span class="popup_text">7</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="32%">
+                                <div class="popup">
+                                    <span class="popup_text">8</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="12%">
+                                <div class="popup">
+                                    <span class="popup_text">9</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                            <div class="overview" height="3%">
+                                <div class="popup">
+                                    <span class="popup_text">10</span>
+                                    <span class="popup_text">2 ratings</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block_title">Most Watched Genres</div>
+                <div class="block_content"></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="recent_activity">
+        <h2>Recent Activity</h2>
+        <span class="block_title">No recent activity</span>
+    </div>
+</div>
+
+<footer th:insert="fragments/Footer :: footer"></footer>
+</body>
+</html>

@@ -11,7 +11,7 @@
 	<groupId>com.herring.yelt</groupId>
 	<artifactId>yelt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>yelt</name>
 	<description>Demo project for Spring Boot</description>
 

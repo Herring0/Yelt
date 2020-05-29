@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+:root {
+    --cadet: #E1E2E2a0;
+    --eggshell: #FFF;
+    --terra_cotta: #F0803C;
+    --charcoal: #3E4C5E;
+    --maize: #F7C548;
+    --orange_soda: #f85a3e;
+    --smoky_black: #1D2228;
+    --btn_hover: #ff7a29;
+    --font_color_first: #546A76;
+    --font_color_second: #3E4C5E;
+}
+
+body {
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+}
+
+.link {
+    color: var(--font_color_second);
+}
+
+.link:hover {
+    color: #F0803C;
+}
+
+.main {
+    height: 100%;
+    width: 1220px;
+    margin: auto;
+    min-height: 350px;
+}
+
+.head_block {
+    width: 100%;
+    height: 230px;
+    margin-top: 60px;
+}
+
+.bg_image {
+    background-size: cover;
+    background-image: radial-gradient(at 30% top, rgba(7, 46, 70, 1) 0%, #032541 70%);
+}
+
+.head_container {
+    width: 1220px;
+    height: 100%;
+    margin: auto;
+    padding: 40px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.photo_container {
+
+}
+
+.photo {
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.head_info_container {
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 110px;
+    justify-content: space-evenly;
+}
+
+.nickname {
+    color: #fff;
+    font-size: 1.65em;
+    font-weight: 600;
+    padding-bottom: 20px;
+}
+
+.head_activity_container {
+    display: flex;
+}
+
+.activity_container {
+    display: flex;
+    align-items: center;
+}
+
+.activity {
+    color: #FFFFFF;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.activity_text {
+    display: flex;
+    flex-direction: column;
+    font-size: .95em;
+    padding: 0px 30px 0px 15px;
+    color: #FFFFFF;
+}
+
+.activity_delimiter {
+    width: 1px;
+    background: #FFFFFF;
+    margin-right: 30px;
+}
+
+.und_head_container {
+    width: 100%;
+    height: 45px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.selector {
+    margin: auto;
+    border-bottom: 4px solid var(--terra_cotta);
+    width: fit-content;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 15px 0px 4px;
+    font-weight: 500;
+    color: var(--font_color_first);
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+}
+
+.stats_blocks {
+    display: flex;
+    justify-content: space-between;
+}
+
+.block {
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+}
+
+.block_title {
+    margin-bottom: 6px;
+    color: var(--font_color_first);
+}
+
+.overview_block {
+    width: 360px;
+    height: 85px;
+    background-size: cover;
+    background-image: url("../resources/rating_overview.png");
+    background-repeat: no-repeat;
+    padding: 0px 1px;
+}
+
+.overview_container {
+    box-sizing: border-box;
+    padding-bottom: 25px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+}
+
+.overview {
+    width: 100%;
+    /*height: 100%;*/
+    transition-duration: 1.2s;
+    transition-property: height;
+    background: var(--terra_cotta);
+    cursor: pointer;
+    position: relative;
+}
+
+.total {
+    font-size: 3em;
+    font-weight: 800;
+    color: var(--terra_cotta);
+}
+
+h2 {
+    color: var(--smoky_black);
+    font-weight: 800;
+    /*margin-top: 0;*/
+}
+
+.overview:hover {
+    background: #ffae7d;
+}
+.overview:hover .popup {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 200%;
+    z-index: 100;
+    visibility: hidden;
+    width: 70px;
+    height: 45px;
+    color: #FFFFFF;
+    background: var(--font_color_second);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px;
+    border-radius: 7px;
+}
+
+.block_user {
+    cursor: pointer;
+    background: #ff0000;
+    border-radius: 15px;
+    font-size: .6em;
+    padding: 5px;
+    margin-left: 20px;
+    opacity: .95;
+}
+
+.unblock_user {
+    cursor: pointer;
+    background: #00a800;
+    border-radius: 15px;
+    font-size: .6em;
+    padding: 5px;
+    margin-left: 20px;
+    opacity: .95;
+}
+
+.block_user:hover {
+    opacity: 1;
+}
+
+.unblock_user:hover {
+    opacity: 1;
+}

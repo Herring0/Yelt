@@ -42,6 +42,8 @@ a {
 .movie_header_block {
   width: 100%;
   background-color: var(--smoky_black);
+  position: sticky;
+  top: 60px;
 }
 
 .movie_header_container {
