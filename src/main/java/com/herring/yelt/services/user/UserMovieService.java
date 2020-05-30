@@ -59,4 +59,8 @@ public class UserMovieService {
             avgRating = ratingSum / votes.size();
         return avgRating;
     }
+
+    public List<UserMovie> getLatestVotesOrderedByDate(int uId) {
+        return userMovieRepository.findTop7ByUidOrderByVoteTimeDesc(uId);
+    }
 }

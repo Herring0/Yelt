@@ -155,7 +155,7 @@ public class MovieController {
                 userMovie = new UserMovie(userDB.getId(), id, rating, jdate);
             } else {
                 userMovie.setRating(rating);
-                userMovie.setVote_time(jdate);
+                userMovie.setVoteTime(jdate);
             }
             userMovieRepository.save(userMovie);
             modelMap.put("rating", rating);

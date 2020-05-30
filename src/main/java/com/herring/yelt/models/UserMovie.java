@@ -16,13 +16,14 @@ public class UserMovie {
     private String mid;
 
     private int rating;
-    private String vote_time;
+    @Column(name = "date")
+    private String voteTime;
 
-    public UserMovie(Integer uid, String mid, int rating, String vote_time) {
+    public UserMovie(Integer uid, String mid, int rating, String voteTime) {
         this.uid = uid;
         this.mid = mid;
         this.rating = rating;
-        this.vote_time = vote_time;
+        this.voteTime = voteTime;
     }
 
     public UserMovie() {
@@ -60,12 +61,12 @@ public class UserMovie {
         this.rating = rating;
     }
 
-    public String getVote_time() {
-        return vote_time;
+    public String getVoteTime() {
+        return voteTime;
     }
 
-    public void setVote_time(String vote_time) {
-        this.vote_time = vote_time;
+    public void setVoteTime(String voteTime) {
+        this.voteTime = voteTime;
     }
 
     @Override
@@ -79,5 +80,15 @@ public class UserMovie {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "UserMovie{" +
+                "uid=" + uid +
+                ", mid='" + mid + '\'' +
+                ", rating=" + rating +
+                ", voteTime='" + voteTime + '\'' +
+                '}';
     }
 }

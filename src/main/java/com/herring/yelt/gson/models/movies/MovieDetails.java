@@ -27,8 +27,6 @@ public class MovieDetails {
     public String tagline;
     public String title;
     public boolean video;
-    public float vote_average;
-    public int vote_count;
 
     private class Genres {
         public int id;
@@ -43,12 +41,15 @@ public class MovieDetails {
     }
 
     private class ProdCountries {
-        public String iso_3166_1;
         public String name;
     }
 
     private class SpokenLanguages {
-        public String iso_639_1;
         public String name;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

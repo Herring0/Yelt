@@ -87,7 +87,8 @@
                                 <div class="overview" th:attr="height=${voteMapPercentage.get(vote)}">
                                     <div class="popup">
                                         <span class="popup_text" th:text="${vote}"></span>
-                                        <span class="popup_text" th:text="${voteMapCount.get(vote)} + ' ratings'"></span>
+                                        <span class="popup_text"
+                                              th:text="${voteMapCount.get(vote)} + ' ratings'"></span>
                                     </div>
                                 </div>
                             </th:block>
@@ -104,8 +105,20 @@
 
     </div>
     <div class="recent_activity">
-        <h2>Recent Activity</h2>
-        <span class="block_title">No recent activity</span>
+        <a href="#" class="h_link">Votes</a>
+        <th:block th:if="${latestVotes.size() > 0}">
+            <div class="votes_container">
+                <th:block th:each="vote,iter : ${latestVotes}">
+                    <a th:href="@{/movie/{id}(id=${latestMovies.get(iter.index).id})}" class="vote">
+                        <span class="vote_rating" th:text="${vote.getRating()} + '/10'"></span>
+                        <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${latestMovies.get(iter.index).poster_path})}" width="150"
+                             height="236"
+                             onerror="this.src='../../resources/lost_poster.png'" class="vote_poster">
+                        <span class="vote_name" th:text="${latestMovies.get(iter.index).title}"></span>
+                    </a>
+                </th:block>
+            </div>
+        </th:block>
     </div>
 </div>
 

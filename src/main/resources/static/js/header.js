@@ -84,5 +84,5 @@ $(document).ready(function () {
         });
     }
 
-    $(".search_input").keyup(search);
+    $(".search_input").on("input", search);
 });
