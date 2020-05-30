@@ -1,10 +1,6 @@
 package com.herring.yelt.models;
 
-import com.herring.yelt.Role;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,13 +15,11 @@ public class User {
     private String password;
     private String email;
     private String avatar;
-    private int num_rating;
-    private float avg_rating;
     private boolean active;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "id_user"),
+    inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles;
 
     public User(String nickname, String login, String password, String email, String avatar) {
@@ -92,22 +86,6 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public int getNum_rating() {
-        return num_rating;
-    }
-
-    public void setNum_rating(int num_rating) {
-        this.num_rating = num_rating;
-    }
-
-    public float getAvg_rating() {
-        return avg_rating;
-    }
-
-    public void setAvg_rating(float avg_rating) {
-        this.avg_rating = avg_rating;
     }
 
     public boolean isActive() {

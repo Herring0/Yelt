@@ -1,7 +1,7 @@
 package com.herring.yelt.controllers;
 
-import com.herring.yelt.Role;
 import com.herring.yelt.models.User;
+import com.herring.yelt.repositories.RoleRepository;
 import com.herring.yelt.repositories.UserRepository;
 import com.herring.yelt.services.UsersDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,9 @@ public class RegistrationController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private UsersDataService usersDataService;
@@ -35,7 +38,7 @@ public class RegistrationController {
             return "registration";
         }
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(roleRepository.findById(1)));
         usersDataService.insertUser(user);
 
         return "redirect:/login";

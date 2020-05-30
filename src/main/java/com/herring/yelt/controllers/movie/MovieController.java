@@ -10,6 +10,7 @@ import com.herring.yelt.repositories.UserMovieRepository;
 import com.herring.yelt.repositories.UserRepository;
 import com.herring.yelt.repositories.UserReviewRepository;
 import com.herring.yelt.services.*;
+import com.herring.yelt.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,6 +40,8 @@ public class MovieController {
     private UserReviewService userReviewService;
     @Autowired
     private MovieCreditsService movieCreditsService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private TMDbRequester tmDbRequester;
@@ -95,6 +98,7 @@ public class MovieController {
 
         model.addAttribute("movie", movieDetails);
         model.addAttribute("credits", movieCredits);
+        model.addAttribute("authenticated", userService.getAuthenticatedUser());
         model.addAttribute("directors", movieCreditsService.getDirectors(movieCredits));
         model.addAttribute("writers", movieCreditsService.getWriters(movieCredits));
         model.addAttribute("producers", movieCreditsService.getProducers(movieCredits));
@@ -149,7 +153,6 @@ public class MovieController {
             }
             if (userMovie == null) {
                 userMovie = new UserMovie(userDB.getId(), id, rating, jdate);
-                userDB.setNum_rating(userDB.getNum_rating() + 1);
             } else {
                 userMovie.setRating(rating);
                 userMovie.setVote_time(jdate);

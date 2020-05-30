@@ -16,7 +16,7 @@
     <script></script>
 </head>
 <body>
-<header th:insert="fragments/Header :: header">
+<header th:insert="fragments/Header :: header(${authenticated})">
 </header>
 <div class="main">
     <div class="movie_main_info_bg" th:style="${movie.backdrop_path != null} ? 'background-image: url(' + @{https://image.tmdb.org/t/p/w1920_and_h800_multi_faces{backdrop_path}(backdrop_path=${movie.backdrop_path})} + ');'">

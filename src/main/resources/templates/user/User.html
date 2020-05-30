@@ -16,7 +16,7 @@
     <script></script>
 </head>
 <body>
-<header th:insert="fragments/Header :: header"></header>
+<header th:insert="fragments/Header :: header(${authenticated})"></header>
 <div class="head_block">
     <div class="bg_image">
         <div class="head_container">
@@ -34,11 +34,11 @@
             <div class="head_info_container">
                 <span class="nickname" th:text="${user.nickname}">
 <!--                    <span class="block_user">Заблокировать</span>-->
-<!--                    <span class="unblock_user">Разблокировать</span>-->
+                    <!--                    <span class="unblock_user">Разблокировать</span>-->
                 </span>
                 <div class="head_activity_container">
                     <div class="activity_container">
-                        <span class="activity">7.3</span>
+                        <span class="activity" th:text="${avgRating}"></span>
                         <div class="activity_text">
                             Average
                             <br>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="activity_delimiter"></div>
                     <div class="activity_container">
-                        <span class="activity" th:text="${user.getNum_rating()}"></span>
+                        <span class="activity" th:text="${userMovieService.getCountById(user.getId())}"></span>
                         <div class="activity_text">
                             Total
                             <br>
@@ -75,7 +75,7 @@
             <div class="block">
                 <div class="block_title">Total Reviews</div>
                 <div class="block_content">
-                    <span class="total">18</span>
+                    <span class="total" th:text="${reviewCount}"></span>
                 </div>
             </div>
             <div class="block">
@@ -83,66 +83,15 @@
                 <div class="block_content">
                     <div class="overview_block">
                         <div class="overview_container">
-                            <div class="overview" height="4%">
-                                <div class="popup">
-                                    <span class="popup_text">1</span>
-                                    <span class="popup_text">2 ratings</span>
+                            <th:block th:each="vote,iter : ${voteMapPercentage.keySet()}">
+                                <div class="overview" th:attr="height=${voteMapPercentage.get(vote)}">
+                                    <div class="popup">
+                                        <span class="popup_text" th:text="${vote}"></span>
+                                        <span class="popup_text" th:text="${voteMapCount.get(vote)} + ' ratings'"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="overview" height="8%">
-                                <div class="popup">
-                                    <span class="popup_text">2</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
-                            <div class="overview" height="2%">
-                                <div class="popup">
-                                    <span class="popup_text">3</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
-                            <div class="overview" height="14%">
-                                <div class="popup">
-                                    <span class="popup_text">4</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
-                            <div class="overview" height="19%">
-                                <div class="popup">
-                                    <span class="popup_text">5</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
-                            <div class="overview" height="24%">
-                                <div class="popup">
-                                    <span class="popup_text">6</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
-                            <div class="overview" height="46%">
-                                <div class="popup">
-                                    <span class="popup_text">7</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
-                            <div class="overview" height="32%">
-                                <div class="popup">
-                                    <span class="popup_text">8</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
-                            <div class="overview" height="12%">
-                                <div class="popup">
-                                    <span class="popup_text">9</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
-                            <div class="overview" height="3%">
-                                <div class="popup">
-                                    <span class="popup_text">10</span>
-                                    <span class="popup_text">2 ratings</span>
-                                </div>
-                            </div>
+                            </th:block>
+
                         </div>
                     </div>
                 </div>

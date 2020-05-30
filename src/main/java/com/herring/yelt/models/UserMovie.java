@@ -2,6 +2,7 @@ package com.herring.yelt.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_movie")
@@ -65,5 +66,18 @@ public class UserMovie {
 
     public void setVote_time(String vote_time) {
         this.vote_time = vote_time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserMovie userMovie = (UserMovie) o;
+        return Objects.equals(id, userMovie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

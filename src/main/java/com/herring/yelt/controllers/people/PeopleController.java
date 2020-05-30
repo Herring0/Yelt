@@ -5,6 +5,7 @@ import com.herring.yelt.gson.models.discover.DiscoverMovie;
 import com.herring.yelt.gson.models.people.PeopleCredits;
 import com.herring.yelt.gson.models.people.PeopleDetails;
 import com.herring.yelt.services.PeopleCreditsService;
+import com.herring.yelt.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,9 @@ public class PeopleController {
     private TMDbRequester tmDbRequester;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private PeopleCreditsService peopleCreditsService;
 
     @GetMapping("/{id}")
@@ -29,6 +33,7 @@ public class PeopleController {
         PeopleDetails peopleDetails = tmDbRequester.getPeopleDetails(id);
         DiscoverMovie discoverMovies = tmDbRequester.getDiscoverMovies(id);
 
+        model.addAttribute("authenticated", userService.getAuthenticatedUser());
         model.addAttribute("people", peopleDetails);
         model.addAttribute("peopleCreditsService", peopleCreditsService);
         model.addAttribute("discoverMovies", discoverMovies);
