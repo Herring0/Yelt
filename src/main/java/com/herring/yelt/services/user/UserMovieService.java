@@ -14,6 +14,10 @@ public class UserMovieService {
     @Autowired
     private UserMovieRepository userMovieRepository;
 
+    public List<UserMovie> getVotesById(int uId) {
+        return userMovieRepository.findByUidOrderByVoteTimeDesc(uId);
+    }
+
     public Map<Integer, String> getVotesMapPercentage(int uId) {
         List<Integer> votes = new ArrayList<>();
         for (UserMovie userMovie : userMovieRepository.findByUid(uId)) {

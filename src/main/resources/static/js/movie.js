@@ -125,6 +125,7 @@ $(document).ready(function () {
         }
     });
 
+
     $(".video img").click(show_video);
     $(".video_btn_container").click(show_video);
     $(".i_video_close").click(hide_video);
@@ -135,4 +136,5 @@ $(document).ready(function () {
     $(".i_review_close").click(hide_review);
     $(".review_delete_block").click(delete_review);
 });
+
 

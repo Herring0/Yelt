@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${user.getNickname()} + ' votes | Yelt'"></title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../css/user/votes.css">
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/movie_popup.css">
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/header.js"></script>
+    <script></script>
+</head>
+<body>
+<header th:insert="fragments/Header :: header"></header>
+<div class="main">
+    <div class="votes_header_block">
+        <div class="votes_header_container">
+            <a th:href="@{/user/{login}(login=${user.getLogin()})}" class="link_container">
+                <div class="photo_container">
+                    <th:block th:if="${user.getAvatar() == null}">
+                        <div class="photo"
+                             style="background: url('../../resources/person.png'); background-size: 85px;"></div>
+                    </th:block>
+                    <th:block th:unless="${user.getAvatar() == null}">
+                        <div class="photo"
+                             th:style="'background: url(' + @{../../db/users/photos/{avatar}(avatar=${user.getAvatar()})} + '); background-size: 85px;'"></div>
+                    </th:block>
+                </div>
+                <div class="name_container">
+                    <span class="title" th:text="${user.getNickname()}"></span>
+                    <span class="back_to_main">← Back to main</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="votes_container">
+        <span class="votes_title">Votes <span class="count" th:text="${votes.size()}"></span></span>
+        <div class="votes_card">
+            <th:block th:if="${votes.size() > 0}">
+                <th:block th:each="vote,iter : ${votes}">
+                    <div class="vote_container">
+                        <img th:src="@{https://image.tmdb.org/t/p/w45{poster}(poster=${movieDetails.get(iter.index).poster_path})}" onerror="this.src='../../resources/lost_poster.png'" class="poster">
+                        <a th:href="@{/movie/{id}(id=${vote.getMid()})}" class="movie_title link movie_popup" th:text="${movieDetails.get(iter.index).title}"></a>
+                    </div>
+                </th:block>
+            </th:block>
+        </div>
+    </div>
+</div>
+<footer th:insert="fragments/Footer :: footer"></footer>
+
+<div class="popup">
+
+</div>
+</body>
+</html>

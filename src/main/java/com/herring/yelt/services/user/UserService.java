@@ -25,7 +25,6 @@ public class UserService {
         UserDetails userDetails = null;
         if (principal instanceof UserDetails) {
             userDetails = (UserDetails) principal;
-            System.out.println("Authorities : " + userDetails.getAuthorities());
             return userRepository.findByLogin(userDetails.getUsername());
         }
         return null;

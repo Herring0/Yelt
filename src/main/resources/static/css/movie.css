@@ -348,7 +348,7 @@ ul {
     margin-left: 10px;
 }
 
-.cast_n_crew_title {
+.votes_title {
     font-size: 1em;
     color: var(--eggshell);
     margin-bottom: 7px;
@@ -360,7 +360,7 @@ ul {
     color: var(--eggshell);
 }
 
-.cast_n_crew_title:after {
+.votes_title:after {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: "\f054";

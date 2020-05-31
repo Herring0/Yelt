@@ -137,7 +137,7 @@
                         <div class="votes" th:text="${votesCount}"></div>
                     </div>
                     <div class="cast_block">
-                        <a href="#" class="cast_n_crew_title">Cast</a>
+                        <a th:href="@{/movie/{id}/cast(id=${movie.id})}" class="votes_title">Cast</a>
                         <th:block th:each="cast,iter : ${credits.cast}">
                             <th:block th:if="${iter.index < 9}">
                                 <a th:text="${cast.name}" th:href="@{/people/{id}(id=${cast.id})}"
@@ -148,7 +148,7 @@
                            th:text="${#lists.size(credits.cast)} + ' actors'" class="cast_n_crew_num"></a>
                     </div>
                     <div class="crew_block">
-                        <a href="#" class="cast_n_crew_title">Crew</a>
+                        <a th:href="@{/movie/{id}/cast(id=${movie.id})}" class="votes_title">Crew</a>
                         <th:block th:each="crew,iter : ${crewSet}">
                             <th:block th:if="${iter.index < 9}">
                                 <a th:text="${crew.name}" th:href="@{/people/{id}(id=${crew.id})}"

@@ -7,7 +7,7 @@
     <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../../css/header.css">
     <link rel="stylesheet" type="text/css" href="../../css/footer.css">
-    <link rel="stylesheet" type="text/css" href="../../css/user.css">
+    <link rel="stylesheet" type="text/css" href="../../css/user/user.css">
 
     <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
     <script src="../../js/lib/jquery.js"></script>
@@ -29,7 +29,6 @@
                     <div class="photo"
                          th:style="'background: url(' + @{../../db/users/photos/{avatar}(avatar=${user.getAvatar()})} + '); background-size: 150px;'"></div>
                 </th:block>
-
             </div>
             <div class="head_info_container">
                 <div class="nickname_container">
@@ -116,7 +115,7 @@
 
     </div>
     <div class="recent_activity">
-        <a href="#" class="h_link">Votes</a>
+        <a th:href="@{/user/{login}/votes(login=${user.getLogin()})}" class="h_link">Votes</a>
         <th:block th:if="${latestVotes.size() > 0}">
             <div class="votes_container">
                 <th:block th:each="vote,iter : ${latestVotes}">

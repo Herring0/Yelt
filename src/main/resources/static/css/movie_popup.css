@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+:root {
+    --cadet: #E1E2E2a0;
+    --eggshell: #FFF;
+    --terra_cotta: #F0803C;
+    --charcoal: #3E4C5E;
+    --maize: #F7C548;
+    --orange_soda: #f85a3e;
+    --smoky_black: #1D2228;
+    --btn_hover: #ff7a29;
+    --font_color_first: #546A76;
+    --font_color_second: #3E4C5E;
+}
+
+.popup {
+    position: fixed;
+    width: 220px;
+    height: 70px;
+    background: #FFFFFF;
+    border: 2px solid black;
+    top: calc(100vh - 110px);
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Roboto', sans-serif;
+    visibility: hidden;
+}

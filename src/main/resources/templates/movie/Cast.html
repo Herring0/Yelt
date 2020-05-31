@@ -16,22 +16,22 @@
 <body>
 <header th:insert="fragments/Header :: header"></header>
 <div class="main">
-    <div class="movie_header_block">
-        <div class="movie_header_container">
+    <div class="votes_header_block">
+        <div class="votes_header_container">
             <a th:href="@{/movie/{id}(id=${movieDetails.id})}" class="link_container">
                 <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movieDetails.poster_path})}"
                      width="58" height="87" class="poster">
-                <div class="title_container">
+                <div class="name_container">
                     <span class="title" th:text="${movieDetails.title}"></span>
                     <span class="back_to_main">← Back to main</span>
                 </div>
             </a>
         </div>
     </div>
-    <div class="cast_n_crew_block">
-        <div class="cast_n_crew_container">
-            <span class="cast_n_crew_title">Cast <span class="count"
-                                                       th:text="${movieCredits.cast.size()}"></span></span>
+    <div class="votes_block">
+        <div class="votes_container">
+            <span class="votes_title">Cast <span class="count"
+                                                 th:text="${movieCredits.cast.size()}"></span></span>
             <div class="people_credits">
                 <th:block th:each="cast,iter : ${movieCredits.cast}">
                     <div class="people_credit">
@@ -46,8 +46,8 @@
                 </th:block>
             </div>
         </div>
-        <div class="cast_n_crew_container">
-            <span class="cast_n_crew_title">Crew <span class="count" th:text="${crewSet.size()}"></span></span>
+        <div class="votes_container">
+            <span class="votes_title">Crew <span class="count" th:text="${crewSet.size()}"></span></span>
             <th:block th:each="department,iter : ${structuredCrew.keySet()}">
                 <div class="department_container">
                     <span class="department name" th:text="${department}"></span>

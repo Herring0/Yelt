@@ -15,19 +15,28 @@ public class MovieDetailsService {
 
     public List<MovieDetails> getMoviesById(List<String> ids) {
         List<MovieDetails> movieDetails = new ArrayList<>();
-        for (String id :
-                ids) {
-            Thread thread = new Thread(() -> {
-                movieDetails.add(tmDbRequester.getMovieDetails(id));
-            });
-            try {
-                thread.start();
-                thread.join();
+        List<Thread> threads = new ArrayList<>();
 
+        for (String id : ids) {
+            threads.add(new Thread(() -> {
+                movieDetails.add(tmDbRequester.getMovieDetails(id));
+            }));
+        }
+        for (Thread thread : threads) {
+            thread.start();
+        }
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         return movieDetails;
+    }
+
+    public MovieDetails getMovieById(String id) {
+        return tmDbRequester.getMovieDetails(id);
     }
 }

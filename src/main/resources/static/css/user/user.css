@@ -160,7 +160,7 @@ a {
     width: 360px;
     height: 85px;
     background-size: cover;
-    background-image: url("../resources/rating_overview.png");
+    background-image: url("../../resources/rating_overview.png");
     background-repeat: no-repeat;
     padding: 0px 1px;
 }

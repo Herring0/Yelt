@@ -1,4 +1,4 @@
-package com.herring.yelt.controllers;
+package com.herring.yelt.controllers.utils;
 
 import com.herring.yelt.TMDbSearchHandler;
 import com.herring.yelt.gson.models.search.SearchMovies;

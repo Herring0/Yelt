@@ -36,6 +36,7 @@ a {
   margin: auto;
   font-family: 'Roboto', sans-serif;
   margin-bottom: 30px;
+  min-height: 500px;
   padding-top: 120px;
 }
 
@@ -47,7 +48,7 @@ a {
 }
 
 .votes_header_container {
-  width: 1150px;
+  width: 900px;
   height: 115px;
   margin: auto;
   display: flex;
@@ -62,7 +63,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 15px;
+  padding-left: 20px;
 }
 
 .title {
@@ -87,7 +88,8 @@ a {
 }
 
 .votes_container {
-  width: 100%;
+  width: 900px;
+  margin: auto;
   display: flex;
   flex-direction: column;
 }
@@ -111,26 +113,8 @@ a {
   margin-bottom: 10px;
 }
 
-.people_photo {
+.movie_poster {
   border-radius: 4px;
-}
-
-.people_movie_info {
-  display: flex;
-  flex-direction: column;
-  padding-left: 20px;
-  justify-content: center;
-}
-
-.name {
-  color: var(--font_color_second);
-  font-weight: 600;
-}
-
-.character {
-  color: var(--font_color_second);
-  font-weight: 400;
-  font-size: .9em;
 }
 
 .count {
@@ -140,6 +124,37 @@ a {
   opacity: .6;
 }
 
-.department_container {
-  margin-bottom: 20px;
+.votes_card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vote_container {
+  padding: 5px 0px;
+  display: flex;
+  align-items: center;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-bottom-color: rgb(222, 222, 222);
+}
+
+.photo {
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 85px;
+  height: 85px;
+}
+
+.movie_title {
+  font-size: 1em;
+  color: var(--charcoal);
+  font-weight: 600;
+  margin-bottom: 3px;
+  padding-left: 10px;
+}
+
+.poster {
+  border-radius: 3px;
 }

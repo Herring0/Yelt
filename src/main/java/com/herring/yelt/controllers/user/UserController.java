@@ -1,6 +1,7 @@
 package com.herring.yelt.controllers.user;
 
 import com.herring.yelt.gson.models.discover.DiscoverMovie;
+import com.herring.yelt.gson.models.movies.MovieDetails;
 import com.herring.yelt.gson.models.people.PeopleDetails;
 import com.herring.yelt.models.User;
 import com.herring.yelt.models.UserMovie;
@@ -57,6 +58,23 @@ public class UserController {
         model.addAttribute("latestMovies", movieDetailsService.getMoviesById(latestIds));
 
         return "user/User";
+    }
+
+    @GetMapping("/{login}/votes")
+    public String votes(@PathVariable(value = "login") String login, Model model) {
+        User user = userService.getUserByLogin(login);
+        List<UserMovie> votes = userMovieService.getVotesById(user.getId());
+        List<String> ids = new ArrayList<>();
+        for (UserMovie userMovie : votes) {
+            ids.add(userMovie.getMid());
+        }
+        List<MovieDetails> movieDetails = movieDetailsService.getMoviesById(ids);
+
+        model.addAttribute("user", user);
+        model.addAttribute("votes", votes);
+        model.addAttribute("movieDetails", movieDetails);
+        model.addAttribute("authenticated", userService.getAuthenticatedUser());
+        return "user/Votes";
     }
 
     @PostMapping("/{login}/block")
