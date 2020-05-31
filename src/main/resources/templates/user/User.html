@@ -16,7 +16,7 @@
     <script></script>
 </head>
 <body>
-<header th:insert="fragments/Header :: header(${authenticated})"></header>
+<header th:insert="fragments/Header :: header"></header>
 <div class="head_block">
     <div class="bg_image">
         <div class="head_container">
@@ -32,10 +32,21 @@
 
             </div>
             <div class="head_info_container">
-                <span class="nickname" th:text="${user.nickname}">
-<!--                    <span class="block_user">Заблокировать</span>-->
-                    <!--                    <span class="unblock_user">Разблокировать</span>-->
-                </span>
+                <div class="nickname_container">
+                    <span class="nickname" th:text="${user.nickname}"></span>
+                    <th:block sec:authorize="hasAuthority('ADMIN')">
+                        <th:block th:if="${authenticated.getId() != user.getId()}">
+                            <div class="active_action_block">
+                                <th:block th:if="${user.isActive()}">
+                                    <span class="block_user">Заблокировать</span>
+                                </th:block>
+                                <th:block th:unless="${user.isActive()}">
+                                    <span class="unblock_user">Разблокировать</span>
+                                </th:block>
+                            </div>
+                        </th:block>
+                    </th:block>
+                </div>
                 <div class="head_activity_container">
                     <div class="activity_container">
                         <span class="activity" th:text="${avgRating}"></span>
@@ -111,7 +122,8 @@
                 <th:block th:each="vote,iter : ${latestVotes}">
                     <a th:href="@{/movie/{id}(id=${latestMovies.get(iter.index).id})}" class="vote">
                         <span class="vote_rating" th:text="${vote.getRating()} + '/10'"></span>
-                        <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${latestMovies.get(iter.index).poster_path})}" width="150"
+                        <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${latestMovies.get(iter.index).poster_path})}"
+                             width="150"
                              height="236"
                              onerror="this.src='../../resources/lost_poster.png'" class="vote_poster">
                         <span class="vote_name" th:text="${latestMovies.get(iter.index).title}"></span>

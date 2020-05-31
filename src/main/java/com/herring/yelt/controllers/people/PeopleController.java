@@ -21,9 +21,6 @@ public class PeopleController {
     private TMDbRequester tmDbRequester;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private PeopleCreditsService peopleCreditsService;
 
     @GetMapping("/{id}")
@@ -33,7 +30,6 @@ public class PeopleController {
         PeopleDetails peopleDetails = tmDbRequester.getPeopleDetails(id);
         DiscoverMovie discoverMovies = tmDbRequester.getDiscoverMovies(id);
 
-        model.addAttribute("authenticated", userService.getAuthenticatedUser());
         model.addAttribute("people", peopleDetails);
         model.addAttribute("peopleCreditsService", peopleCreditsService);
         model.addAttribute("discoverMovies", discoverMovies);

@@ -29,11 +29,7 @@ public class SimpleUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Not found!");
         }
 
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder()
-                .username(user.getLogin())
-                .password(user.getPassword())
-                .authorities(getGrantedAuthorities(user))
-                .build();
+        UserDetails userDetails = new CustomUserPrincipal(user);
 
         return userDetails;
     }

@@ -23,7 +23,7 @@ public class CustomUserPrincipal implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         for (Role role : user.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role.toString()));
+            authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
         return authorities;
     }
@@ -45,7 +45,7 @@ public class CustomUserPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.isActive();
     }
 
     @Override

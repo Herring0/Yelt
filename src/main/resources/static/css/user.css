@@ -243,9 +243,12 @@ h2 {
     cursor: pointer;
     background: #ff0000;
     border-radius: 15px;
-    font-size: .6em;
+    font-size: 1.15em;
+    font-weight: 500;
+    color: #fff;
     padding: 5px;
     margin-left: 20px;
+    max-height: 20px;
     opacity: .95;
 }
 
@@ -253,9 +256,12 @@ h2 {
     cursor: pointer;
     background: #00a800;
     border-radius: 15px;
-    font-size: .6em;
+    font-size: 1.15em;
+    font-weight: 500;
+    color: #fff;
     padding: 5px;
     margin-left: 20px;
+    max-height: 20px;
     opacity: .95;
 }
 
@@ -305,4 +311,12 @@ h2 {
     font-size: 2.1em;
     font-weight: 500;
     margin: auto;
+}
+
+.nickname_container {
+    display: flex;
+}
+
+.active_action_block {
+    display: flex;
 }

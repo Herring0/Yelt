@@ -1,4 +1,4 @@
-<div class="container" th:fragment="header(authenticated)" xmlns="http://www.w3.org/1999/xhtml"
+<div class="container" th:fragment="header" xmlns="http://www.w3.org/1999/xhtml"
      xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
     <div class="f">
@@ -24,11 +24,11 @@
     <th:block sec:authorize="isAuthenticated()">
         <div class="fr_authorized">
             <a href="#" class="watchlist"> Wacthlist</a>
-            <th:block th:if="${authenticated.getAvatar() == null}">
+            <th:block th:if="${#authentication.getPrincipal().getUser().getAvatar() == null}">
                 <div class="profile"
                      style="background: url('../../resources/person.png'); background-size: 45px;">
                     <ul class="submenu">
-                        <li><a th:href="@{/user/{login}(login=${authenticated.getLogin()})}">Profile</a></li>
+                        <li><a th:href="@{/user/{login}(login=${#authentication.getPrincipal().getUser().getLogin()})}">Profile</a></li>
                         <li><a href="">Author</a></li>
                         <li><a href="">Archive</a></li>
                         <li><a href="">Tags</a></li>
@@ -38,11 +38,11 @@
                     </ul>
                 </div>
             </th:block>
-            <th:block th:unless="${authenticated.getAvatar() == null}">
+            <th:block th:unless="${#authentication.getPrincipal().getUser().getAvatar() == null}">
                 <div class="profile"
-                     th:style="'background: url(' + @{../../db/users/photos/{avatar}(avatar=${authenticated.getAvatar()})} + '); background-size: 45px;'">
+                     th:style="'background: url(' + @{../../db/users/photos/{avatar}(avatar=${#authentication.getPrincipal().getUser().getAvatar()})} + '); background-size: 45px;'">
                     <ul class="submenu">
-                        <li><a th:href="@{/user/{login}(login=${authenticated.getLogin()})}">Profile</a></li>
+                        <li><a th:href="@{/user/{login}(login=${#authentication.getPrincipal().getUser().getLogin()})}">Profile</a></li>
                         <li><a href="">Author</a></li>
                         <li><a href="">Archive</a></li>
                         <li><a href="">Tags</a></li>

@@ -5,6 +5,7 @@ import com.herring.yelt.repositories.RoleRepository;
 import com.herring.yelt.repositories.UserRepository;
 import com.herring.yelt.services.UsersDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,9 @@ public class RegistrationController {
     @Autowired
     private UsersDataService usersDataService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/registration")
     public String registration() {
         return "Registration";
@@ -39,6 +43,7 @@ public class RegistrationController {
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(roleRepository.findById(1)));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersDataService.insertUser(user);
 
         return "redirect:/login";

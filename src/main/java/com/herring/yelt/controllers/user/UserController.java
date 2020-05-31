@@ -11,10 +11,10 @@ import com.herring.yelt.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +55,24 @@ public class UserController {
         model.addAttribute("reviewCount", userReviewService.getReviewCount(Integer.valueOf(user.getId())));
         model.addAttribute("latestVotes", latestVotes);
         model.addAttribute("latestMovies", movieDetailsService.getMoviesById(latestIds));
-        System.out.println(movieDetailsService.getMoviesById(latestIds));
-        System.out.println(userMovieService.getLatestVotesOrderedByDate(Integer.valueOf(user.getId())));
+
         return "user/User";
+    }
+
+    @PostMapping("/{login}/block")
+    @ResponseBody
+    public void blockUser(@PathVariable(value = "login") String login) {
+        User user = userService.getUserByLogin(login);
+        user.setActive(false);
+        userService.saveUser(user);
+    }
+
+    @PostMapping("/{login}/unblock")
+    @ResponseBody
+    public void unblockUser(@PathVariable(value = "login") String login) {
+        User user = userService.getUserByLogin(login);
+        user.setActive(true);
+        userService.saveUser(user);
     }
 
 }

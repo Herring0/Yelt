@@ -40,8 +40,6 @@ public class MovieController {
     private UserReviewService userReviewService;
     @Autowired
     private MovieCreditsService movieCreditsService;
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private TMDbRequester tmDbRequester;
@@ -98,7 +96,6 @@ public class MovieController {
 
         model.addAttribute("movie", movieDetails);
         model.addAttribute("credits", movieCredits);
-        model.addAttribute("authenticated", userService.getAuthenticatedUser());
         model.addAttribute("directors", movieCreditsService.getDirectors(movieCredits));
         model.addAttribute("writers", movieCreditsService.getWriters(movieCredits));
         model.addAttribute("producers", movieCreditsService.getProducers(movieCredits));
