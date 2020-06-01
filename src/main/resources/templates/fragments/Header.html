@@ -29,11 +29,11 @@
                      style="background: url('../../resources/person.png'); background-size: 45px;">
                     <ul class="submenu">
                         <li><a th:href="@{/user/{login}(login=${#authentication.getPrincipal().getUser().getLogin()})}">Profile</a></li>
-                        <li><a href="">Author</a></li>
-                        <li><a href="">Archive</a></li>
-                        <li><a href="">Tags</a></li>
+                        <li><a th:href="@{/user/{login}/votes(login=${#authentication.getPrincipal().getUser().getLogin()})}">Votes</a></li>
+                        <li><a href="">Watchlist</a></li>
+                        <li><a href="">Favorite</a></li>
                         <li>
-                            <a href="/logout">logout</a>
+                            <a href="/logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -43,11 +43,11 @@
                      th:style="'background: url(' + @{../../db/users/photos/{avatar}(avatar=${#authentication.getPrincipal().getUser().getAvatar()})} + '); background-size: 45px;'">
                     <ul class="submenu">
                         <li><a th:href="@{/user/{login}(login=${#authentication.getPrincipal().getUser().getLogin()})}">Profile</a></li>
-                        <li><a href="">Author</a></li>
-                        <li><a href="">Archive</a></li>
-                        <li><a href="">Tags</a></li>
+                        <li><a th:href="@{/user/{login}/votes(login=${#authentication.getPrincipal().getUser().getLogin()})}">Votes</a></li>
+                        <li><a href="">Watchlist</a></li>
+                        <li><a href="">Favorite</a></li>
                         <li>
-                            <a href="/logout">logout</a>
+                            <a href="/logout">Logout</a>
                         </li>
                     </ul>
                 </div>

@@ -14,12 +14,13 @@ public class MovieDetailsService {
     private TMDbRequester tmDbRequester;
 
     public List<MovieDetails> getMoviesById(List<String> ids) {
+        List<MovieDetails> tempList = new ArrayList<>();
         List<MovieDetails> movieDetails = new ArrayList<>();
         List<Thread> threads = new ArrayList<>();
 
         for (String id : ids) {
             threads.add(new Thread(() -> {
-                movieDetails.add(tmDbRequester.getMovieDetails(id));
+                tempList.add(tmDbRequester.getMovieDetails(id));
             }));
         }
         for (Thread thread : threads) {
@@ -33,6 +34,16 @@ public class MovieDetailsService {
                 e.printStackTrace();
             }
         }
+
+        for (String id : ids) {
+            for (MovieDetails details : tempList) {
+                if (details.id.equals(id)) {
+                    movieDetails.add(details);
+                    continue;
+                }
+            }
+        }
+
         return movieDetails;
     }
 

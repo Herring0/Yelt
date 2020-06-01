@@ -64,6 +64,7 @@ $(document).ready(function () {
                     $(".my_vote_block").removeClass("hidden");
                     $(".my_vote").text(data.rating);
                     $(".date_vote").text(data.date);
+                    document.location.reload(true);
                 }
             }
         });
@@ -82,6 +83,7 @@ $(document).ready(function () {
 
             success: function (data) {
                 $(".my_vote_block").addClass("hidden");
+                document.location.reload(true);
             }
         });
     }

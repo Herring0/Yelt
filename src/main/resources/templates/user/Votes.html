@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/movie_popup.css">
     <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
     <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/user/votes.js"></script>
     <script src="../../js/header.js"></script>
     <script></script>
 </head>
@@ -42,9 +43,24 @@
         <div class="votes_card">
             <th:block th:if="${votes.size() > 0}">
                 <th:block th:each="vote,iter : ${votes}">
-                    <div class="vote_container">
-                        <img th:src="@{https://image.tmdb.org/t/p/w45{poster}(poster=${movieDetails.get(iter.index).poster_path})}" onerror="this.src='../../resources/lost_poster.png'" class="poster">
-                        <a th:href="@{/movie/{id}(id=${vote.getMid()})}" class="movie_title link movie_popup" th:text="${movieDetails.get(iter.index).title}"></a>
+                    <div class="vote_block">
+                        <img th:src="@{https://image.tmdb.org/t/p/w45{poster}(poster=${movieDetails.get(iter.index).poster_path})}"
+                             width="45" height="68" onerror="this.src='../../resources/lost_poster.png'" class="poster">
+                        <div class="vote_title_container">
+                            <a th:href="@{/movie/{id}(id=${vote.getMid()})}" class="movie_title link movie_popup" th:text="${movieDetails.get(iter.index).title}"></a>
+                        </div>
+                        <div class="vote_date_container">
+                            <span class="vote_date" th:text="${vote.getVoteTime()}"></span>
+                        </div>
+                        <div class="vote_container">
+                            <div class="vote" th:text="${vote.getRating()}"></div>
+                        </div>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <th:block th:if="${user.getId() == authenticated.getId()}">
+                                <div class="delete_vote" th:attr="movie_id=${vote.getMid()}">—</div>
+                            </th:block>
+                        </th:block>
+
                     </div>
                 </th:block>
             </th:block>

@@ -201,4 +201,21 @@ public class TMDbRequester {
         System.out.println("Discover movies received");
         return discoverMovies;
     }
+
+    public MoviePopular getPopularMovies() {
+        MoviePopular moviePopular;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(BASE_URL);
+        stringBuilder.append("/movie");
+        stringBuilder.append("/popular");
+        stringBuilder.append("?api_key=");
+        stringBuilder.append(apiKey);
+
+        String result = new RestTemplate().getForObject(stringBuilder.toString(), String.class);
+
+        moviePopular = new Gson().fromJson(result, MoviePopular.class);
+        System.out.println("Popular movies received");
+        return moviePopular;
+    }
 }

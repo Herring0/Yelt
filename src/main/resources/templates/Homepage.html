@@ -10,15 +10,29 @@
     <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
     <script src="../../js/lib/jquery.js"></script>
     <script src="../../js/header.js"></script>
-    <script> </script>
+    <script></script>
 </head>
 <body>
 <header th:insert="fragments/Header :: header"></header>
-<br>
-<br>
-<br>
-<br>
-<br>
-    <a href="/movie/522627">default page</a>
+<div class="main">
+    <div class="popular_block">
+        <a href="#" class="block_title title_link">Popular movies</a>
+        <div class="popular_container">
+            <th:block th:each="movie,iter : ${moviePopular.results}">
+                <th:block th:if="${iter.index < 7}">
+                    <a th:href="@{/movie/{id}(id=${movie.id})}" class="movie">
+                        <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movie.poster_path})}"
+                             width="150"
+                             height="236"
+                             onerror="this.src='../../resources/lost_poster.png'" class="movie_poster">
+                        <span class="movie_title" th:text="${movie.title}"></span>
+                        <span class="movie_date" th:text="${movie.release_date}"></span>
+                    </a>
+                </th:block>
+            </th:block>
+        </div>
+    </div>
+</div>
+<a href="/movie/522627">default page</a>
 </body>
 </html>

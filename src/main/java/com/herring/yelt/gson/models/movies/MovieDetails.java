@@ -9,7 +9,7 @@ public class MovieDetails {
     public int budget;
     public List<Genres> genres;
     public String homepage;
-    public int id;
+    public String id;
     public String imdb_id;
     public String original_language;
     public String original_title;
