@@ -150,6 +150,7 @@ body {
     border-radius: 0px 0px 6px 6px;
     overflow: hidden;
     max-height: 76px;
+    transition-duration: .2s;
 }
 
 .review_bg {
@@ -161,6 +162,13 @@ body {
 }
 
 .review:hover .review_bg{
-    transform: scale(1.02);
+    /*transform: scale(1.02);*/
+    width: 256px;
+    height: 276px;
+    transform: translate(-3px, -3px);
     box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.15);
+}
+
+.review:hover .review_bg .review_text_container {
+    padding: 0px 3px 0px 3px;
 }

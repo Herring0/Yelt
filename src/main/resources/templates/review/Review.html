@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="'Review by ' + ${user.getNickname()} + ' | Yelt'"></title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/review/review.css">
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/header.js"></script>
+    <script> </script>
+</head>
+<body>
+<header th:insert="fragments/Header :: header"> </header>
+    <div class="main">
+        <a th:href="@{/movie/{id}(id=${movieDetails.id})}" class="poster_container">
+            <img th:src="@{http://image.tmdb.org/t/p/w220_and_h330_face{poster_path}(poster_path=${movieDetails.poster_path})}"
+                 onerror="this.src='../../resources/lost_poster.png'"
+                 class="poster">
+        </a>
+        <div class="review_container" th:classappend="${userReview.getType() == 'Positive'} ? positive : (${userReview.getType() == 'Negative'} ? negative)">
+            <a th:href="@{/movie/{id}(id=${movieDetails.id})}" class="movie_title link" th:text="${movieDetails.title}"></a>
+            <span class="written_by_container">Written by <a th:href="@{/user/{login}(login=${user.getLogin()})}" class="written_by link" th:text="${user.getNickname()}"></a> on <span th:text="${userReview.getDate()}"></span></span>
+            <span class="review_text" th:text="${userReview.getText()}"></span>
+        </div>
+    </div>
+<footer th:insert="fragments/Footer :: footer"> </footer>
+</body>
+</html>

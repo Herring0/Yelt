@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="'Search | Yelt'"></title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../css/search/search.css">
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/header.js"></script>
+    <script src="../../js/search/search.js"></script>
+    <script> </script>
+</head>
+<body>
+<header th:insert="fragments/Header :: header" style="position: absolute;"> </header>
+    <div class="main">
+        <div class="type_container">
+            <div id="movie" class="type active">Movies</div>
+            <div id="people" class="type">People</div>
+        </div>
+        <div class="main_panel">
+            <div class="search_panel">
+                <input name="s" placeholder="Search Yelt" class="search_panel_input">
+            </div>
+            <div class="search_results_container">
+
+            </div>
+        </div>
+        <div class="top_panel"></div>
+    </div>
+<footer th:insert="fragments/Footer :: footer"> </footer>
+</body>
+</html>

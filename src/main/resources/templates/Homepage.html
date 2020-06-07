@@ -56,7 +56,7 @@
         <div class="content_container">
             <th:block th:each="review,iter : ${userReviews}">
                 <div class="review">
-                    <a href="#" class="review_link">
+                    <a th:href="@{/review/{id}(id=${review.getId()})}" class="review_link">
                         <div class="review_bg" th:style="${userReviewsMovieDetails.get(iter.index).poster_path != null} ? 'background-image: url(' + @{https://image.tmdb.org/t/p/w500{backdrop_path}(backdrop_path=${userReviewsMovieDetails.get(iter.index).poster_path})} + ');'">
                             <div class="user_name_container" th:text="${userService.getUserById(review.getUid()).getNickname()}"></div>
                             <div class="review_text_container" th:style="${review.getType() == 'Positive'} ? 'background: rgba(2, 93, 0, 0.8);' : (${review.getType() == 'Negative'} ? 'background: rgba(181, 25, 0, 0.8);')" th:text="${#strings.abbreviate(review.getText(), 107)}"></div>

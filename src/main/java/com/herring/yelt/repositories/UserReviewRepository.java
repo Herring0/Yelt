@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface UserReviewRepository extends CrudRepository<UserReview, Integer> {
     UserReview findByUidAndMid(int uid, String mid);
+    UserReview findById(int id);
     List<UserReview> findByMid(String mid);
     @Query(value = "SELECT * FROM user_review ORDER BY date DESC limit 0,4",
             nativeQuery = true)

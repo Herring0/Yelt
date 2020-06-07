@@ -251,15 +251,18 @@
                                          th:classappend="${review.getType() == 'Positive'} ? positive_review : (${review.getType() == 'Negative'} ? negative_review : neutral_review)">
                                         <div class="review_header">
                                             <div class="review_user_block">
-                                                <div class="profile_img"></div>
+                                                <div class="profile_img" th:style="'background: url(' + @{../../db/users/photos/{avatar}(avatar=${usersDataService.getUser(review.getUid()).getAvatar()})} + '); background-size: 45px;'"></div>
                                                 <div class="profile_n_rev_num">
-                                                    <a href="#" class="review_profile"
+                                                    <a th:href="@{/user/{login}(login=${usersDataService.getUser(review.getUid()).getLogin()})}" class="review_profile"
                                                        th:text="${usersDataService.getUser(review.getUid()).getNickname()}"></a>
                                                     <div class="reviews_num"
                                                          th:text="${userReviewService.getReviewCount(review.getUid())} + ' reviews'"></div>
                                                 </div>
                                             </div>
-                                            <div class="review_data_block" th:text="${review.getDate()}"></div>
+                                            <div class="review_data_block">
+                                                <span th:text="${review.getDate()}"></span>
+                                                <a th:href="@{/review/{id}(id=${review.getId()})}" class="go_to_review">go to review</a>
+                                            </div>
                                             <th:block sec:authorize="isAuthenticated()">
                                                 <div th:if="${usersDataService.getUser(review.getUid()).getId() == user.getId()}"
                                                      class="review_delete_block"></div>

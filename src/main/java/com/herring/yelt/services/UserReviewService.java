@@ -24,4 +24,9 @@ public class UserReviewService {
         return userReviewRepository.findTop4OrderByDateDesc();
     }
 
+    @Transactional
+    public UserReview getReview(int id) {
+        return userReviewRepository.findById(id);
+    }
+
 }

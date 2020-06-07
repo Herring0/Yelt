@@ -13,8 +13,20 @@ public class SearchPeople {
     public class Result {
         public String dataType;
         public String profile_path;
-        public int id;
+        public List<KnownFor> knownFor;
+        public String id;
         public String name;
         public float popularity;
+        public String department;
+        public String biography;
+
+        public class KnownFor {
+            public String poster_path;
+            public String overview;
+            public String media_type;
+            public String backdrop_path;
+            public String title;
+            public String id;
+        }
     }
 }

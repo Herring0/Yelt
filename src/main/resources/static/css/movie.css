@@ -823,11 +823,18 @@ ul {
 .review_data_block {
     height: 100%;
     width: 100%;
-    font-size: .9em;
     color: var(--font_color_first);
-    opacity: .6;
     text-align: right;
     padding-top: 9px;
+    display: flex;
+    width: 200px;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.review_data_block span {
+    opacity: .6;
+    font-size: .9em;
 }
 
 .review_main {
@@ -841,11 +848,11 @@ ul {
     /*transition-duration: .5s;*/
 }
 
-.reviews a {
+.reviews .review_profile {
     color: var(--charcoal);
 }
 
-.reviews a:hover {
+.reviews .review_profile:hover {
     color: var(--terra_cotta);
 }
 
@@ -1081,6 +1088,16 @@ select {
     cursor: pointer;
     pointer-events: none;
     transition: .25s all ease;
+}
+
+.go_to_review {
+    color: var(--font_color_second);
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.go_to_review:hover {
+    color: var(--btn_hover);
 }
 
 /* Transition */
