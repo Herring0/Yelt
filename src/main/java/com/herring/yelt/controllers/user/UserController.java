@@ -1,8 +1,6 @@
 package com.herring.yelt.controllers.user;
 
-import com.herring.yelt.gson.models.discover.DiscoverMovie;
 import com.herring.yelt.gson.models.movies.MovieDetails;
-import com.herring.yelt.gson.models.people.PeopleDetails;
 import com.herring.yelt.models.User;
 import com.herring.yelt.models.UserMovie;
 import com.herring.yelt.services.UserReviewService;
@@ -13,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

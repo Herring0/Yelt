@@ -19,7 +19,8 @@
 <header th:insert="fragments/Header :: header">
 </header>
 <div class="main">
-    <div class="movie_main_info_bg" th:style="${movie.backdrop_path != null} ? 'background-image: url(' + @{https://image.tmdb.org/t/p/w1920_and_h800_multi_faces{backdrop_path}(backdrop_path=${movie.backdrop_path})} + ');'">
+    <div class="movie_main_info_bg"
+         th:style="${movie.backdrop_path != null} ? 'background-image: url(' + @{https://image.tmdb.org/t/p/w1920_and_h800_multi_faces{backdrop_path}(backdrop_path=${movie.backdrop_path})} + ');'">
         <div class="movie_main_info">
             <div class="movie_main_info_container">
                 <div class="movie_info_first_c">
@@ -64,8 +65,10 @@
                             <div class="about_movie_info">
                                 <div class="about_movie_info_k">Genres</div>
                                 <div class="about_movie_info_v" th:each="genre,iter : ${movie.genres}">
-                                    <a href="#" th:text="${genre.name}"></a> <span
-                                        th:text="${iter.last} ? '' : ',&nbsp;'"></span>
+                                    <th:block th:if="${iter.index < 4}">
+                                        <a href="#" th:text="${genre.name}"></a> <span
+                                            th:text="${iter.last || iter.index == 3} ? '' : ',&nbsp;'"></span>
+                                    </th:block>
                                 </div>
                             </div>
                             <div class="about_movie_info">
@@ -319,7 +322,7 @@
     <div class="write_review_container">
         <div class="form_container">
             <div class="i_review_close"></div>
-            <form action="#" class="review_container" method="post">
+            <form action="" class="review_container" method="post">
                 <select name="type" class="review_combobox">
                     <option value="Positive" class="review_option">Positive</option>
                     <option value="Neutral" class="review_option">Neutral</option>

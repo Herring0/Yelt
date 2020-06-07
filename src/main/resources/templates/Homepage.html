@@ -5,8 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Yelt</title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../../css/header.css">
     <link rel="stylesheet" type="text/css" href="../../css/homepage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
     <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
     <script src="../../js/lib/jquery.js"></script>
     <script src="../../js/header.js"></script>
@@ -15,9 +17,9 @@
 <body>
 <header th:insert="fragments/Header :: header"></header>
 <div class="main">
-    <div class="popular_block">
+    <div class="content_block">
         <a href="#" class="block_title title_link">Popular movies</a>
-        <div class="popular_container">
+        <div class="content_container">
             <th:block th:each="movie,iter : ${moviePopular.results}">
                 <th:block th:if="${iter.index < 7}">
                     <a th:href="@{/movie/{id}(id=${movie.id})}" class="movie">
@@ -32,7 +34,40 @@
             </th:block>
         </div>
     </div>
+    <div class="content_block">
+        <a href="#" class="block_title title_link">Top rated movies</a>
+        <div class="content_container">
+            <th:block th:each="movie,iter : ${topRatedMovies.results}">
+                <th:block th:if="${iter.index < 7}">
+                    <a th:href="@{/movie/{id}(id=${movie.id})}" class="movie">
+                        <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movie.poster_path})}"
+                             width="150"
+                             height="236"
+                             onerror="this.src='../../resources/lost_poster.png'" class="movie_poster">
+                        <span class="movie_title" th:text="${movie.title}"></span>
+                        <span class="movie_date" th:text="${movie.release_date}"></span>
+                    </a>
+                </th:block>
+            </th:block>
+        </div>
+    </div>
+    <div class="content_block">
+        <a href="#" class="block_title title_link">Latest reviews</a>
+        <div class="content_container">
+            <th:block th:each="review,iter : ${userReviews}">
+                <div class="review">
+                    <a href="#" class="review_link">
+                        <div class="review_bg" th:style="${userReviewsMovieDetails.get(iter.index).poster_path != null} ? 'background-image: url(' + @{https://image.tmdb.org/t/p/w500{backdrop_path}(backdrop_path=${userReviewsMovieDetails.get(iter.index).poster_path})} + ');'">
+                            <div class="user_name_container" th:text="${userService.getUserById(review.getUid()).getNickname()}"></div>
+                            <div class="review_text_container" th:style="${review.getType() == 'Positive'} ? 'background: rgba(2, 93, 0, 0.8);' : (${review.getType() == 'Negative'} ? 'background: rgba(181, 25, 0, 0.8);')" th:text="${#strings.abbreviate(review.getText(), 107)}"></div>
+                        </div>
+                        <div class="movie" th:text="${userReviewsMovieDetails.get(iter.index).title}"></div>
+                    </a>
+                </div>
+            </th:block>
+        </div>
+    </div>
 </div>
-<a href="/movie/522627">default page</a>
+<footer th:insert="fragments/Footer :: footer"></footer>
 </body>
 </html>

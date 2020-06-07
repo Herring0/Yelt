@@ -97,15 +97,18 @@ $(document).ready(function () {
     }
 
     var delete_review = function (e) {
+        console.log("was send");
+        var that = this;
         $.ajax({
             type: "POST",
             contentType: "application/x-www-form-urlencoded",
             url: window.location.href + "/delete_review",
 
             success: function (data) {
-                if (!$.isEmptyObject(data)) {
-                    $(e.target).closest(".review").css("display", "none");
-                }
+                console.log("success");
+                $(that).closest(".review").animate({opacity: 0, height: "0px", padding: "0px"}, 500, function () {
+                    $(that).closest(".review").css("display", "none");
+                });
             }
         });
     }

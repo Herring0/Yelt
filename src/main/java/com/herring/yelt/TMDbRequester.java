@@ -6,19 +6,9 @@ import com.herring.yelt.gson.models.genres.GenresMovieList;
 import com.herring.yelt.gson.models.movies.*;
 import com.herring.yelt.gson.models.people.PeopleCredits;
 import com.herring.yelt.gson.models.people.PeopleDetails;
-import com.herring.yelt.gson.models.search.SearchMovies;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
 
 @Component("tmdb_requester")
 public class TMDbRequester {
@@ -217,5 +207,22 @@ public class TMDbRequester {
         moviePopular = new Gson().fromJson(result, MoviePopular.class);
         System.out.println("Popular movies received");
         return moviePopular;
+    }
+
+    public MovieTopRated getTopRatedMovies() {
+        MovieTopRated topRatedMovies;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(BASE_URL);
+        stringBuilder.append("/movie");
+        stringBuilder.append("/top_rated");
+        stringBuilder.append("?api_key=");
+        stringBuilder.append(apiKey);
+
+        String result = new RestTemplate().getForObject(stringBuilder.toString(), String.class);
+
+        topRatedMovies = new Gson().fromJson(result, MovieTopRated.class);
+        System.out.println("Top rated movies received");
+        return topRatedMovies;
     }
 }

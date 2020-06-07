@@ -2,10 +2,8 @@ package com.herring.yelt.controllers.people;
 
 import com.herring.yelt.TMDbRequester;
 import com.herring.yelt.gson.models.discover.DiscoverMovie;
-import com.herring.yelt.gson.models.people.PeopleCredits;
 import com.herring.yelt.gson.models.people.PeopleDetails;
 import com.herring.yelt.services.PeopleCreditsService;
-import com.herring.yelt.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
