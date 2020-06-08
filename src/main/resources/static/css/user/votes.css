@@ -215,6 +215,28 @@ a {
   transition-duration: .1s;
 }
 
+.delete_wathclist {
+  background: red;
+  height: 25px;
+  width: 25px;
+  font-size: 1.3em;
+  text-align: center;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  position: absolute;
+  right: -40px;
+  cursor: pointer;
+  opacity: .6;
+  transition-duration: .1s;
+}
+
 .delete_vote:hover {
+  opacity: 1;
+}
+
+.delete_wathclist:hover {
   opacity: 1;
 }

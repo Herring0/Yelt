@@ -200,14 +200,30 @@ public class MovieController {
 
     @PostMapping("/{id}/delete_review")
     @ResponseBody
-    public Object deleteVote(@PathVariable(value = "id") String id) {
+    public Object deleteReview(@PathVariable(value = "id") String id) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             UserDetails user = ((UserDetails)principal);
             User userDb = userRepository.findByLogin(user.getUsername());
             UserReview userReview = userReviewRepository.findByUidAndMid(userDb.getId(), id);
             if (userReview == null) {
+                System.out.println(userReview);
                 userReviewRepository.deleteById(userReview.getId());
+            }
+        }
+        return null;
+    }
+
+    @PostMapping("/{id}/delete_from_watchlist")
+    @ResponseBody
+    public Object deleteFromWatchlist(@PathVariable(value = "id") String id) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails user = ((UserDetails)principal);
+            User userDb = userRepository.findByLogin(user.getUsername());
+            Watchlist watchlist = watchlistService.getWatchlist(userDb.getId(), id);
+            if (watchlist != null) {
+                watchlistService.deleteById(watchlist.getId());
             }
         }
         return null;

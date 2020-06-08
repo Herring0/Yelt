@@ -132,24 +132,28 @@
         </th:block>
     </div>
 
-    <div class="recent_activity">
-        <a th:href="@{/user/{login}/watchlater(login=${user.getLogin()})}" class="h_link">Watchlist</a>
-        <th:block th:if="${watchlistService.getCountByUid(user.getId()) > 0}">
-            <div class="activity_container">
-                <th:block th:each="watchlist,iter : ${watchlistService.getWatchlistsByUserId(user.getId())}">
-                    <th:block th:if="${iter.index < 7}">
-                        <a th:href="@{/movie/{id}(id=${movieDetailsService.getMovieById(watchlist.getMid()).id})}" class="vote">
-                            <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movieDetailsService.getMovieById(watchlist.getMid()).poster_path})}"
-                                 width="150"
-                                 height="236"
-                                 onerror="this.src='../../resources/lost_poster.png'" class="movie_poster">
-                            <span class="movie_name" th:text="${movieDetailsService.getMovieById(watchlist.getMid()).title}"></span>
-                        </a>
+    <th:block sec:authorize="isAuthenticated()">
+        <th:block th:if="${user.getId() == authenticated.getId()}">
+        <div class="recent_activity">
+            <a th:href="@{/user/{login}/watchlist(login=${user.getLogin()})}" class="h_link">Watchlist</a>
+            <th:block th:if="${watchlistService.getCountByUid(user.getId()) > 0}">
+                <div class="activity_container">
+                    <th:block th:each="list,iter : ${watchlist}">
+                        <th:block th:if="${iter.index < 7}">
+                            <a th:href="@{/movie/{id}(id=${list.id})}" class="vote">
+                                <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${list.poster_path})}"
+                                     width="150"
+                                     height="236"
+                                     onerror="this.src='../../resources/lost_poster.png'" class="movie_poster">
+                                <span class="movie_name" th:text="${list.title}"></span>
+                            </a>
+                        </th:block>
                     </th:block>
-                </th:block>
-            </div>
+                </div>
+            </th:block>
+        </div>
         </th:block>
-    </div>
+    </th:block>
 </div>
 
 <footer th:insert="fragments/Footer :: footer"></footer>
