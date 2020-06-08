@@ -35,7 +35,7 @@ public class HomepageController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/homepage")
+    @GetMapping("/")
     public String home(Model model) {
         MoviePopular moviePopular = popularMoviesService.getPopularMovies();
         MovieTopRated topRatedMovies = topRatedMovieService.getTopRatedMovies();

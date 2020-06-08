@@ -119,6 +119,10 @@ a {
     transition-duration: .2s;
 }
 
+.search_panel_input:focus {
+    border: 2px solid var(--terra_cotta);
+}
+
 .search_panel_button {
     position: absolute;
     top: 0;

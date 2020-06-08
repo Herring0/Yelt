@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="votes_block">
-        <div class="votes_container">
+        <div class="activity_container">
             <span class="votes_title">Cast <span class="count"
                                                  th:text="${movieCredits.cast.size()}"></span></span>
             <div class="people_credits">
@@ -46,7 +46,7 @@
                 </th:block>
             </div>
         </div>
-        <div class="votes_container">
+        <div class="activity_container">
             <span class="votes_title">Crew <span class="count" th:text="${crewSet.size()}"></span></span>
             <th:block th:each="department,iter : ${structuredCrew.keySet()}">
                 <div class="department_container">

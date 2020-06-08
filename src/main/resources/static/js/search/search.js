@@ -26,16 +26,17 @@ $(document).ready(function () {
                             $(".search_results_container").empty();
                             data.results.forEach((item) => {
                                 $(".search_results_container").append(`
-                        <a href="/movie/${item.id}" class="movie_search_result_container">\n
-                            <img src="https://image.tmdb.org/t/p/w94_and_h141_bestv2${item.poster_path}" alt="" class="poster" onerror="this.src='../../resources/lost_poster.png'">\n
-                             <div class="info_container">\n
-                                 <div class="title">\n
-                                     <span class="movie_title">${item.title}</span>\n
-                                     <span class="movie_date">${item.release_date}</span>\n
-                                 </div>\n
-                                 <span class="overview">${item.overview.length >= 235 ? item.overview.slice(0, 235).concat("...") : item.overview}</span>\n
-                             </div>\n
-                         </a>`);
+                                    <a href="/movie/${item.id}" class="movie_search_result_container">\n
+                                       <img src="https://image.tmdb.org/t/p/w94_and_h141_bestv2${item.poster_path}" alt="" class="poster" onerror="this.src='../../resources/lost_poster.png'">\n
+                                        <div class="info_container">\n
+                                            <div class="title">\n
+                                                <span class="movie_title">${item.title}</span>\n
+                                                <span class="movie_date">${item.release_date}</span>\n
+                                            </div>\n
+                                            <span class="overview">${item.overview.length >= 235 ? item.overview.slice(0, 235).concat("...") : item.overview}</span>\n
+                                        </div>\n
+                                    </a>`
+                                );
                             });
                         }
                     }
@@ -52,16 +53,17 @@ $(document).ready(function () {
                             $(".search_results_container").empty();
                             data.results.forEach((item) => {
                                 $(".search_results_container").append(`
-                        <a href="/people/${item.id}" class="movie_search_result_container">\n
-                            <img src="https://image.tmdb.org/t/p/w94_and_h141_bestv2${item.profile_path}" alt="" class="poster" onerror="this.src='../../resources/person_large.png'">\n
-                             <div class="info_container">\n
-                                 <div class="title">\n
-                                     <span class="movie_title">${item.name}</span>\n
-                                     <span class="movie_date">${item.department}</span>\n
-                                 </div>\n
-                                 <span class="overview">${item.biography.length >= 235 ? item.biography.slice(0, 235).replace(/\n/g, "").concat("...") : item.biography.replace(/\n/g, "")}</span>\\n
-                             </div>\n
-                         </a>`);
+                                    <a href="/people/${item.id}" class="movie_search_result_container">\n
+                                       <img src="https://image.tmdb.org/t/p/w94_and_h141_bestv2${item.profile_path}" alt="" class="poster" onerror="this.src='../../resources/person_large.png'">\n
+                                        <div class="info_container">\n
+                                            <div class="title">\n
+                                                <span class="movie_title">${item.name}</span>\n
+                                                <span class="movie_date">${item.department}</span>\n
+                                            </div>\n
+                                            <span class="overview">${item.biography.length >= 235 ? item.biography.slice(0, 235).replace(/\n/g, "").concat("...") : item.biography.replace(/\n/g, "")}</span>\\n
+                                        </div>\n
+                                    </a>`
+                                );
                             });
                         }
                         $('.info_container').contents().filter(function(){

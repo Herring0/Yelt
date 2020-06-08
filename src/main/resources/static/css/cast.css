@@ -80,12 +80,12 @@ a {
 .votes_block {
   margin: auto;
   padding-top: 30px;
-  width: 1220px;
+  width: 1150px;
   display: flex;
 
 }
 
-.votes_container {
+.activity_container {
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -7,6 +7,7 @@ import com.herring.yelt.services.UserReviewService;
 import com.herring.yelt.services.movies.MovieDetailsService;
 import com.herring.yelt.services.user.UserMovieService;
 import com.herring.yelt.services.user.UserService;
+import com.herring.yelt.services.watchlist.WatchlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,9 @@ public class UserController {
     @Autowired
     private UserReviewService userReviewService;
 
+    @Autowired
+    private WatchlistService watchlistService;
+
     @GetMapping("/{login}")
     public String main(@PathVariable(value = "login") String login, Model model) {
         User user = userService.getUserByLogin(login);
@@ -51,6 +55,8 @@ public class UserController {
         model.addAttribute("reviewCount", userReviewService.getReviewCount(Integer.valueOf(user.getId())));
         model.addAttribute("latestVotes", latestVotes);
         model.addAttribute("latestMovies", movieDetailsService.getMoviesById(latestIds));
+        model.addAttribute("movieDetailsService", movieDetailsService);
+        model.addAttribute("watchlistService", watchlistService);
 
         return "user/User";
     }

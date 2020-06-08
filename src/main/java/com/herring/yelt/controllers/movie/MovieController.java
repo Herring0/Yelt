@@ -6,11 +6,13 @@ import com.herring.yelt.gson.models.people.PeopleCredits;
 import com.herring.yelt.models.User;
 import com.herring.yelt.models.UserMovie;
 import com.herring.yelt.models.UserReview;
+import com.herring.yelt.models.Watchlist;
 import com.herring.yelt.repositories.UserMovieRepository;
 import com.herring.yelt.repositories.UserRepository;
 import com.herring.yelt.repositories.UserReviewRepository;
 import com.herring.yelt.services.*;
 import com.herring.yelt.services.user.UserService;
+import com.herring.yelt.services.watchlist.WatchlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,23 +31,31 @@ public class MovieController {
 
     @Autowired
     private UserMovieRepository userMovieRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private UserReviewRepository userReviewRepository;
 
     @Autowired
     private UsersDataService usersDataService;
+
     @Autowired
     private UserReviewService userReviewService;
+
     @Autowired
     private MovieCreditsService movieCreditsService;
+
+    @Autowired
+    private WatchlistService watchlistService;
 
     @Autowired
     private TMDbRequester tmDbRequester;
 
     @Autowired
     private MovieSimilarMoviesService movieSimilarMoviesService;
+
     @Autowired
     private MovieCertificationService movieCertificationService;
 
@@ -196,15 +206,29 @@ public class MovieController {
             UserDetails user = ((UserDetails)principal);
             User userDb = userRepository.findByLogin(user.getUsername());
             UserReview userReview = userReviewRepository.findByUidAndMid(userDb.getId(), id);
-            if (userReview != null) {
+            if (userReview == null) {
                 userReviewRepository.deleteById(userReview.getId());
             }
         }
         return null;
     }
 
+    @PostMapping("/{id}/add_to_watchlist")
+    @ResponseBody
+    public Object addToWatchlist(@PathVariable(value = "id") String id) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails user = ((UserDetails)principal);
+            User userDb = userRepository.findByLogin(user.getUsername());
+            Watchlist watchlist = watchlistService.getWatchlist(userDb.getId(), id);
+            if (watchlist == null) {
+                watchlist = new Watchlist(userDb.getId(), id);
+                watchlistService.save(watchlist);
+            }
+        }
+        return null;
+    }
 
-    // гениальный мув от гениального человека
     private void executeTMDbRequesterForMovie(String id) {
         Thread detailsThread = new Thread(() -> movieDetails = tmDbRequester.getMovieDetails(id));
         Thread creditsThread = new Thread(() -> movieCredits = tmDbRequester.getMovieCredits(id));

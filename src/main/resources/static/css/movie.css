@@ -219,7 +219,7 @@ ul {
 .about_movie_block {
     height: 100%;
     width: 100%;
-    margin-top: 5px;
+    margin-top: 10px;
     box-sizing: border-box;
 }
 
@@ -316,6 +316,10 @@ ul {
     margin-top: 18px;
     margin-left: 10px;
     align-items: flex-end;
+}
+
+.folder_selection_block {
+    min-height: 65px;
 }
 
 .rating {
@@ -857,7 +861,7 @@ ul {
 }
 
 .profile_img {
-    background-image: url(profile_img.jpg);
+    background-image: url("../resources/person.png");
     width: 45px;
     height: 45px;
     border: 2px solid var(--font_color_first);

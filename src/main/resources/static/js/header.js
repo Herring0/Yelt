@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var timer;
+    var xhr;
     $(".search_button").mouseover(function () {
         $(".search_input").css("border", "2px solid var(--terra_cotta)");
     });
@@ -9,12 +10,12 @@ $(document).ready(function () {
     })
 
     var search = async function (e) {
-        timer = setTimeout(function () {
+        // timer = setTimeout(function () {
             var movieResults;
             var peopleResults;
 
             $(".lds-dual-ring").css("visibility", "visible");
-            $.ajax({
+            xhr = $.ajax({
                 type: "POST",
                 contentType: "application/x-www-form-urlencoded",
                 url: "/search/movies",
@@ -85,13 +86,14 @@ $(document).ready(function () {
                 },
             });
 
-        }, 100);
+        // }, 100);
     }
 
     var didScroll;
 
     $(".search_input").keyup(search).keydown(function () {
-        clearTimeout(timer);
+        // clearTimeout(timer);
+        xhr.abort();
     });
     $(".search_button").click(function () {
         window.location.href = window.location.origin + `search?query=${$(".search_input").val()}`;

@@ -97,18 +97,27 @@ $(document).ready(function () {
     }
 
     var delete_review = function (e) {
-        console.log("was send");
         var that = this;
         $.ajax({
             type: "POST",
             contentType: "application/x-www-form-urlencoded",
             url: window.location.href + "/delete_review",
-
             success: function (data) {
-                console.log("success");
                 $(that).closest(".review").animate({opacity: 0, height: "0px", padding: "0px"}, 500, function () {
                     $(that).closest(".review").css("display", "none");
                 });
+            }
+        });
+    }
+
+    function addToWatchlist(e) {
+        $.ajax({
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            url: window.location.href + "/add_to_watchlist",
+
+            success: function (data) {
+                console.log("success");
             }
         });
     }
@@ -140,6 +149,7 @@ $(document).ready(function () {
     $(".write_review").click(write_review);
     $(".i_review_close").click(hide_review);
     $(".review_delete_block").click(delete_review);
+    $(".btn_folder_selection").click(addToWatchlist);
 });
 
 

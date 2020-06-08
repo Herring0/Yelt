@@ -273,7 +273,7 @@ h2 {
     opacity: 1;
 }
 
-.votes_container {
+.activity_container {
     margin-top: 20px;
     display: flex;
     margin-bottom: 20px;
@@ -286,17 +286,17 @@ h2 {
     margin-right: 20px;
 }
 
-.vote_poster {
+.movie_poster {
     transition-duration: .2s;
     border-radius: 6px;
 }
 
-.vote:hover .vote_poster{
+.vote:hover .movie_poster{
     transform: scale(1.02, 1.02);
     box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.15);
 }
 
-.vote_name {
+.movie_name {
     font-size: .9em;
     text-align: center;
     color: var(--font_color_first);
