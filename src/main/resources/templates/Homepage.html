@@ -37,7 +37,7 @@
     <div class="content_block">
         <a href="#" class="block_title title_link">Top rated movies</a>
         <div class="content_container">
-            <th:block th:each="movie,iter : ${topRatedMovies.results}">
+            <th:block th:each="movie,iter : ${topRatedMovies}">
                 <th:block th:if="${iter.index < 7}">
                     <a th:href="@{/movie/{id}(id=${movie.id})}" class="movie">
                         <img th:src="@{http://image.tmdb.org/t/p/w500{poster_path}(poster_path=${movie.poster_path})}"
@@ -64,6 +64,23 @@
                         <div class="movie" th:text="${userReviewsMovieDetails.get(iter.index).title}"></div>
                     </a>
                 </div>
+            </th:block>
+        </div>
+    </div>
+
+    <div class="content_block">
+        <a href="#" class="block_title title_link">Popular people</a>
+        <div class="content_container">
+            <th:block th:each="people,iter : ${peoplePopular.results}">
+                <th:block th:if="${iter.index < 7}">
+                    <a th:href="@{/people/{id}(id=${people.id})}" class="movie">
+                        <img th:src="@{http://image.tmdb.org/t/p/w500{profile_path}(profile_path=${people.profile_path})}"
+                             width="150"
+                             height="236"
+                             onerror="this.src='../../resources/person_large.png'" class="movie_poster">
+                        <span class="movie_title" th:text="${people.name}"></span>
+                    </a>
+                </th:block>
             </th:block>
         </div>
     </div>

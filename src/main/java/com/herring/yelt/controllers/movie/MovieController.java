@@ -1,8 +1,7 @@
 package com.herring.yelt.controllers.movie;
 
-import com.herring.yelt.TMDbRequester;
+import com.herring.yelt.utils.TMDbRequester;
 import com.herring.yelt.gson.models.movies.*;
-import com.herring.yelt.gson.models.people.PeopleCredits;
 import com.herring.yelt.models.User;
 import com.herring.yelt.models.UserMovie;
 import com.herring.yelt.models.UserReview;
@@ -11,7 +10,6 @@ import com.herring.yelt.repositories.UserMovieRepository;
 import com.herring.yelt.repositories.UserRepository;
 import com.herring.yelt.repositories.UserReviewRepository;
 import com.herring.yelt.services.*;
-import com.herring.yelt.services.user.UserService;
 import com.herring.yelt.services.watchlist.WatchlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

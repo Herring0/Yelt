@@ -3,24 +3,32 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Spring Security Example </title>
+    <meta charset="UTF-8">
+    <title>Login | Yelt</title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
     <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/header.js"></script>
     <script> </script>
 </head>
 <body>
-
+<header th:insert="fragments/Header :: header"></header>
 <div class="main-page">
     <th:block th:if="${message != null}">
         <span th:text="${message}" class="error"></span>
     </th:block>
-    <div class="form">
+    <div class="lr_form">
         <form th:action="@{/login}" method="post" class="register-form">
             <input type="text" placeholder="login" name="username" class="data_input"/>
             <input type="password" placeholder="password" name="password" class="data_input"/>
-            <input type="submit" value="Sign In" class="submit"/>
+            <input type="submit" value="Log in" class="submit"/>
             <p class="message">Not registered? <a href="/registration">Create an account</a></p>
         </form>
     </div>
 </div>
+<footer th:insert="fragments/Footer :: footer"></footer>
 </body>
 </html>

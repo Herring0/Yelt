@@ -78,7 +78,6 @@ $(document).ready(function () {
 
     function changeToPeople(e) {
         if (!$("#people").hasClass("active")) {
-            // $(".search_results_container").empty();
             $("#movie").removeClass("active");
             $("#people").addClass("active");
             window.scrollTo({
@@ -91,7 +90,6 @@ $(document).ready(function () {
 
     function changeToMovie(e) {
         if (!$("#movie").hasClass("active")) {
-            // $(".search_results_container").empty();
             $("#people").removeClass("active");
             $("#movie").addClass("active");
             window.scrollTo({
@@ -104,7 +102,6 @@ $(document).ready(function () {
 
     $(window).scroll(function() {
         var pos = $(document).scrollTop();
-        console.log(pos);
         if (pos > 180) {
             $(".top_panel").css("opacity", 1);
         } else {

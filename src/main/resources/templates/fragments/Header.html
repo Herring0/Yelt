@@ -19,15 +19,15 @@
     </th:block>
     <th:block sec:authorize="isAuthenticated()">
         <div class="fr_authorized">
-            <a href="#" class="watchlist"> Wacthlist</a>
+            <a th:href="@{/user/{login}/watchlist(login=${#authentication.getPrincipal().getUser().getLogin()})}" class="watchlist"> Wacthlist</a>
             <th:block th:if="${#authentication.getPrincipal().getUser().getAvatar() == null}">
                 <div class="profile"
                      style="background: url('../../resources/person.png'); background-size: 45px;">
                     <ul class="submenu">
                         <li><a th:href="@{/user/{login}(login=${#authentication.getPrincipal().getUser().getLogin()})}">Profile</a></li>
                         <li><a th:href="@{/user/{login}/votes(login=${#authentication.getPrincipal().getUser().getLogin()})}">Votes</a></li>
-                        <li><a href="">Watchlist</a></li>
-                        <li><a href="">Favorite</a></li>
+                        <li><a th:href="@{/user/{login}/watchlist(login=${#authentication.getPrincipal().getUser().getLogin()})}">Watchlist</a></li>
+<!--                        <li><a href="">Favorite</a></li>-->
                         <li>
                             <a href="/logout">Logout</a>
                         </li>
@@ -40,8 +40,8 @@
                     <ul class="submenu">
                         <li><a th:href="@{/user/{login}(login=${#authentication.getPrincipal().getUser().getLogin()})}">Profile</a></li>
                         <li><a th:href="@{/user/{login}/votes(login=${#authentication.getPrincipal().getUser().getLogin()})}">Votes</a></li>
-                        <li><a href="">Watchlist</a></li>
-                        <li><a href="">Favorite</a></li>
+                        <li><a th:href="@{/user/{login}/watchlist(login=${#authentication.getPrincipal().getUser().getLogin()})}">Watchlist</a></li>
+<!--                        <li><a href="">Favorite</a></li>-->
                         <li>
                             <a href="/logout">Logout</a>
                         </li>

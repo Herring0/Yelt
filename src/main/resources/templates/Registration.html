@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Sigh Up</title>
+    <meta charset="UTF-8">
+    <title>Registration | Yelt</title>
+    <link rel="SHORTCUT ICON" href="../../resources/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
     <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <script src="https://kit.fontawesome.com/a12f7fab33.js" crossorigin="anonymous"></script>
+    <script src="../../js/lib/jquery.js"></script>
+    <script src="../../js/header.js"></script>
     <script> </script>
 </head>
 <body>
-
+<header th:insert="fragments/Header :: header"></header>
 <div class="main-page">
     <th:block th:if="${message != null}">
         <span th:text="${message}" class="error"></span>
     </th:block>
-    <div class="form">
+    <div class="lr_form">
         <form th:action="@{/registration}" method="post" class="register-form">
             <input type="text" placeholder="nickname" name="nickname" class="data_input"/>
             <input type="text" placeholder="login" name="login" class="data_input"/>
             <input type="password" placeholder="password" name="password" class="data_input"/>
             <input type="text" placeholder="email address" name="email" class="data_input"/>
             <input type="submit" value="create" class="submit"></input>
-            <p class="message">Already registered? <a href="/login">Sign In</a></p>
+            <p class="message">Already registered? <a href="/login">Log In</a></p>
         </form>
     </div>
 </div>
+<footer th:insert="fragments/Footer :: footer"></footer>
 </body>
 </html>

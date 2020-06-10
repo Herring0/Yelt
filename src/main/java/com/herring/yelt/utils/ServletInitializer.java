@@ -1,5 +1,6 @@
-package com.herring.yelt;
+package com.herring.yelt.utils;
 
+import com.herring.yelt.YeltApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

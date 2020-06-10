@@ -2,7 +2,6 @@
 :root {
     --cadet: #E1E2E2a0;
     --eggshell: #FFF;
-    /* --terra_cotta: #E07A5F; */
     --terra_cotta: #F0803C;
     --charcoal: #3E4C5E;
     --maize: #F7C548;
@@ -94,6 +93,7 @@ body {
 
 .content_block {
     width: 100%;
+    min-height: 377px;
 }
 
 .review {

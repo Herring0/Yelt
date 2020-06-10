@@ -1,4 +1,4 @@
-package com.herring.yelt.controllers;
+package com.herring.yelt.controllers.utils;
 
 import com.herring.yelt.gson.models.movies.MovieDetails;
 import com.herring.yelt.services.movies.MovieDetailsService;

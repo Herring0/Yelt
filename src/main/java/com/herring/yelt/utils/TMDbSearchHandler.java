@@ -1,4 +1,4 @@
-package com.herring.yelt;
+package com.herring.yelt.utils;
 
 import com.google.gson.Gson;
 import com.herring.yelt.gson.models.search.SearchMovies;

@@ -1,6 +1,6 @@
 package com.herring.yelt.controllers.people;
 
-import com.herring.yelt.TMDbRequester;
+import com.herring.yelt.utils.TMDbRequester;
 import com.herring.yelt.gson.models.discover.DiscoverMovie;
 import com.herring.yelt.gson.models.people.PeopleDetails;
 import com.herring.yelt.services.PeopleCreditsService;

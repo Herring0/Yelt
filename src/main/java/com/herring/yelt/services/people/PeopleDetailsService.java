@@ -1,6 +1,6 @@
 package com.herring.yelt.services.people;
 
-import com.herring.yelt.TMDbRequester;
+import com.herring.yelt.utils.TMDbRequester;
 import com.herring.yelt.gson.models.people.PeopleDetails;
 import com.herring.yelt.gson.models.search.SearchPeople;
 import org.springframework.beans.factory.annotation.Autowired;

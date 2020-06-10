@@ -67,4 +67,8 @@ public class UserMovieService {
     public List<UserMovie> getLatestVotesOrderedByDate(int uId) {
         return userMovieRepository.findTop7ByUidOrderByVoteTimeDesc(uId);
     }
+
+    public List<UserMovie> getTop7RatedMovies() {
+        return userMovieRepository.findTop7RatedMovies();
+    }
 }

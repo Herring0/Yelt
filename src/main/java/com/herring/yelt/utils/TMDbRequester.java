@@ -1,4 +1,4 @@
-package com.herring.yelt;
+package com.herring.yelt.utils;
 
 import com.google.gson.Gson;
 import com.herring.yelt.gson.models.discover.DiscoverMovie;
@@ -6,6 +6,7 @@ import com.herring.yelt.gson.models.genres.GenresMovieList;
 import com.herring.yelt.gson.models.movies.*;
 import com.herring.yelt.gson.models.people.PeopleCredits;
 import com.herring.yelt.gson.models.people.PeopleDetails;
+import com.herring.yelt.gson.models.people.PeoplePopular;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -207,6 +208,23 @@ public class TMDbRequester {
         moviePopular = new Gson().fromJson(result, MoviePopular.class);
         System.out.println("Popular movies received");
         return moviePopular;
+    }
+
+    public PeoplePopular getPopularPeople() {
+        PeoplePopular peoplePopular;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(BASE_URL);
+        stringBuilder.append("/person");
+        stringBuilder.append("/popular");
+        stringBuilder.append("?api_key=");
+        stringBuilder.append(apiKey);
+
+        String result = new RestTemplate().getForObject(stringBuilder.toString(), String.class);
+
+        peoplePopular = new Gson().fromJson(result, PeoplePopular.class);
+        System.out.println("Popular people received");
+        return peoplePopular;
     }
 
     public MovieTopRated getTopRatedMovies() {

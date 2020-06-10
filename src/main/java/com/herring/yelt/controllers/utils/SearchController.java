@@ -1,6 +1,6 @@
 package com.herring.yelt.controllers.utils;
 
-import com.herring.yelt.TMDbSearchHandler;
+import com.herring.yelt.utils.TMDbSearchHandler;
 import com.herring.yelt.gson.models.search.SearchMovies;
 import com.herring.yelt.gson.models.search.SearchPeople;
 import com.herring.yelt.services.people.PeopleDetailsService;

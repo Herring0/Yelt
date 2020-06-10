@@ -1,8 +1,7 @@
 package com.herring.yelt.services;
 
-import com.herring.yelt.TMDbRequester;
+import com.herring.yelt.utils.TMDbRequester;
 import com.herring.yelt.gson.models.genres.GenresMovieList;
-import com.herring.yelt.gson.models.movies.MovieCredits;
 import com.herring.yelt.gson.models.movies.MovieSimilarMovies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

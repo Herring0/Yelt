@@ -1,4 +1,4 @@
-package com.herring.yelt;
+package com.herring.yelt.utils;
 
 import com.herring.yelt.services.SimpleUserDetailsService;
 import com.herring.yelt.services.UsersDataService;

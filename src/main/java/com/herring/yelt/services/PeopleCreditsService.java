@@ -1,6 +1,6 @@
 package com.herring.yelt.services;
 
-import com.herring.yelt.TMDbRequester;
+import com.herring.yelt.utils.TMDbRequester;
 import com.herring.yelt.gson.models.people.PeopleCredits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
